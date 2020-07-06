@@ -6,10 +6,10 @@
 ![](screenshot.png)
 
 ## Description
-With the Code Snippet extension, you can benefit from a rich user experience for yeoman generators. This extension allows developers to reuse existing yeoman generators and provide wizard-like experience with no development efforts.
+This extension allows developers to add generic code pieces to their project and provide wizard-like experience with minor development efforts.
 The repository contains three main packages:
 * **Frontend** - The Code Snippet as a standalone vue.js application.
-* **Backend** - The backend part which communicates with Yeoman and the system. Runs as a VSCode extension or node.js application.
+* **Backend** - The backend part. Runs as a VSCode extension or node.js application.
 * **VSCode snippet contributor example** - Example snippet contibutor to show usage.
 
 ## Requirements
