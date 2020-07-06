@@ -1,0 +1,7 @@
+package-lock.json
+reports
+**/node_modules
+**/dist
+**/out
+**/*.vsix
+**/coverage
