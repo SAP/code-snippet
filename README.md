@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/sap-staging/code-snippet.svg?style=svg)](https://circleci.com/gh/sap-staging/code-snippet)
+[![CircleCI](https://circleci.com/gh/SAP/code-snippet.svg?style=svg)](https://circleci.com/gh/SAP/code-snippet)
 ![GitHub license](https://img.shields.io/badge/license-Apache_2.0-blue.svg)
 
 # Code Snippet
