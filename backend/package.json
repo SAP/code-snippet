@@ -1,6 +1,6 @@
 {
 	"name": "code-snippet",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"displayName": "Code Snippet",
 	"publisher": "SAPOSS",
 	"author": {
@@ -52,6 +52,10 @@
 		],
 		"menus": {
 			"commandPalette": [
+				{
+					"command": "loadCodeSnippet",
+					"when": "false"
+				},
 				{
 					"command": "codeSnippet.toggleOutput",
 					"when": "false"

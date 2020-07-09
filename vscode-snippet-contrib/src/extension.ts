@@ -5,13 +5,7 @@ import { ISnippet } from '@sap-devx/code-snippet-types';
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "snippet1" is now active!');
 
-	let disposable = vscode.commands.registerCommand('extension.snippetContributor', () => {
-		vscode.window.showInformationMessage('Hello snippet contributor!');
-	});
-
-	context.subscriptions.push(disposable);
-
-	let disposable1 = vscode.commands.registerCommand('extension.showCodeSnippetContributor', (uri: vscode.Uri) => {
+	let disposable = vscode.commands.registerCommand('extension.showCodeSnippetContributor', (uri: vscode.Uri) => {
 		try {
 			vscode.commands.executeCommand("loadCodeSnippet", {contributorName: "vscode-snippet-contrib", snippetName: "snippet_1", context: {uri: uri}});
 		  } catch (error) {
@@ -19,7 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	});
 
-	context.subscriptions.push(disposable1);
+	context.subscriptions.push(disposable);
 
 	const api = {
 		geCodeSnippets(context: any) {

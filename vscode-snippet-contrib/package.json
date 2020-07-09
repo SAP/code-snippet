@@ -19,15 +19,11 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.snippetContributor"
+		"onCommand:extension.showCodeSnippetContributor"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
-			{
-				"command": "extension.snippetContributor",
-				"title": "Snippet Contributor"
-			},
 			{
 				"command": "extension.showCodeSnippetContributor",
 				"title": "Show Code Snippet Contributor"
