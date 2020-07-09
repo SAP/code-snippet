@@ -32,6 +32,16 @@ export abstract class AbstractWebviewPanel {
 		this.state = state;
 	};
 
+	protected loadWebviewPanel(state?: any) {
+		if (this.webViewPanel && _.isEmpty(state)) {
+			this.webViewPanel.reveal();
+		} else {
+			this.disposeWebviewPanel();
+			const webViewPanel = this.createWebviewPanel();
+			this.setWebviewPanel(webViewPanel, state);
+		}
+	}
+
 	protected createWebviewPanel(): vscode.WebviewPanel {
 		return vscode.window.createWebviewPanel(
 			this.viewType,
