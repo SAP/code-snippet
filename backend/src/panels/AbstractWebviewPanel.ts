@@ -32,7 +32,7 @@ export abstract class AbstractWebviewPanel {
 		this.state = state;
 	};
 
-	protected loadWebviewPanel(state?: any) {
+	public loadWebviewPanel(state?: any) {
 		if (this.webViewPanel && _.isEmpty(state)) {
 			this.webViewPanel.reveal();
 		} else {

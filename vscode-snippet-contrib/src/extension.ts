@@ -1,6 +1,7 @@
-import * as _ from 'lodash';
-import * as vscode from 'vscode';
 import { ISnippet } from '@sap-devx/code-snippet-types';
+import * as vscode from 'vscode';
+import * as _ from 'lodash';
+import { ConfigHelper } from "./configHelper";
 
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "snippet1" is now active!');
@@ -20,33 +21,42 @@ export function activate(context: vscode.ExtensionContext) {
 			const snippets = new Map<string, ISnippet>();
 			let snippet: ISnippet = {
 				getMessages() {
-					return {title: "Create an action", description: "Select the action, target, service, and entity set to which you want to connect."};
+					return {title: "Create Launch Configuration", description: "Select Name, Environment, Target to which you want to create launch configuration."};
 				},
 				getQuestions() {
 					return createCodeSnippetQuestions(context);
 				},
 				async getWorkspaceEdit(answers: any) {
-					let outputFolder: string;
+					let outputFile: string;
 					if (context.uri) {
-						outputFolder = context.uri.path;
+						outputFile = context.uri.path;
 					} else {
-						outputFolder = _.get(vscode, "workspace.workspaceFolders[0].uri.path");
+						let outputFolder = _.get(vscode, "workspace.workspaceFolders[0].uri.path");
+						if (!outputFolder || !outputFolder.length) {
+							vscode.window.showErrorMessage("Cannot find folder");
+							return;
+						}
+						outputFile = outputFolder + '/.vscode/launch.json';
 					}
 
-					if (!outputFolder || !outputFolder.length) {
-						vscode.window.showErrorMessage("Cannot find folder");
-						return;
-					}
-					const docUri: vscode.Uri = vscode.Uri.parse(outputFolder + '/newFile.md');
+					const docUri: vscode.Uri = vscode.Uri.parse(outputFile);
+
+					const configurations = await ConfigHelper.readFile(docUri.fsPath);
+
+					const config = {
+						name: answers.configName,
+						type: answers.configType,
+						program: answers.configProgram
+					};
+					configurations['configurations'].push(config)
 
 					const we = new vscode.WorkspaceEdit();
 					we.createFile(docUri, { ignoreIfExists: true });
 
 					const metadata = {needsConfirmation: true, label: "snippet contributor"};
-					we.insert(docUri, new vscode.Position(0, 0), docUri.fsPath + '\n', metadata);
-					we.insert(docUri, new vscode.Position(0, 0), answers.actionName + '\n', metadata);
-					we.insert(docUri, new vscode.Position(0, 0), answers.actionTemplate + '\n', metadata);
-					we.insert(docUri, new vscode.Position(0, 0), answers.actionType + '\n', metadata);
+					const newText = ConfigHelper.getString(configurations);
+					const range = await ConfigHelper.getRange(docUri);
+					we.replace(docUri, range, newText, metadata);
 
 					return we;
 				}
@@ -65,41 +75,35 @@ function createCodeSnippetQuestions(context: any) : any[] {
     questions.push(
 		{
 		  guiOptions: {
-			hint: "hint actionTemplate"
+			hint: "hint config type"
 		  },
 		  type: "list",
-		  name: "actionTemplate",
-		  message: "Action Template",
+		  name: "configType",
+		  message: "Type",
 		  choices: [
-			'OData action',
-			'Offline action',
-			'Message acion',
-			'Change user password'
+			'node',
+			'extensionHost'
 		  ]
 		},
 		{
 		  guiOptions: {
-			hint: "hint actionName"
+			hint: "hint config name"
 		  },
 		  type: "input",
-		  name: "actionName",
-		  message: "Action Name",
+		  name: "configName",
+		  message: "Name",
 		  validate: (value: any, answers: any) => {
 			return (value.length > 1 ? true : "Enter at least 2 characters");
 		  }
 		},
 		{
 		  guiOptions: {
-			hint: "hint actionType"
+			hint: "hint config program",
+			type: "file-browser",
 		  },
-		  type: "list",
-		  name: "actionType",
-		  message: "Action Type",
-		  choices: [
-			'Create entity',
-			'Log',
-			'Close page'
-		  ]
+		  type: "input",
+		  name: "configProgram",
+		  message: "Program"
 		}
 	  );
   

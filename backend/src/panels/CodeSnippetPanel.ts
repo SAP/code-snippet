@@ -18,10 +18,6 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 
 	private static channel: vscode.OutputChannel;
 
-	public loadCodeSnippet(uiOptions?: any) {
-		this.loadWebviewPanel(uiOptions);
-	}
-
 	public toggleOutput() {
 		this.outputChannel.showOutput();
 	}

@@ -34,7 +34,7 @@
 				{
 					"command": "extension.showCodeSnippetContributor",
 					"group": "navigation@1",
-					"when": "explorerResourceIsFolder"
+					"when": "resourceFilename == launch.json"
 				}
 			]
 		}
@@ -48,11 +48,15 @@
 		"package": "vsce package ."
 	},
 	"dependencies": {
+		"@sap-devx/code-snippet-types": "0.0.2",
 		"lodash": "^4.17.15",
-		"@sap-devx/code-snippet-types": "0.0.2"
+		"comment-json": "2.1.0",
+		"fs-extra": "7.0.1"
 	},
 	"devDependencies": {
 		"@types/lodash": "^4.14.150",
+		"@types/comment-json": "1.1.1",
+		"@types/fs-extra": "5.0.5",
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^5.2.7",
 		"@types/node": "^12.11.7",
