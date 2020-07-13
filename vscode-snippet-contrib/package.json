@@ -19,20 +19,20 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.showCodeSnippetContributor"
+		"onCommand:extension.showCodeSnippetContrib"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.showCodeSnippetContributor",
-				"title": "Show Code Snippet Contributor"
+				"command": "extension.showCodeSnippetContrib",
+				"title": "Code-Snippet Contributor (Create Launch Configuration)"
 			}
 		],
 		"menus": {
 			"explorer/context": [
 				{
-					"command": "extension.showCodeSnippetContributor",
+					"command": "extension.showCodeSnippetContrib",
 					"group": "navigation@1",
 					"when": "resourceFilename == launch.json"
 				}

@@ -6,7 +6,7 @@ import { ConfigHelper } from "./configHelper";
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "snippet1" is now active!');
 
-	let disposable = vscode.commands.registerCommand('extension.showCodeSnippetContributor', (uri: vscode.Uri) => {
+	let disposable = vscode.commands.registerCommand('extension.showCodeSnippetContrib', (uri: vscode.Uri) => {
 		try {
 			vscode.commands.executeCommand("loadCodeSnippet", {contributorName: "vscode-snippet-contrib", snippetName: "snippet_1", context: {uri: uri}});
 		  } catch (error) {
