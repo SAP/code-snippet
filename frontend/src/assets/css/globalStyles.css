@@ -34,10 +34,6 @@ div.v-application .theme--light.v-btn.v-btn--disabled .v-icon {
   border-color: var(--vscode-button-hoverBackground, #1177bb);
 }
 
-.v-application .theme--light.v-btn.v-btn--disabled:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined) {
-  background-color: var(--vscode-input-background, #3c3c3c) !important;
-  border-color: var(--vscode-input-background, #3c3c3c);
-}
 /* Do not accept uppercase from vuetify */
 .v-btn {
   text-transform: none;
