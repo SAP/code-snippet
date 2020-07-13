@@ -21,7 +21,7 @@ export function activate(context: vscode.ExtensionContext) {
 	Contributors.init();
 
 	codeSnippetPanel = new CodeSnippetPanel(extContext);
-	registerAndSubscribeCommand("loadCodeSnippet", codeSnippetPanel.loadCodeSnippet.bind(codeSnippetPanel));
+	registerAndSubscribeCommand("loadCodeSnippet", codeSnippetPanel.loadWebviewPanel.bind(codeSnippetPanel));
 	registerAndSubscribeCommand("codeSnippet.toggleOutput", codeSnippetPanel.toggleOutput.bind(codeSnippetPanel));
 	registerWebviewPanelSerializer(codeSnippetPanel);
 }
