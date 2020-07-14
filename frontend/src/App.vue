@@ -39,7 +39,7 @@
         >
           <v-col class="bottom-buttons-col" style="display:flex;align-items: center;">
             <v-btn id="apply" :disabled="!stepValidated" @click="apply">
-              Apply
+              {{messages.applyButton}}
             </v-btn>
           </v-col>
         </v-row>
