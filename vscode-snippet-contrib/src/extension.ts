@@ -21,7 +21,11 @@ export function activate(context: vscode.ExtensionContext) {
 			const snippets = new Map<string, ISnippet>();
 			let snippet: ISnippet = {
 				getMessages() {
-					return {title: "Create Launch Configuration", description: "Select Name, Environment, Target to which you want to create launch configuration."};
+					return {
+						title: "Create Launch Configuration",
+						description: "Select Name, Environment, Target to which you want to create launch configuration.",
+						applyButton: "Create"
+					};
 				},
 				getQuestions() {
 					return createCodeSnippetQuestions(context);
