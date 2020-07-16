@@ -26,7 +26,7 @@
 		"commands": [
 			{
 				"command": "extension.showCodeSnippetContrib",
-				"title": "Code-Snippet Contributor (Create Launch Configuration)"
+				"title": "Create Launch Configuration"
 			}
 		],
 		"menus": {
