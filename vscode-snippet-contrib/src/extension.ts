@@ -23,7 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
 				getMessages() {
 					return {
 						title: "Create Launch Configuration",
-						description: "Select Name, Environment, Target to which you want to create launch configuration.",
+						description: "Provide details for the launch configuration you want to create.",
 						applyButton: "Create"
 					};
 				},
@@ -79,7 +79,7 @@ function createCodeSnippetQuestions(context: any) : any[] {
     questions.push(
 		{
 		  guiOptions: {
-			hint: "hint config type"
+			hint: "Select the type of configuration you want to create."
 		  },
 		  type: "list",
 		  name: "configType",
@@ -91,7 +91,7 @@ function createCodeSnippetQuestions(context: any) : any[] {
 		},
 		{
 		  guiOptions: {
-			hint: "hint config name"
+			hint: "Provide a name for your new configuration."
 		  },
 		  type: "input",
 		  name: "configName",
@@ -102,7 +102,7 @@ function createCodeSnippetQuestions(context: any) : any[] {
 		},
 		{
 		  guiOptions: {
-			hint: "hint config program",
+			hint: "Select the path to the program you want to run.",
 			type: "file-browser",
 		  },
 		  type: "input",
