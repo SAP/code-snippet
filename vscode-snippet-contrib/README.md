@@ -1,3 +1,12 @@
-# vscode-snippet-contrib README
+# VSCcode Snippet Contributor
 
-## Getting started
+## Project setup
+```
+npm install
+```
+
+### Compiles
+```
+npm run compile
+```
+
