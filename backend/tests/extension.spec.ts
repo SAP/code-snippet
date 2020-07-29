@@ -61,10 +61,8 @@ describe('extension unit test', () => {
             loggerWrapperMock.expects("getLogger").once();
             extension.activate(testContext);
             expect(_.size(_.keys(oRegisteredCommands))).to.be.equal(2);
-            // tslint:disable-next-line: no-unused-expression
-            expect( _.get(oRegisteredCommands, "loadCodeSnippet")).to.be.not.undefined;
-            // tslint:disable-next-line: no-unused-expression
-            expect(_.get(oRegisteredCommands, "codeSnippet.toggleOutput")).to.be.not.undefined;
+                expect( _.get(oRegisteredCommands, "loadCodeSnippet")).to.be.not.undefined;
+                expect(_.get(oRegisteredCommands, "codeSnippet.toggleOutput")).to.be.not.undefined;
         });
 
         it("logger failure on extenion activation", () => {

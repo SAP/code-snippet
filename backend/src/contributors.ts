@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as _ from 'lodash';
 
 export class Contributors {
-    private static apiMap = new Map<string, any>();
+    private static readonly apiMap = new Map<string, any>();
 
     public static getSnippet(uiOptions: any) {
 		let snippet  = undefined;
@@ -37,16 +37,15 @@ export class Contributors {
 }
 
     public static async init() {
-        let allExtensions: readonly vscode.Extension<any>[] = vscode.extensions.all;
-        for (let currentExtensionIndex in allExtensions) {
-            const currentExtension: vscode.Extension<any> = allExtensions[currentExtensionIndex];
-            const currentPackageJSON: any = _.get(currentExtension, "packageJSON");
+        const allExtensions: readonly vscode.Extension<any>[] = vscode.extensions.all;
+        for (const extension of allExtensions) {
+            const currentPackageJSON: any = _.get(extension, "packageJSON");
             const extensionDependencies: string[] = _.get(currentPackageJSON, "extensionDependencies");
             if (!_.isEmpty(extensionDependencies)) {
                 const codeSnippetDependancy: boolean = _.includes (extensionDependencies,"saposs.code-snippet");
                 if (codeSnippetDependancy) {
                     const extensionName: string =  _.get(currentPackageJSON, "name");
-                    const api = await Contributors.getApi(currentExtension, extensionName);
+                    const api = await Contributors.getApi(extension, extensionName);
                     Contributors.add(extensionName, api);
                 }
             }

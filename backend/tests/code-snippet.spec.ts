@@ -1,6 +1,6 @@
 import * as mocha from "mocha";
 import * as sinon from "sinon";
-const datauri = require("datauri");
+const datauri = require("datauri"); // eslint-disable-line @typescript-eslint/no-var-requires
 import * as fsextra from "fs-extra";
 import { expect } from "chai";
 import * as _ from "lodash";
@@ -23,8 +23,8 @@ describe('codeSnippet unit test', () => {
     let loggerMock: any;
     let rpcMock: any;
     let appEventsMock: any;
-    const UTF8: string = "utf8";
-    const PACKAGE_JSON: string = "package.json";
+    const UTF8 = "utf8";
+    const PACKAGE_JSON = "package.json";
 
     const choiceMessage = 
         "Some quick example text of the codeSnippet description. This is a long text so that the example will look good.";
@@ -134,7 +134,6 @@ describe('codeSnippet unit test', () => {
 
     it("constructor", () => {
         try {
-            // tslint:disable-next-line: no-unused-expression
             new CodeSnippet(undefined, undefined, undefined, undefined, undefined);
             fail("contructor should throw an exception");
         } catch (error) {
@@ -174,7 +173,6 @@ describe('codeSnippet unit test', () => {
     describe("showPrompt", () => {
         it("prompt without questions", async () => {
             const answers = await codeSnippet.showPrompt([]);
-            // tslint:disable-next-line: no-unused-expression
             expect(answers).to.be.empty;
         });
     });
@@ -182,13 +180,11 @@ describe('codeSnippet unit test', () => {
     describe("funcReplacer", () => {
         it("with function", () => {
             const res = CodeSnippet["funcReplacer"]("key", () => { return; });
-            // tslint:disable-next-line: no-unused-expression
             expect(res).to.be.equal("__Function");
         });
 
         it("without function", () => {
             const res = CodeSnippet["funcReplacer"]("key", "value");
-            // tslint:disable-next-line: no-unused-expression
             expect(res).to.be.equal("value");
         });
     });
@@ -196,15 +192,13 @@ describe('codeSnippet unit test', () => {
     it("toggleOutput", () => {
         const codeSnippetInstance: CodeSnippet = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, {});
         const res = codeSnippetInstance["toggleOutput"]();
-        // tslint:disable-next-line: no-unused-expression
         expect(res).to.be.false;
     });
 
     it("getErrorInfo", () => {
         const codeSnippetInstance: CodeSnippet = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, {});
-        const errorInfo: string = "Error Info";
+        const errorInfo = "Error Info";
         const res = codeSnippetInstance["getErrorInfo"](errorInfo);
-        // tslint:disable-next-line: no-unused-expression
         expect(res).to.be.equal(errorInfo);
     });
 
@@ -220,8 +214,7 @@ describe('codeSnippet unit test', () => {
                 q2: "y",
                 q3: "z"
             };
-            for (const index in questions) {
-                const question = questions[index];
+            for (const question of questions) {
                 switch (question.name) {
                     case "a":
                         expect((question as any)["answer"]).to.equal("x");
@@ -237,7 +230,7 @@ describe('codeSnippet unit test', () => {
         });
     });
 
-    describe("showPrompt", async () => {
+    describe("showPrompt", () => {
         it("returns answers", async () => {
             const firstName = "john";
             rpc.invoke = async () => {
@@ -267,18 +260,16 @@ describe('codeSnippet unit test', () => {
 
         it("onSuccess", () => {
             codeSnippet["onSuccess"]("testSnippetName");
-            // tslint:disable-next-line: no-unused-expression
             expect(doSnippeDoneSpy.calledWith(true, "'testSnippetName' snippet has been created.")).to.be.true;
         });
 
         it("onFailure", async () => {
             await codeSnippet["onFailure"]("testSnippetName", "testError");
-            // tslint:disable-next-line: no-unused-expression
             expect(doSnippeDoneSpy.calledWith(false, "testSnippetName snippet failed.\ntestError")).to.be.true;
         });
     });
 
-    describe("Custom Question Event Handlers", async () => {
+    describe("Custom Question Event Handlers", () => {
         it("addCustomQuestionEventHandlers()", async () => {
             const testEventFunction = () => {
                 return true;
@@ -301,7 +292,7 @@ describe('codeSnippet unit test', () => {
         });
     });
 
-    describe("evaluateMethod()", async () => {
+    describe("evaluateMethod()", () => {
         it("custom question events", async () => {
             const testEventFunction = () => {
                 return true;
@@ -310,7 +301,6 @@ describe('codeSnippet unit test', () => {
             codeSnippetInstance.registerCustomQuestionEventHandler("questionType", "testEvent", testEventFunction);
             codeSnippetInstance["currentQuestions"] = [{name:"question1", guiType: "questionType"}];
             const response = await codeSnippetInstance["evaluateMethod"](null, "question1", "testEvent");
-            // tslint:disable-next-line: no-unused-expression
             expect(response).to.be.true;
         });
 
@@ -320,7 +310,6 @@ describe('codeSnippet unit test', () => {
                 return true;
             }}];
             const response = await codeSnippetInstance["evaluateMethod"](null, "question1", "method1");
-            // tslint:disable-next-line: no-unused-expression
             expect(response).to.be.true;
         });
 
@@ -330,14 +319,12 @@ describe('codeSnippet unit test', () => {
                 return true;
             }}];
             const response = await codeSnippetInstance["evaluateMethod"](null, "question2", "method2");
-            // tslint:disable-next-line: no-unused-expression
             expect(response).to.be.undefined;
         });
 
         it("no questions", async () => {
             const codeSnippetInstance: CodeSnippet = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, {});
             const response = await codeSnippetInstance["evaluateMethod"](null, "question1", "method1");
-            // tslint:disable-next-line: no-unused-expression
             expect(response).to.be.undefined;
         });
 
@@ -358,7 +345,7 @@ describe('codeSnippet unit test', () => {
 
     describe("applyCode", () => {
         const title = "snippet title";
-        let codeSnippetInstanceMock:any;
+        let codeSnippetInstanceMock: any;
         let codeSnippetInstance: CodeSnippet;
 
         beforeEach(() => {
@@ -374,7 +361,6 @@ describe('codeSnippet unit test', () => {
             const onSuccessSpy = sandbox.spy(codeSnippetInstance, "onSuccess");
             codeSnippetInstanceMock.expects("createCodeSnippetWorkspaceEdit").resolves();
             await codeSnippetInstance["applyCode"]({});
-            // tslint:disable-next-line: no-unused-expression
             expect(onSuccessSpy.calledWith(title)).to.be.true;
             onSuccessSpy.restore();
         });
@@ -384,7 +370,6 @@ describe('codeSnippet unit test', () => {
             const error = new Error("error");
             codeSnippetInstanceMock.expects("createCodeSnippetWorkspaceEdit").rejects(error);
             await codeSnippetInstance["applyCode"]({});
-            // tslint:disable-next-line: no-unused-expression
             expect(onFailureSpy.calledWith(title, error)).to.be.true;
             onFailureSpy.restore();
         });
