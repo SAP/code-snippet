@@ -1,14 +1,14 @@
 import { AppLog } from "../app-log";
 import { RpcCommon } from "@sap-devx/webview-rpc/out.ext/rpc-common";
-const stripAnsi = require("strip-ansi");
+import stripAnsi = require("strip-ansi");
 
 export class ServerLog implements AppLog {
-    private rpc: RpcCommon;
-    private isOutputVisible: boolean = false;
+    private readonly rpc: RpcCommon;
+    private isOutputVisible = false;
     /**
      *
      */
-    constructor(rpc : RpcCommon) {
+    constructor(rpc: RpcCommon) {
         this.rpc = rpc;        
     }
     public log(str: string): void {

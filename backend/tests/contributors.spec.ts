@@ -36,7 +36,7 @@ describe('Contributors unit test', () => {
     });
 
     describe('getSnippet', () => {
-        function createCodeSnippetQuestions() : any[] {
+        function createCodeSnippetQuestions(): any[] {
             const questions: any[] = [];
         
             questions.push(
@@ -58,7 +58,7 @@ describe('Contributors unit test', () => {
           
             return questions;
         }
-        function getSnippet(context: any) : any {
+        function getSnippet(context: any): any {
             return {
                 getMessages() {
                     return messageValue;
@@ -77,7 +77,7 @@ describe('Contributors unit test', () => {
         const api = {
             geCodeSnippets(context: any) {
                 const snippets = new Map<string, any>();
-                let snippet: any = getSnippet(context);
+                const snippet: any = getSnippet(context);
                 snippets.set(snippetName, snippet);
                 return snippets;
             },
@@ -97,8 +97,7 @@ describe('Contributors unit test', () => {
         it("receives no contributorName and no snippetName ---> returns undefined snippet", () => {
             const uiOptions = {};
             const snippet = Contributors.getSnippet(uiOptions);
-            // tslint:disable-next-line: no-unused-expression
-            expect(snippet).to.be.undefined;
+                expect(snippet).to.be.undefined;
         });
     });
 

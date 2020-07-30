@@ -8,27 +8,23 @@ import Generator = require("yeoman-generator");
 import { IChildLogger } from "@vscode-logging/logger";
 import {IPrompt} from "@sap-devx/yeoman-ui-types";
 
-export interface IQuestionsPrompt extends IPrompt{
-  questions: any[];
-}
-
 export class CodeSnippet {
 
   private static funcReplacer(key: any, value: any) {
     return _.isFunction(value) ? "__Function" : value;
   }
 
-  private uiOptions: any;
-  private rpc: IRpc;
-  private appEvents: AppEvents;
-  private outputChannel: AppLog;
-  private logger: IChildLogger;
-  private gen: Generator | undefined;
+  private readonly uiOptions: any;
+  private readonly rpc: IRpc;
+  private readonly appEvents: AppEvents;
+  private readonly outputChannel: AppLog;
+  private readonly logger: IChildLogger;
+  private gen: Generator | undefined; // eslint-disable-line @typescript-eslint/prefer-readonly
   private promptCount: number;
   private currentQuestions: Environment.Adapter.Questions<any>;
   private snippetName: string;
-  private customQuestionEventHandlers: Map<string, Map<string, Function>>;
-  private errorThrown: boolean = false;
+  private readonly customQuestionEventHandlers: Map<string, Map<string, Function>>;
+  private errorThrown = false;
 
   constructor(rpc: IRpc, appEvents: AppEvents, outputChannel: AppLog, logger: IChildLogger, uiOptions: any) {
     this.rpc = rpc;
@@ -184,7 +180,7 @@ export class CodeSnippet {
     return `name: ${name}\n message: ${message}\n stack: ${stack}\n string: ${error.toString()}\n`;
   }
   
-  private async createCodeSnippetQuestions() : Promise<any[]> {
+  private async createCodeSnippetQuestions(): Promise<any[]> {
     const snippet = this.uiOptions.snippet;
     // if (_.isNil(snippet)) {
     //   throw new Error(this.uiOptions.snippet_must_exist);
@@ -199,7 +195,7 @@ export class CodeSnippet {
     return questions;
   }
 
-  private async createCodeSnippetWorkspaceEdit(answers: any) : Promise<any[]> {
+  private async createCodeSnippetWorkspaceEdit(answers: any): Promise<any[]> {
     const snippet = this.uiOptions.snippet;
     // if (_.isNil(snippet)) {
     //   throw new Error(this.uiOptions.snippet_must_exist);
@@ -234,7 +230,7 @@ export class CodeSnippet {
       const questionHandlers = this.customQuestionEventHandlers.get(guiType);
       if (questionHandlers) {
         questionHandlers.forEach((handler, methodName) => {
-          (question as any)[methodName] = handler;
+          (question)[methodName] = handler;
         });
       }
     }

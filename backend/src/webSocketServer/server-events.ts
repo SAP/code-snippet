@@ -2,9 +2,9 @@ import { AppEvents } from "../app-events";
 import { RpcCommon } from "@sap-devx/webview-rpc/out.ext/rpc-common";
 
 export class ServerEvents implements AppEvents {
-    private rpc: RpcCommon;
+    private readonly rpc: RpcCommon;
 
-    constructor(rpc : RpcCommon) {
+    constructor(rpc: RpcCommon) {
         this.rpc = rpc;        
     }
     
@@ -16,7 +16,7 @@ export class ServerEvents implements AppEvents {
         this.rpc.invoke("selectOutputFolder");
     }
 
-    doSnippeDone(suceeded: boolean, message: string, targetPath: string = ""): void {
+    doSnippeDone(suceeded: boolean, message: string, targetPath = ""): void {
         this.rpc.invoke("snippetDone", [suceeded, message, targetPath]);
     }
 }

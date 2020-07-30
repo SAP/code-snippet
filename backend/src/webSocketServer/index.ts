@@ -48,7 +48,7 @@ class CodeSnippetWebSocketServer {
   }
 }
 
-function createCodeSnippetQuestions() : any[] {
+function createCodeSnippetQuestions(): any[] {
 	const questions: any[] = [];
 
     questions.push(

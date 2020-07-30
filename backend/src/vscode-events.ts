@@ -5,9 +5,9 @@ import { RpcCommon } from "@sap-devx/webview-rpc/out.ext/rpc-common";
 
 export class VSCodeEvents implements AppEvents {
     private webviewPanel: vscode.WebviewPanel;
-    private resolveFunc: any;
+    private readonly resolveFunc: any;
 
-    constructor(rpc : RpcCommon, webviewPanel: vscode.WebviewPanel) {
+    constructor(rpc: RpcCommon, webviewPanel: vscode.WebviewPanel) {
         this.webviewPanel = webviewPanel;   
     }
 

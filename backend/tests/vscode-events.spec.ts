@@ -74,8 +74,7 @@ describe('vscode-events unit test', () => {
         it("verify showDoneMessage called", () => {
             const showDoneMessageSpy = sandbox.spy(events,"showDoneMessage");
             events.doSnippeDone(true, "success message", "testTargetFolderPath");
-            // tslint:disable-next-line: no-unused-expression
-            expect(showDoneMessageSpy.called).to.be.true;
+                expect(showDoneMessageSpy.called).to.be.true;
         });        
 
         it("webviewPanel exists ---> webviewPanel is disposed", () => {
@@ -83,8 +82,7 @@ describe('vscode-events unit test', () => {
             events = new VSCodeEvents(undefined, webViewPanel);
             const webViewPanelSpy = sandbox.spy(webViewPanel, "dispose");
             events.doSnippeDone(true, "success message", "testTargetFolderPath");
-            // tslint:disable-next-line: no-unused-expression
-            expect(webViewPanelSpy.called).to.be.true;
+                expect(webViewPanelSpy.called).to.be.true;
         });        
 
     });

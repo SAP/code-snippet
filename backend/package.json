@@ -1,6 +1,6 @@
 {
 	"name": "code-snippet",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"displayName": "Code Snippet",
 	"publisher": "SAPOSS",
 	"author": {
@@ -112,7 +112,8 @@
 		"package": "vsce package .",
 		"test": "nyc mocha -p tsconfig.json --opts ./mocha.opts",
 		"ws:run": "node ./out/src/webSocketServer/index.js",
-		"lint": "tslint '*/*.{ts,tsx}' -c ./tslint.yml"
+		"lint": "eslint . --ext .ts,.tsx --cache",
+		"lint:fix": "eslint . --ext .ts,.tsx --cache --fix"
 	},
 	"dependencies": {
 		"@sap-devx/webview-rpc": "^0.2.2",
@@ -139,7 +140,13 @@
 		"@types/object-hash": "^1.3.1",
 		"@types/sinon": "^7.5.0",
 		"@types/ws": "^6.0.3",
-		"@types/yeoman-environment": "^2.3.3",
+		"@types/yeoman-environment": "2.3.3",
+		"@typescript-eslint/parser": "^2.30.0",
+		"@typescript-eslint/eslint-plugin": "^2.30.0",
+		"eslint": "^6.8.0",
+		"eslint-config-prettier": "^6.11.0",
+		"prettier": "^2.0.5",
+		"typescript": "^3.9.7",
 		"bufferutil": "^4.0.1",
 		"chai": "^4.2.0",
 		"copy-webpack-plugin": "^5.0.5",
@@ -148,10 +155,6 @@
 		"sinon": "^7.5.0",
 		"ts-loader": "^6.2.1",
 		"ts-node": "^8.9.1",
-		"tslint": "^5.20.1",
-		"tslint-config-prettier": "^1.18.0",
-		"tslint-no-unused-expression-chai": "^0.1.4",
-		"typescript": "^3.8.2",
 		"utf-8-validate": "^5.0.2",
 		"string-replace-loader": "^2.1.1",
 		"vsce": "^1.73.0",

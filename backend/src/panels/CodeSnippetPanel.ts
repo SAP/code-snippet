@@ -74,7 +74,7 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 	}
 
 	private async showOpenDialog(currentPath: string, canSelectFiles: boolean): Promise<string> {
-		const canSelectFolders: boolean = !canSelectFiles;
+		const canSelectFolders = !canSelectFiles;
 
 		let uri;
 		try {

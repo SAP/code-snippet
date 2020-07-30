@@ -1,9 +1,9 @@
 import { AppLog } from "./app-log";
 import { CodeSnippetPanel } from "./panels/CodeSnippetPanel";
-const stripAnsi = require("strip-ansi");
+import stripAnsi = require("strip-ansi");
 
 export class OutputChannelLog implements AppLog {
-    public constructor(private channelName: string) {}
+    public constructor(private readonly channelName: string) {}
 
     public log(value: string): void {
         this.appendLine(value);
@@ -32,7 +32,7 @@ export class OutputChannelLog implements AppLog {
     public skip(value: string): void {
         this.appendLine(value);
     }
-    public showOutput():boolean {
+    public showOutput(): boolean {
         CodeSnippetPanel.getOutputChannel(this.channelName).show();
         return true;
     }
