@@ -27,7 +27,7 @@ describe('vscode-events unit test', () => {
         _.set(vscode, "workspace.updateWorkspaceFolders", (): any => undefined);
         _.set(vscode, "workspace.applyEdit", (): any => undefined);
         _.set(vscode, "commands.executeCommand", (): any => undefined);
-        _.set(vscode, "WorkspaceEdit", (): any => {});
+        _.set(vscode, "WorkspaceEdit", {});
     });
 
     after(() => {

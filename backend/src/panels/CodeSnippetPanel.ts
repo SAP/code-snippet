@@ -32,7 +32,7 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 
 		this.messages = _.assign({}, backendMessages, this.snippet.getMessages());
 		const rpc = new RpcExtension(this.webViewPanel.webview);
-		this.outputChannel = new OutputChannelLog(this.messages.channel_name);
+		this.outputChannel = new OutputChannelLog(this.messages.channelName);
 		const vscodeEvents: AppEvents = new VSCodeEvents(rpc, this.webViewPanel);
 		this.codeSnippet = new CodeSnippet(rpc, 
 			vscodeEvents, 

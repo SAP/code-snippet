@@ -116,7 +116,7 @@ export class CodeSnippet {
       const normalizedQuestions = this.normalizeFunctions(questions);
       const response: any = await this.rpc.invoke("showPrompt", [normalizedQuestions]);
       if (_.isEmpty(response)) {
-        this.logError(this.uiOptions.messages.no_response);
+        this.logError(this.uiOptions.messages.noResponse);
       } else {
         await this.applyCode(response);
       }
@@ -183,7 +183,7 @@ export class CodeSnippet {
   private async createCodeSnippetQuestions(): Promise<any[]> {
     const snippet = this.uiOptions.snippet;
     // if (_.isNil(snippet)) {
-    //   throw new Error(this.uiOptions.snippet_must_exist);
+    //   throw new Error(this.uiOptions.snippetMustExist);
     // }
 
     let questions: any[] = [];
@@ -198,7 +198,7 @@ export class CodeSnippet {
   private async createCodeSnippetWorkspaceEdit(answers: any): Promise<any[]> {
     const snippet = this.uiOptions.snippet;
     // if (_.isNil(snippet)) {
-    //   throw new Error(this.uiOptions.snippet_must_exist);
+    //   throw new Error(this.uiOptions.snippetMustExist);
     // }
 
 

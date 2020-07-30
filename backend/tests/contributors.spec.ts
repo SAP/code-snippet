@@ -5,7 +5,7 @@ import { mockVscode } from "./mockUtil";
 
 const testVscode = {
     extensions: {
-        all: () => new Error("not implemented")
+        all: new Array()
     }
 };
 
@@ -33,6 +33,13 @@ describe('Contributors unit test', () => {
     afterEach(() => {
         extensionsMock.verify();
         contributorsMock.verify();
+    });
+
+    describe('init', () => {
+        it("No Contributors", () => {
+            contributorsMock.expects("add").never();
+            Contributors.init();
+        });
     });
 
     describe('getSnippet', () => {
