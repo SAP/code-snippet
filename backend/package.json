@@ -7,7 +7,7 @@
 		"name": "SAP SE"
 	},
 	"license": "Apache 2.0",
-	"description": "Provides rich user experience for Yeoman generators.",
+	"description": "A VSCode extension that provides a simple way to add code snippets.",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/SAP/code-snippet.git"
