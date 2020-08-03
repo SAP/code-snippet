@@ -11,7 +11,7 @@ export class Contributors {
 		const snippetContext = _.get(uiOptions, "context");
 		if (contributorName && snippetName) {
 			const api = Contributors.apiMap.get(contributorName);
-			const snippets = api.geCodeSnippets(snippetContext);
+			const snippets = api.getCodeSnippets(snippetContext);
 			snippet  = snippets.get(snippetName);
 		}
 		return snippet;

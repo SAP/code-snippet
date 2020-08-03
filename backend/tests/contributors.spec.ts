@@ -82,7 +82,7 @@ describe('Contributors unit test', () => {
 
         const snippetName = "snippet_1";
         const api = {
-            geCodeSnippets(context: any) {
+            getCodeSnippets(context: any) {
                 const snippets = new Map<string, any>();
                 const snippet: any = getSnippet(context);
                 snippets.set(snippetName, snippet);
