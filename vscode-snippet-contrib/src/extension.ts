@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(disposable);
 
 	const api = {
-		geCodeSnippets(context: any) {
+		getCodeSnippets(context: any) {
 			const snippets = new Map<string, ISnippet>();
 			let snippet: ISnippet = {
 				getMessages() {
