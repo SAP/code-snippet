@@ -6,29 +6,29 @@ export class Contributors {
 
     public static getSnippet(uiOptions: any) {
 		let snippet  = undefined;
-		const contributorName = _.get(uiOptions, "contributorName");
+		const contributorId = _.get(uiOptions, "contributorId");
 		const snippetName = _.get(uiOptions, "snippetName");
 		const snippetContext = _.get(uiOptions, "context");
-		if (contributorName && snippetName) {
-			const api = Contributors.apiMap.get(contributorName);
+		if (contributorId && snippetName) {
+			const api = Contributors.apiMap.get(contributorId);
 			const snippets = api.getCodeSnippets(snippetContext);
 			snippet  = snippets.get(snippetName);
 		}
 		return snippet;
 	}
 
-    public static add(extensionName: string, api: any) {
-        Contributors.apiMap.set(extensionName, api);
+    public static add(extensionId: string, api: any) {
+        Contributors.apiMap.set(extensionId, api);
     }
 
-    private static async getApi(extension: vscode.Extension<any>, extensionName: string) {
+    private static async getApi(extension: vscode.Extension<any>, extensionId: string) {
         let api: any;
         if (!extension.isActive) {
             try {
                 api = await extension.activate();
             } catch (error) {
                 console.error(error);
-                // TODO: Add Logger.error here ("Failed to activate extension", {extensionName: extensionName})
+                // TODO: Add Logger.error here ("Failed to activate extension", {extensionId: extensionId})
             }
         } else {
             api = extension.exports;
@@ -45,8 +45,10 @@ export class Contributors {
                 const codeSnippetDependancy: boolean = _.includes (extensionDependencies,"saposs.code-snippet");
                 if (codeSnippetDependancy) {
                     const extensionName: string =  _.get(currentPackageJSON, "name");
-                    const api = await Contributors.getApi(extension, extensionName);
-                    Contributors.add(extensionName, api);
+                    const extensionPublisher: string =  _.get(currentPackageJSON, "publisher");
+                    const extensionId: string = extensionPublisher + "." + extensionName;
+                    const api = await Contributors.getApi(extension, extensionId);
+                    Contributors.add(extensionId, api);
                 }
             }
         }
