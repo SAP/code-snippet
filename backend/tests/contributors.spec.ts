@@ -89,19 +89,19 @@ describe('Contributors unit test', () => {
                 return snippets;
             },
         };
-        const extensionName = "vscode-snippet-contrib";
-        Contributors.add(extensionName, api);
+        const extensionId = "SAPOSS.vscode-snippet-contrib";
+        Contributors.add(extensionId, api);
         
-        it("receives valid contributorName and snippetName ---> returns valid snippet", () => {
+        it("receives valid contributorId and snippetName ---> returns valid snippet", () => {
             const uiOptions = {
-                "contributorName": extensionName,
+                "contributorId": extensionId,
                 "snippetName": snippetName
               };
               const snippet = Contributors.getSnippet(uiOptions);
               expect(snippet.getMessages()).to.deep.equal(messageValue);
         });
 
-        it("receives no contributorName and no snippetName ---> returns undefined snippet", () => {
+        it("receives no contributorId and no snippetName ---> returns undefined snippet", () => {
             const uiOptions = {};
             const snippet = Contributors.getSnippet(uiOptions);
                 expect(snippet).to.be.undefined;
