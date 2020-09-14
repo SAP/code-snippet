@@ -27,7 +27,7 @@ describe('vscode-events unit test', () => {
         _.set(vscode, "workspace.updateWorkspaceFolders", (): any => undefined);
         _.set(vscode, "workspace.applyEdit", (): any => undefined);
         _.set(vscode, "commands.executeCommand", (): any => undefined);
-        _.set(vscode, "WorkspaceEdit", {});
+        _.set(vscode, "WorkspaceEdit", function() { return {};});
     });
 
     after(() => {
@@ -51,8 +51,14 @@ describe('vscode-events unit test', () => {
 
     describe("doApply", () => {
         it("applyEdit is called", () => {
-            const we = {};
+            const we = new vscode.WorkspaceEdit();
             workspaceMock.expects("applyEdit").withExactArgs(we);
+            events.doApply(we);
+        });
+
+        it("applyEdit isn't called (we is undefined)", () => {
+            let we = undefined;
+            workspaceMock.expects("applyEdit").never();
             events.doApply(we);
         });
     });

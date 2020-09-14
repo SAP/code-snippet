@@ -207,6 +207,9 @@ export class CodeSnippet {
     if (snippet && snippet.getWorkspaceEdit) {
       we = await snippet.getWorkspaceEdit(answers);
     }
+    if (!we) {
+      this.logger.debug(this.snippetName + " WorkspaceEdit is undefined");
+    }
 
     return we;
   }

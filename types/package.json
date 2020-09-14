@@ -2,7 +2,7 @@
   "name": "@sap-devx/code-snippet-types",
   "displayName": "code-snippet-types",
   "description": "code-snippet types",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "author": "SAP SE",
   "publisher": "SAP",
   "license": "Apache-2.0",
@@ -19,7 +19,8 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./"
   },
-  "dependencies": {
-    "typescript": "^3.8.3"
+  "devDependencies": {
+    "typescript": "^3.8.3",
+    "@types/vscode": "^1.36.0"
   }
 }

@@ -5,15 +5,16 @@ import { RpcCommon } from "@sap-devx/webview-rpc/out.ext/rpc-common";
 
 export class VSCodeEvents implements AppEvents {
     private webviewPanel: vscode.WebviewPanel;
-    private readonly resolveFunc: any;
 
     constructor(rpc: RpcCommon, webviewPanel: vscode.WebviewPanel) {
         this.webviewPanel = webviewPanel;   
     }
 
-    public async doApply(we: any): Promise<any> {
+    public async doApply(we: vscode.WorkspaceEdit): Promise<any> {
         // Apply code
-        await vscode.workspace.applyEdit(we);
+        if (we) {
+            await vscode.workspace.applyEdit(we);
+        }
     }
 
     public doSnippeDone(success: boolean, message: string, targetFolderPath?: string): void {
