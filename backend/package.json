@@ -1,6 +1,6 @@
 {
 	"name": "code-snippet",
-	"version": "0.0.11",
+	"version": "0.0.12",
 	"displayName": "Code Snippet",
 	"publisher": "SAPOSS",
 	"author": {
@@ -109,7 +109,7 @@
 		"webpack-prod": "webpack --mode production",
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
-		"package": "vsce package .",
+		"package": "npm run webpack && vsce package .",
 		"test": "nyc mocha -p tsconfig.json --opts ./mocha.opts",
 		"ws:run": "node ./out/src/webSocketServer/index.js",
 		"lint": "eslint . --ext .ts,.tsx --cache",
