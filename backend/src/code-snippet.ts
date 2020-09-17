@@ -6,7 +6,6 @@ import { AppEvents } from "./app-events";
 import { IRpc } from "@sap-devx/webview-rpc/out.ext/rpc-common";
 import Generator = require("yeoman-generator");
 import { IChildLogger } from "@vscode-logging/logger";
-import {IPrompt} from "@sap-devx/yeoman-ui-types";
 
 export class CodeSnippet {
 
@@ -76,6 +75,9 @@ export class CodeSnippet {
     this.snippetName = this.uiOptions.messages.title;
     try {
       const we: any = await this.createCodeSnippetWorkspaceEdit(answers);
+      if (!we) {
+        return this.appEvents.doClose();
+      }
       await this.appEvents.doApply(we);
       this.onSuccess(this.snippetName);
     } catch (error) {

@@ -12,11 +12,11 @@ export class ServerEvents implements AppEvents {
         // Apply code
     }
 
-    selectFolder(): void {
-        this.rpc.invoke("selectOutputFolder");
-    }
-
     doSnippeDone(suceeded: boolean, message: string, targetPath = ""): void {
         this.rpc.invoke("snippetDone", [suceeded, message, targetPath]);
+    }
+
+    public doClose(): void {
+
     }
 }

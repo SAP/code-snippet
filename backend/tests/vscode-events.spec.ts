@@ -55,12 +55,6 @@ describe('vscode-events unit test', () => {
             workspaceMock.expects("applyEdit").withExactArgs(we);
             events.doApply(we);
         });
-
-        it("applyEdit isn't called (we is undefined)", () => {
-            let we = undefined;
-            workspaceMock.expects("applyEdit").never();
-            events.doApply(we);
-        });
     });
 
     describe("doSnippeDone", () => {
