@@ -4,35 +4,29 @@ const datauri = require("datauri"); // eslint-disable-line @typescript-eslint/no
 import * as fsextra from "fs-extra";
 import { expect } from "chai";
 import * as _ from "lodash";
-import * as path from "path";
 import {CodeSnippet} from "../src/code-snippet";
-import * as yeomanEnv from "yeoman-environment";
 import { AppLog } from "../src/app-log";
 import { AppEvents } from '../src/app-events';
 import { IMethod, IPromiseCallbacks, IRpc } from "@sap-devx/webview-rpc/out.ext/rpc-common";
 import { IChildLogger } from "@vscode-logging/logger";
-import * as os from "os";
 import { fail } from "assert";
-import Environment = require("yeoman-environment");
 
 describe('codeSnippet unit test', () => {
     let sandbox: any;
-    let yeomanEnvMock: any;
     let fsExtraMock: any;
     let datauriMock: any;
     let loggerMock: any;
     let rpcMock: any;
     let appEventsMock: any;
-    const UTF8 = "utf8";
-    const PACKAGE_JSON = "package.json";
 
-    const choiceMessage = 
-        "Some quick example text of the codeSnippet description. This is a long text so that the example will look good.";
     class TestEvents implements AppEvents {
         public async doApply(we: any): Promise<any> {
             return;
         }
         public doSnippeDone(success: boolean, message: string, targetPath?: string): void {
+            return;
+        }
+        public doClose(): void {
             return;
         }
     }
@@ -100,10 +94,22 @@ describe('codeSnippet unit test', () => {
 
     const testLogger = {debug: () => {}, error: () => {}, fatal: () => {}, warn: () => {}, info: () => {}, trace: () => {}, getChildLogger: () => ({} as IChildLogger)};
 
+    const snippet: any = {
+        getMessages() {
+            return "getMessages";
+        },
+        getQuestions() {
+            return "createCodeSnippetQuestions";
+        },
+        async getWorkspaceEdit(answers: any, context: any) {
+            return "getWorkspaceEdit";
+        }
+    };
+
     const rpc = new TestRpc();
     const outputChannel = new TestOutputChannel();
     const appEvents = new TestEvents();
-    const uiOptions = {messages: {title: "snippet title"}};
+    const uiOptions = {messages: {title: "snippet title"}, snippet: snippet};
     const codeSnippet: CodeSnippet = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, uiOptions);
 
     before(() => {
@@ -115,7 +121,6 @@ describe('codeSnippet unit test', () => {
     });
 
     beforeEach(() => {
-        yeomanEnvMock = sandbox.mock(yeomanEnv);
         fsExtraMock = sandbox.mock(fsextra);
         datauriMock = sandbox.mock(datauri);
         rpcMock = sandbox.mock(rpc);
@@ -124,7 +129,6 @@ describe('codeSnippet unit test', () => {
     });
 
     afterEach(() => {
-        yeomanEnvMock.verify();
         fsExtraMock.verify();
         datauriMock.verify();
         rpcMock.verify();
@@ -359,9 +363,19 @@ describe('codeSnippet unit test', () => {
 
         it("createCodeSnippetWorkspaceEdit succeeds ---> onSuccess is called", async () => {
             const onSuccessSpy = sandbox.spy(codeSnippetInstance, "onSuccess");
-            codeSnippetInstanceMock.expects("createCodeSnippetWorkspaceEdit").resolves();
+            codeSnippetInstanceMock.expects("createCodeSnippetWorkspaceEdit").resolves({});
             await codeSnippetInstance["applyCode"]({});
             expect(onSuccessSpy.calledWith(title)).to.be.true;
+            onSuccessSpy.restore();
+        });
+
+        it("createCodeSnippetWorkspaceEdit fails (we is undefined) ---> onFailure is not called", async () => {
+            const onSuccessSpy = sandbox.spy(codeSnippetInstance, "onSuccess");
+            codeSnippetInstanceMock.expects("createCodeSnippetWorkspaceEdit").resolves(undefined);
+            appEventsMock.expects("doApply").never();
+            appEventsMock.expects("doClose");
+            await codeSnippetInstance["applyCode"]({});
+            expect(onSuccessSpy.calledWith(title)).to.be.false;
             onSuccessSpy.restore();
         });
 
@@ -375,23 +389,17 @@ describe('codeSnippet unit test', () => {
         });
     });
     
-    const snippet: any = {
-        getMessages() {
-            return "getMessages";
-        },
-        getQuestions() {
-            return "createCodeSnippetQuestions";
-        },
-        async getWorkspaceEdit(answers: any, context: any) {
-            return "getWorkspaceEdit";
-        }
-    };
-
     describe("createCodeSnippetWorkspaceEdit", () => {
         it("snippet has getWorkspaceEdit ---> call getWorkspaceEdit", async () => {
             const myCodeSnippet = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, {snippet: snippet});
             const we = await myCodeSnippet["createCodeSnippetWorkspaceEdit"]({});
             expect(we).to.be.equal("getWorkspaceEdit");
+        });
+        it("snippet is undefined", async () => {
+            const myCodeSnippet = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, {});
+            loggerMock.expects("debug");
+            const we = await myCodeSnippet["createCodeSnippetWorkspaceEdit"]({});
+            expect(we).to.be.equal(undefined);
         });
     });
 

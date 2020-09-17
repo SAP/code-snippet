@@ -12,9 +12,7 @@ export class VSCodeEvents implements AppEvents {
 
     public async doApply(we: vscode.WorkspaceEdit): Promise<any> {
         // Apply code
-        if (we) {
-            await vscode.workspace.applyEdit(we);
-        }
+        await vscode.workspace.applyEdit(we);
     }
 
     public doSnippeDone(success: boolean, message: string, targetFolderPath?: string): void {
@@ -22,7 +20,7 @@ export class VSCodeEvents implements AppEvents {
         this.showDoneMessage(success, message, targetFolderPath);
     }
 
-    private doClose(): void {
+    public doClose(): void {
         if (this.webviewPanel) {
             this.webviewPanel.dispose();
             this.webviewPanel = null;
