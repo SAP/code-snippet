@@ -46,7 +46,7 @@ export abstract class AbstractWebviewPanel {
 		return vscode.window.createWebviewPanel(
 			this.viewType,
 			this.viewTitle,
-			vscode.ViewColumn.One,
+			vscode.ViewColumn.Two,
 			{
 				// Enable javascript in the webview
 				enableScripts: true,
