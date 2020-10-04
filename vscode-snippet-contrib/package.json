@@ -2,7 +2,7 @@
 	"name": "vscode-snippet-contrib",
 	"displayName": "vscode-snippet-contrib",
 	"description": "",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"publisher": "SAPOSS",
 	"engines": {
 		"vscode": "^1.44.2"
@@ -48,7 +48,7 @@
 		"package": "vsce package ."
 	},
 	"dependencies": {
-		"@sap-devx/code-snippet-types": "0.0.5",
+		"@sap-devx/code-snippet-types": "0.0.6",
 		"lodash": "^4.17.15",
 		"comment-json": "2.1.0",
 		"fs-extra": "7.0.1"
