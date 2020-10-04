@@ -70,7 +70,7 @@ describe('Contributors unit test', () => {
                 getMessages() {
                     return messageValue;
                 },
-                getQuestions() {
+                async getQuestions() {
                     return createCodeSnippetQuestions();
                 },
                 async getWorkspaceEdit(answers: any) {

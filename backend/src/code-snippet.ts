@@ -191,7 +191,7 @@ export class CodeSnippet {
     let questions: any[] = [];
 
     if (snippet && snippet.getQuestions) {
-      questions = snippet.getQuestions();
+      questions = await snippet.getQuestions();
     }
 
     return questions;

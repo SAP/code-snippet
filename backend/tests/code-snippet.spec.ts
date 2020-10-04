@@ -98,7 +98,7 @@ describe('codeSnippet unit test', () => {
         getMessages() {
             return "getMessages";
         },
-        getQuestions() {
+        async getQuestions() {
             return "createCodeSnippetQuestions";
         },
         async getWorkspaceEdit(answers: any, context: any) {

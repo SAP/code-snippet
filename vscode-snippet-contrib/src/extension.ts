@@ -27,7 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
 						applyButton: "Create"
 					};
 				},
-				getQuestions() {
+				async getQuestions() {
 					return createCodeSnippetQuestions(context);
 				},
 				async getWorkspaceEdit(answers: any) {
