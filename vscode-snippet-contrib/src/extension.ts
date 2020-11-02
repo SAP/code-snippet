@@ -91,7 +91,8 @@ function createCodeSnippetQuestions(context: any) : any[] {
 		},
 		{
 		  guiOptions: {
-			hint: "Provide a name for your new configuration."
+			hint: "Provide a name for your new configuration.",
+			mandatory: true
 		  },
 		  type: "input",
 		  name: "configName",
