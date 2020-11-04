@@ -1,4 +1,5 @@
 [![CircleCI](https://circleci.com/gh/SAP/code-snippet.svg?style=svg)](https://circleci.com/gh/SAP/code-snippet)
+[![Coverage Status](https://coveralls.io/repos/github/SAP/code-snippet/badge.svg?branch=master)](https://coveralls.io/github/SAP/code-snippet?branch=master)
 ![GitHub license](https://img.shields.io/badge/license-Apache_2.0-blue.svg)
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP/code-snippet)](https://api.reuse.software/info/github.com/SAP/code-snippet)
 [![dependentbot](https://api.dependabot.com/badges/status?host=github&repo=SAP/code-snippet)](https://dependabot.com/)
