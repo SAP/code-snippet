@@ -12,6 +12,7 @@ export abstract class AbstractWebviewPanel {
 	protected mediaPath: string;
 	protected viewTitle: string;
 	protected webViewPanel: vscode.WebviewPanel;
+	protected viewColumn: vscode.ViewColumn;
 	protected focusedKey: string;
 	protected htmlFileName: string;
 	protected state: any;
@@ -30,6 +31,7 @@ export abstract class AbstractWebviewPanel {
 	public setWebviewPanel(webviewPanel: vscode.WebviewPanel, state?: any) {
 		this.webViewPanel = webviewPanel;
 		this.state = state;
+		this.viewColumn = vscode.ViewColumn.One;
 	}
 
 	public loadWebviewPanel(state?: any) {
@@ -46,7 +48,7 @@ export abstract class AbstractWebviewPanel {
 		return vscode.window.createWebviewPanel(
 			this.viewType,
 			this.viewTitle,
-			vscode.ViewColumn.Two,
+			this.viewColumn,
 			{
 				// Enable javascript in the webview
 				enableScripts: true,

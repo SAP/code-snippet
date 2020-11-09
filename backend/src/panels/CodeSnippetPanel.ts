@@ -103,5 +103,8 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 	public initWebviewPanel() {
 		super.initWebviewPanel();
 		this.webViewPanel.title = this.messages.title;
+		if (this.snippet.viewColumn) {
+			this.viewColumn = this.snippet.viewColumn;
+		}
 	}
 }
