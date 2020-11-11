@@ -26,6 +26,11 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 		super.setWebviewPanel(webViewPanel);
 
 		this.snippet = Contributors.getSnippet(uiOptions);
+		
+		if (uiOptions.viewColumn) {
+			this.viewColumn = uiOptions.viewColumn;
+		}
+
 		if (_.isNil(this.snippet)) {
 			return vscode.window.showErrorMessage("Can not find snippet.");
 		}
@@ -103,8 +108,5 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 	public initWebviewPanel() {
 		super.initWebviewPanel();
 		this.webViewPanel.title = this.messages.title;
-		if (this.snippet.viewColumn) {
-			this.viewColumn = this.snippet.viewColumn;
-		}
 	}
 }
