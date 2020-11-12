@@ -31,6 +31,7 @@ export abstract class AbstractWebviewPanel {
 	public setWebviewPanel(webviewPanel: vscode.WebviewPanel, uiOptions?: any) {
 		this.webViewPanel = webviewPanel;
 		this.uiOptions = uiOptions;
+		this.viewColumn = this.uiOptions?.viewColumn || vscode.ViewColumn.One;
 	}
 
 	public loadWebviewPanel(uiOptions?: any) {
