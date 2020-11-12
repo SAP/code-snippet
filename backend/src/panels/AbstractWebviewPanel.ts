@@ -39,7 +39,7 @@ export abstract class AbstractWebviewPanel {
 			this.webViewPanel.reveal();
 		} else {
 			this.disposeWebviewPanel();
-			this.viewColumn = this.uiOptions?.viewColumn || vscode.ViewColumn.One;
+			this.viewColumn = uiOptions?.viewColumn || vscode.ViewColumn.One;
 			const webViewPanel = this.createWebviewPanel();
 			this.setWebviewPanel(webViewPanel, uiOptions);
 		}
