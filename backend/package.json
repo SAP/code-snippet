@@ -149,7 +149,7 @@
 		"typescript": "^3.9.7",
 		"bufferutil": "^4.0.1",
 		"chai": "^4.2.0",
-		"copy-webpack-plugin": "^5.0.5",
+		"copy-webpack-plugin": "^6.3.0",
 		"mocha": "^6.2.2",
 		"nyc": "^14.1.1",
 		"sinon": "^7.5.0",
