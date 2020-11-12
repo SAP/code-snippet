@@ -23,9 +23,10 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 	}
 
 	public setWebviewPanel(webViewPanel: vscode.WebviewPanel, uiOptions?: any) {
-		super.setWebviewPanel(webViewPanel);
+		super.setWebviewPanel(webViewPanel, uiOptions);
 
 		this.snippet = Contributors.getSnippet(uiOptions);
+
 		if (_.isNil(this.snippet)) {
 			return vscode.window.showErrorMessage("Can not find snippet.");
 		}

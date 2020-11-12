@@ -12,9 +12,10 @@ export abstract class AbstractWebviewPanel {
 	protected mediaPath: string;
 	protected viewTitle: string;
 	protected webViewPanel: vscode.WebviewPanel;
+	protected viewColumn: vscode.ViewColumn;
 	protected focusedKey: string;
 	protected htmlFileName: string;
-	protected state: any;
+	protected uiOptions: any;
 
 	protected logger: IChildLogger;
 	protected disposables: vscode.Disposable[];
@@ -27,18 +28,19 @@ export abstract class AbstractWebviewPanel {
 		this.disposables = [];
 	}
 
-	public setWebviewPanel(webviewPanel: vscode.WebviewPanel, state?: any) {
+	public setWebviewPanel(webviewPanel: vscode.WebviewPanel, uiOptions?: any) {
 		this.webViewPanel = webviewPanel;
-		this.state = state;
+		this.uiOptions = uiOptions;
+		this.viewColumn = this.uiOptions?.viewColumn || vscode.ViewColumn.One;
 	}
 
-	public loadWebviewPanel(state?: any) {
-		if (this.webViewPanel && _.isEmpty(state)) {
+	public loadWebviewPanel(uiOptions?: any) {
+		if (this.webViewPanel && _.isEmpty(uiOptions)) {
 			this.webViewPanel.reveal();
 		} else {
 			this.disposeWebviewPanel();
 			const webViewPanel = this.createWebviewPanel();
-			this.setWebviewPanel(webViewPanel, state);
+			this.setWebviewPanel(webViewPanel, uiOptions);
 		}
 	}
 
@@ -46,7 +48,7 @@ export abstract class AbstractWebviewPanel {
 		return vscode.window.createWebviewPanel(
 			this.viewType,
 			this.viewTitle,
-			vscode.ViewColumn.Two,
+			this.viewColumn,
 			{
 				// Enable javascript in the webview
 				enableScripts: true,
