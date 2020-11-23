@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 import * as _ from 'lodash';
 import { ConfigHelper } from "./configHelper";
 
+oops I did it again! // should break build
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "snippet1" is now active!');
 
