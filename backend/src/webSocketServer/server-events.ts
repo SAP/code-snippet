@@ -17,6 +17,6 @@ export class ServerEvents implements AppEvents {
     }
 
     public doClose(): void {
-
+        return;
     }
 }

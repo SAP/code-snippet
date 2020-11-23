@@ -18,7 +18,7 @@ export class Contributors {
     public static add(extension: vscode.Extension<any>) {
         const extensionName: string = _.get(extension, "packageJSON.name");
         const extensionPublisher: string = _.get(extension, "packageJSON.publisher");
-        const extensionId: string = `${extensionPublisher}.${extensionName}`;
+        const extensionId = `${extensionPublisher}.${extensionName}`;
         try {
             const apiPromise = (extension.isActive ? extension.exports : extension.activate());
             Contributors.apiMap.set(extensionId, apiPromise);

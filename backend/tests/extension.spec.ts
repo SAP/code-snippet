@@ -3,7 +3,7 @@ import { expect } from "chai";
 import * as sinon from "sinon";
 import * as _ from "lodash";
 import { mockVscode } from "./mockUtil";
-import { Contributors } from "../src/contributors"
+import { Contributors } from "../src/contributors";
 
 const oRegisteredCommands = {};
 const testVscode = {

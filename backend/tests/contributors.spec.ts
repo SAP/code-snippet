@@ -3,11 +3,8 @@ import { expect } from 'chai';
 import * as _ from 'lodash';
 import { mockVscode } from './mockUtil';
 
-const testVscode = {
-    extensions: {
-        all: new Array()
-    }
-};
+const testVscode = {};
+_.set(testVscode, "extensions.all", []);
 
 mockVscode(testVscode, "src/contributors.ts");
 import { Contributors } from "../src/contributors";
@@ -34,7 +31,7 @@ describe('Contributors unit test', () => {
                 exports: {}
             };
 
-            testVscode.extensions.all = [extension];
+            _.set(testVscode, "extensions.all", [extension]);
 
             Contributors.init();
             expect(Contributors.apiMap).to.have.lengthOf(0);
@@ -58,7 +55,7 @@ describe('Contributors unit test', () => {
                 exports: {}
             };
 
-            testVscode.extensions.all = [extension];
+            _.set(testVscode, "extensions.all", [extension]);
 
             Contributors.init();
             expect(Contributors.apiMap).to.have.lengthOf(0);
@@ -78,11 +75,11 @@ describe('Contributors unit test', () => {
                 extensionKind: null as any,
                 activate: () => Promise.resolve(),
                 exports: {
-                    getCodeSnippets: () => {}
+                    getCodeSnippets: () => ""
                 }
             };
             
-            testVscode.extensions.all = [extension];
+            _.set(testVscode, "extensions.all", [extension]);
 
             Contributors.init();
             expect(Contributors.apiMap).to.have.lengthOf(1);
@@ -117,7 +114,7 @@ describe('Contributors unit test', () => {
                 async getQuestions() {
                     return createCodeSnippetQuestions();
                 },
-                async getWorkspaceEdit() { }
+                async getWorkspaceEdit() { return; }
             };
         }
 
@@ -157,7 +154,7 @@ describe('Contributors unit test', () => {
         });
 
         it("receives valid contributorId and snippetName ---> returns valid snippet", async () => {
-            testVscode.extensions.all = [];
+            _.set(testVscode, "extensions.all", []);
             Contributors.init();
             Contributors.add(api);
 

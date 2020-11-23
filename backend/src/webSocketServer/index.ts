@@ -35,7 +35,7 @@ class CodeSnippetWebSocketServer {
       this.rpc = new RpcExtensionWebSockets(ws);
       //TODO: Use RPC to send it to the browser log (as a collapsed pannel in Vue)
       const logger: AppLog = new ServerLog(this.rpc);
-      const childLogger = {debug: () => {}, error: () => {}, fatal: () => {}, warn: () => {}, info: () => {}, trace: () => {}, getChildLogger: () => {return {} as IChildLogger;}};
+      const childLogger = {debug: () => "", error: () => "", fatal: () => "", warn: () => "", info: () => "", trace: () => "", getChildLogger: () => {return {} as IChildLogger;}};
       const appEvents: AppEvents = new ServerEvents(this.rpc);
       const snippet = {
 				getQuestions() {
