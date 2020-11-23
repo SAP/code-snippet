@@ -25,25 +25,27 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 	public setWebviewPanel(webViewPanel: vscode.WebviewPanel, uiOptions?: any) {
 		super.setWebviewPanel(webViewPanel, uiOptions);
 
-		this.snippet = Contributors.getSnippet(uiOptions);
+		Contributors.getSnippet(_.get(uiOptions, "snippet", uiOptions)).then(snippet => {
+			if (_.isNil(snippet)) {
+				this.webViewPanel.dispose();
+				return vscode.window.showErrorMessage("Can not find snippet.");
+			}
 
-		if (_.isNil(this.snippet)) {
-			return vscode.window.showErrorMessage("Can not find snippet.");
-		}
+			this.snippet = _.assign(snippet, uiOptions);
+			this.messages = _.assign({}, backendMessages, this.snippet.getMessages());
+			const rpc = new RpcExtension(this.webViewPanel.webview);
+			this.outputChannel = new OutputChannelLog(this.messages.channelName);
+			const vscodeEvents: AppEvents = new VSCodeEvents(rpc, this.webViewPanel);
+			this.codeSnippet = new CodeSnippet(rpc,
+				vscodeEvents,
+				this.outputChannel,
+				this.logger,
+				{ messages: this.messages, snippet: this.snippet });
+			this.codeSnippet.registerCustomQuestionEventHandler("file-browser", "getFilePath", this.showOpenFileDialog.bind(this));
+			this.codeSnippet.registerCustomQuestionEventHandler("folder-browser", "getPath", this.showOpenFolderDialog.bind(this));
 
-		this.messages = _.assign({}, backendMessages, this.snippet.getMessages());
-		const rpc = new RpcExtension(this.webViewPanel.webview);
-		this.outputChannel = new OutputChannelLog(this.messages.channelName);
-		const vscodeEvents: AppEvents = new VSCodeEvents(rpc, this.webViewPanel);
-		this.codeSnippet = new CodeSnippet(rpc, 
-			vscodeEvents, 
-			this.outputChannel, 
-			this.logger, 
-			{messages: this.messages, snippet: this.snippet});
-		this.codeSnippet.registerCustomQuestionEventHandler("file-browser", "getFilePath", this.showOpenFileDialog.bind(this));
-		this.codeSnippet.registerCustomQuestionEventHandler("folder-browser", "getPath", this.showOpenFolderDialog.bind(this));
-
-		this.initWebviewPanel();
+			this.initWebviewPanel();
+		});
 	}
 
 	public static getOutputChannel(channelName: string): vscode.OutputChannel {
