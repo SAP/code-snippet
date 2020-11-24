@@ -8,7 +8,8 @@ export class Contributors {
         const contributorId = _.get(uiOptions, "contributorId");
         const snippetName = _.get(uiOptions, "snippetName");
         if (contributorId && snippetName) {
-            const api = await Contributors.apiMap.get(contributorId);
+            const apiPromise = Contributors.apiMap.get(contributorId);
+            const api = await apiPromise;
             const snippetContext = _.get(uiOptions, "context");
             const snippets = api.getCodeSnippets(snippetContext);
             return snippets.get(snippetName);
