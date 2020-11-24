@@ -21,20 +21,23 @@ export class Contributors {
     }
 
     private static getApiPromise(extension: vscode.Extension<any>) {
-        return (extension.isActive ? Promise.resolve(extension.exports) : extension.activate());
+        return (extension.isActive ? extension.exports : extension.activate());
     }
 
     private static getContributorExtension(contributorId: string) {
         return _.find(vscode.extensions.all, (extension: vscode.Extension<any>) => {
             const extensionDependencies: string[] = _.get(extension, "packageJSON.extensionDependencies");
             if (_.includes(extensionDependencies, "saposs.code-snippet")) {
-                const extensionName: string = _.get(extension, "packageJSON.name");
-                const extensionPublisher: string = _.get(extension, "packageJSON.publisher");
-                const extensionId = `${extensionPublisher}.${extensionName}`;
-                if (contributorId === extensionId) {
+                if (contributorId === Contributors.getExtensionId(extension)) {
                     return extension;
                 }
             }
         });
+    }
+
+    private static getExtensionId(extension: vscode.Extension<any>) {
+        const extensionName: string = _.get(extension, "packageJSON.name");
+        const extensionPublisher: string = _.get(extension, "packageJSON.publisher");
+        return `${extensionPublisher}.${extensionName}`;
     }
 }
