@@ -135,7 +135,14 @@ describe('Contributors unit test', () => {
                 extensionDependencies: ["saposs.code-snippet"]
             },
             extensionKind: null as any,
-            activate: () => Promise.resolve(),
+            activate: () => Promise.resolve({
+                getCodeSnippets: () => {
+                    const snippets = new Map<string, any>();
+                    const snippet: any = getSnippet();
+                    snippets.set(snippetName, snippet);
+                    return snippets;
+                }
+            }),
             exports: {
                 getCodeSnippets: () => {
                     const snippets = new Map<string, any>();
@@ -153,7 +160,21 @@ describe('Contributors unit test', () => {
             expect(snippet).to.be.undefined;
         });
 
-        it("receives valid contributorId and snippetName ---> returns valid snippet", async () => {
+        it("receives valid contributorId and snippetName from exports ---> returns valid snippet", async () => {
+            _.set(testVscode, "extensions.all", []);
+            Contributors.init();
+            Contributors.add(api);
+
+            const uiOptions = {
+                "contributorId": extensionId,
+                "snippetName": snippetName
+            };
+            const snippet = await Contributors.getSnippet(uiOptions);
+            expect(snippet.getMessages()).to.deep.equal(messageValue);
+        });
+
+        it("receives valid contributorId and snippetName from activate ---> returns valid snippet", async () => {
+            api.isActive = false;
             _.set(testVscode, "extensions.all", []);
             Contributors.init();
             Contributors.add(api);

@@ -20,13 +20,17 @@ export class Contributors {
         const extensionPublisher: string = _.get(extension, "packageJSON.publisher");
         const extensionId = `${extensionPublisher}.${extensionName}`;
         try {
-            const apiPromise = (extension.isActive ? extension.exports : extension.activate());
+            const apiPromise = Contributors.getApiPromise(extension);
             Contributors.apiMap.set(extensionId, apiPromise);
         } catch (error) {
             const errorMessage = _.get(error, "stack", _.get(error, "message", error));
             console.error(errorMessage);
             // TODO: Add Logger.error
         }
+    }
+
+    private static getApiPromise(extension: vscode.Extension<any>) {
+        return (extension.isActive ? extension.exports : extension.activate());
     }
 
     public static init() {
