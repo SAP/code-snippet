@@ -57,7 +57,6 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 	}
 
 	private codeSnippet: CodeSnippet;
-	private snippet: any;
 	private messages: any;
 	private outputChannel: AppLog;
 
