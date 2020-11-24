@@ -92,7 +92,7 @@ describe('codeSnippet unit test', () => {
         }  
     }
 
-    const testLogger = {debug: () => {}, error: () => {}, fatal: () => {}, warn: () => {}, info: () => {}, trace: () => {}, getChildLogger: () => ({} as IChildLogger)};
+    const testLogger = { debug: () => "", error: () => "", fatal: () => "", warn: () => "", info: () => "", trace: () => "", getChildLogger: () => ({} as IChildLogger)};
 
     const snippet: any = {
         getMessages() {

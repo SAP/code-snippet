@@ -6,6 +6,7 @@ import { AppEvents } from "./app-events";
 import { IRpc } from "@sap-devx/webview-rpc/out.ext/rpc-common";
 import Generator = require("yeoman-generator");
 import { IChildLogger } from "@vscode-logging/logger";
+import TerminalAdapter = require("yeoman-environment/lib/adapter");
 
 export class CodeSnippet {
 
@@ -20,7 +21,7 @@ export class CodeSnippet {
   private readonly logger: IChildLogger;
   private gen: Generator | undefined; // eslint-disable-line @typescript-eslint/prefer-readonly
   private promptCount: number;
-  private currentQuestions: Environment.Adapter.Questions<any>;
+  private currentQuestions: TerminalAdapter.Questions<any>;
   private snippetName: string;
   private readonly customQuestionEventHandlers: Map<string, Map<string, Function>>;
   private errorThrown = false;
@@ -131,12 +132,12 @@ export class CodeSnippet {
     return this.outputChannel.showOutput();
   }
 
-  public async showPrompt(questions: Environment.Adapter.Questions<any>): Promise<inquirer.Answers> {
+  public async showPrompt(questions: TerminalAdapter.Questions<any>): Promise<inquirer.Answers> {
     this.promptCount++;
     const promptName = this.getPromptName(questions);
 
     this.currentQuestions = questions;
-    const mappedQuestions: Environment.Adapter.Questions<any> = this.normalizeFunctions(questions);
+    const mappedQuestions: TerminalAdapter.Questions<any> = this.normalizeFunctions(questions);
     if (_.isEmpty(mappedQuestions)) {
       return {};
     }
@@ -152,7 +153,7 @@ export class CodeSnippet {
     }
   }
 
-  private getPromptName(questions: Environment.Adapter.Questions<any>): string {
+  private getPromptName(questions: TerminalAdapter.Questions<any>): string {
     const firstQuestionName = _.get(questions, "[0].name");
     return (firstQuestionName ? _.startCase(firstQuestionName) : `Step ${this.promptCount}`);
   }
@@ -224,12 +225,12 @@ export class CodeSnippet {
    * Functions are lost when being passed to client (using JSON.Stringify)
    * Also functions cannot be evaluated on client)
    */
-  private normalizeFunctions(questions: Environment.Adapter.Questions<any>): Environment.Adapter.Questions<any> {
+  private normalizeFunctions(questions: TerminalAdapter.Questions<any>): TerminalAdapter.Questions<any> {
     this.addCustomQuestionEventHandlers(questions);
     return JSON.parse(JSON.stringify(questions, CodeSnippet.funcReplacer));
   }
 
-  private addCustomQuestionEventHandlers(questions: Environment.Adapter.Questions<any>): void {
+  private addCustomQuestionEventHandlers(questions: TerminalAdapter.Questions<any>): void {
     for (const question of (questions as any[])) {
       const guiType = _.get(question, "guiOptions.type", question.guiType);
       const questionHandlers = this.customQuestionEventHandlers.get(guiType);
