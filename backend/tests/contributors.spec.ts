@@ -10,82 +10,6 @@ mockVscode(testVscode, "src/contributors.ts");
 import { Contributors } from "../src/contributors";
 
 describe('Contributors unit test', () => {
-    describe('init', () => {
-        beforeEach(() => {
-            Contributors.apiMap.clear();
-        });
-
-        it("no relevant contributors", () => {
-            const extension = {
-                id: "id",
-                extensionPath: "extensionPath",
-                extensionUri: null as any,
-                isActive: true,
-                packageJSON: {
-                    name: "vscode-snippet-blabla1",
-                    publisher: "BLABLA1",
-                    extensionDependencies: ["BLABLA.vscode-snippet-contrib"]
-                },
-                extensionKind: null as any,
-                activate: () => Promise.resolve(),
-                exports: {}
-            };
-
-            _.set(testVscode, "extensions.all", [extension]);
-
-            Contributors.init();
-            expect(Contributors.apiMap).to.have.lengthOf(0);
-        });
-
-        it("extension activate throws error", () => {
-            const extension = {
-                id: "id",
-                extensionPath: "extensionPath",
-                extensionUri: null as any,
-                isActive: false,
-                packageJSON: {
-                    name: "vscode-snippet-blabla",
-                    publisher: "BLABLA",
-                    extensionDependencies: ["saposs.code-snippet"]
-                },
-                extensionKind: null as any,
-                activate: () => {
-                    throw new Error();
-                },
-                exports: {}
-            };
-
-            _.set(testVscode, "extensions.all", [extension]);
-
-            Contributors.init();
-            expect(Contributors.apiMap).to.have.lengthOf(0);
-        });
-
-        it("1 contributor", () => {
-            const extension = {
-                id: "id",
-                extensionPath: "extensionPath",
-                extensionUri: null as any,
-                isActive: true,
-                packageJSON: {
-                    name: "vscode-snippet-blabla2",
-                    publisher: "BLABLA2",
-                    extensionDependencies: ["saposs.code-snippet"]
-                },
-                extensionKind: null as any,
-                activate: () => Promise.resolve(),
-                exports: {
-                    getCodeSnippets: () => ""
-                }
-            };
-            
-            _.set(testVscode, "extensions.all", [extension]);
-
-            Contributors.init();
-            expect(Contributors.apiMap).to.have.lengthOf(1);
-        });
-    });
-
     describe('getSnippet', () => {
         function createCodeSnippetQuestions(): any[] {
             const questions: any[] = [{
@@ -161,9 +85,7 @@ describe('Contributors unit test', () => {
         });
 
         it("receives valid contributorId and snippetName from exports ---> returns valid snippet", async () => {
-            _.set(testVscode, "extensions.all", []);
-            Contributors.init();
-            Contributors.add(api);
+            _.set(testVscode, "extensions.all", [api]);
 
             const uiOptions = {
                 "contributorId": extensionId,
@@ -175,9 +97,7 @@ describe('Contributors unit test', () => {
 
         it("receives valid contributorId and snippetName from activate ---> returns valid snippet", async () => {
             api.isActive = false;
-            _.set(testVscode, "extensions.all", []);
-            Contributors.init();
-            Contributors.add(api);
+            _.set(testVscode, "extensions.all", [api]);
 
             const uiOptions = {
                 "contributorId": extensionId,
@@ -185,6 +105,53 @@ describe('Contributors unit test', () => {
             };
             const snippet = await Contributors.getSnippet(uiOptions);
             expect(snippet.getMessages()).to.deep.equal(messageValue);
+        });
+
+        it("contributer extension activate fails", async () => {
+            api.isActive = false;
+            api.activate = () => {
+                throw new Error();
+            };
+            _.set(testVscode, "extensions.all", [api]);
+
+            const uiOptions = {
+                "contributorId": extensionId,
+                "snippetName": snippetName
+            };
+            const res = await Contributors.getSnippet(uiOptions);
+            expect(res).to.be.undefined;
+        });
+
+        it("no contributer extension not found", async () => {
+            api.packageJSON = {
+                name: "vscode-snippet-contrib",
+                publisher: "BLABLA3",
+                extensionDependencies: ["saposs-other.code-snippet"]
+            };
+            _.set(testVscode, "extensions.all", [api]);
+
+            const uiOptions = {
+                "contributorId": extensionId,
+                "snippetName": snippetName
+            };
+            const res = await Contributors.getSnippet(uiOptions);
+            expect(res).to.be.undefined;
+        });
+
+        it("no contributer extension not found by contributorId", async () => {
+            api.packageJSON = {
+                name: "vscode-snippet-contrib",
+                publisher: "BLABLA3",
+                extensionDependencies: ["saposs.code-snippet"]
+            };
+            _.set(testVscode, "extensions.all", [api]);
+
+            const uiOptions = {
+                "contributorId": extensionId + "-other",
+                "snippetName": snippetName
+            };
+            const res = await Contributors.getSnippet(uiOptions);
+            expect(res).to.be.undefined;
         });
     });
 });

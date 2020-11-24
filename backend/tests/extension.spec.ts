@@ -58,15 +58,12 @@ describe('extension unit test', () => {
 
     describe('activate', () => {
         it("commands registration", () => {
-            const contributorsMock = sandbox.mock(Contributors);
-            contributorsMock.expects("init");
             loggerWrapperMock.expects("createExtensionLoggerAndSubscribeToLogSettingsChanges");
             loggerWrapperMock.expects("getLogger").once();
             extension.activate(testContext);
             expect(_.size(_.keys(oRegisteredCommands))).to.be.equal(2);
             expect( _.get(oRegisteredCommands, "loadCodeSnippet")).to.be.not.undefined;
             expect(_.get(oRegisteredCommands, "codeSnippet.toggleOutput")).to.be.not.undefined;
-            contributorsMock.verify();
         });
 
         it("logger failure on extenion activation", () => {

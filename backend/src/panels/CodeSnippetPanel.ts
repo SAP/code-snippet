@@ -25,14 +25,14 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 	public setWebviewPanel(webViewPanel: vscode.WebviewPanel, uiOptions?: any) {
 		super.setWebviewPanel(webViewPanel, uiOptions);
 
-		Contributors.getSnippet(_.get(uiOptions, "snippet", uiOptions)).then(snippet => {
+		const contributerInfo = _.get(uiOptions, "contributerInfo", uiOptions);
+		Contributors.getSnippet(contributerInfo).then(snippet => {
 			if (_.isNil(snippet)) {
 				this.webViewPanel.dispose();
 				return vscode.window.showErrorMessage("Can not find snippet.");
 			}
 
-			this.snippet = _.assign(snippet, uiOptions);
-			this.messages = _.assign({}, backendMessages, this.snippet.getMessages());
+			this.messages = _.assign({}, backendMessages, snippet.getMessages());
 			const rpc = new RpcExtension(this.webViewPanel.webview);
 			this.outputChannel = new OutputChannelLog(this.messages.channelName);
 			const vscodeEvents: AppEvents = new VSCodeEvents(rpc, this.webViewPanel);
@@ -40,7 +40,7 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 				vscodeEvents,
 				this.outputChannel,
 				this.logger,
-				{ messages: this.messages, snippet: this.snippet });
+				{ messages: this.messages, snippet, contributerInfo});
 			this.codeSnippet.registerCustomQuestionEventHandler("file-browser", "getFilePath", this.showOpenFileDialog.bind(this));
 			this.codeSnippet.registerCustomQuestionEventHandler("folder-browser", "getPath", this.showOpenFolderDialog.bind(this));
 

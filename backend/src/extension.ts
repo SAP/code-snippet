@@ -1,7 +1,6 @@
 import * as _ from 'lodash';
 import * as vscode from 'vscode';
 import { createExtensionLoggerAndSubscribeToLogSettingsChanges } from "./logger/logger-wrapper";
-import { Contributors } from './contributors';
 import { CodeSnippetPanel } from './panels/CodeSnippetPanel';
 import { AbstractWebviewPanel } from './panels/AbstractWebviewPanel';
 
@@ -17,8 +16,6 @@ export function activate(context: vscode.ExtensionContext) {
 		console.error("Extension activation failed due to Logger configuration failure:", error.message);
 		return;
 	}
-
-	Contributors.init();
 
 	codeSnippetPanel = new CodeSnippetPanel(extContext);
 	registerAndSubscribeCommand("loadCodeSnippet", codeSnippetPanel.loadWebviewPanel.bind(codeSnippetPanel));
