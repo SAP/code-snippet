@@ -123,11 +123,9 @@
 		"lodash": "4.17.20",
 		"strip-ansi": "6.0.0",
 		"ws": "7.4.0",
-		"yeoman-environment": "2.10.3",
-		"@sap/swa-for-sapbas-vsx": "1.1.5"
+		"yeoman-environment": "2.10.3"
 	},
 	"devDependencies": {
-		"flatted": "3.1.0",
 		"@types/chai": "^4.2.9",
 		"@types/fs-extra": "^8.1.0",
 		"@types/inquirer": "^6.5.0",
