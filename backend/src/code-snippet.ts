@@ -50,7 +50,7 @@ export class CodeSnippet {
   }
 
   private async getState() {
-    const state = _.omit(this.uiOptions, ["snippet", "contributorInfo.context"]);
+    const state = _.omit(this.uiOptions, ["snippet"]);
     return state;
   }
 
