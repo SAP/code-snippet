@@ -147,7 +147,7 @@ describe('codeSnippet unit test', () => {
 
     it("getState", async () => {
         const state = await codeSnippet["getState"]();
-        expect(state).to.deep.equal(uiOptions);
+        expect(state.messages).to.be.not.empty;
     });
 
     describe("receiveIsWebviewReady", () => {

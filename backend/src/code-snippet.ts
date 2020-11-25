@@ -50,7 +50,8 @@ export class CodeSnippet {
   }
 
   private async getState() {
-    return this.uiOptions;
+    const state = _.omit(this.uiOptions, ["snippet", "contributorInfo.context"]);
+    return state;
   }
 
   public registerCustomQuestionEventHandler(questionType: string, methodName: string, handler: Function): void {

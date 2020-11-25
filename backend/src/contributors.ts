@@ -2,15 +2,15 @@ import * as vscode from 'vscode';
 import * as _ from 'lodash';
 
 export class Contributors {
-    public static async getSnippet(contributerInfo: any) {
-        const contributorId = _.get(contributerInfo, "contributorId");
+    public static async getSnippet(contributorInfo: any) {
+        const contributorId = _.get(contributorInfo, "contributorId");
         const extension = Contributors.getContributorExtension(contributorId);
         if (extension) {
             try {
                 const api = await this.getApiPromise(extension as vscode.Extension<any>);
-                const snippetContext = _.get(contributerInfo, "context");
+                const snippetContext = _.get(contributorInfo, "context");
                 const snippets = api.getCodeSnippets(snippetContext);
-                const snippetName = _.get(contributerInfo, "snippetName");
+                const snippetName = _.get(contributorInfo, "snippetName");
                 return snippets.get(snippetName);
             } catch (error) {
                 const errorMessage = _.get(error, "stack", _.get(error, "message", error));

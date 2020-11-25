@@ -1,7 +1,7 @@
 {
 	"name": "code-snippet",
-	"version": "0.0.22",
-	"displayName": "Code Snippet", 
+	"version": "0.0.23",
+	"displayName": "Code Snippet",
 	"publisher": "SAPOSS",
 	"author": {
 		"name": "SAP SE"
@@ -116,13 +116,13 @@
 		"lint:fix": "eslint . --ext .ts,.tsx --cache --fix"
 	},
 	"dependencies": {
-		"@sap-devx/webview-rpc": "^0.2.2",
+		"@sap-devx/webview-rpc": "0.2.3",
 		"@vscode-logging/logger": "1.1.0",
-		"datauri": "^2.0.0",
-		"fs-extra": "^8.1.0",
-		"lodash": "^4.17.15",
-		"strip-ansi": "^6.0.0",
-		"ws": "^7.2.5",
+		"datauri": "3.0.0",
+		"fs-extra": "9.0.1",
+		"lodash": "4.17.20",
+		"strip-ansi": "6.0.0",
+		"ws": "7.4.0",
 		"yeoman-environment": "2.10.3"
 	},
 	"devDependencies": {

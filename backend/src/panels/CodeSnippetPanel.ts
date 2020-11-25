@@ -24,9 +24,9 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 
 	public setWebviewPanel(webViewPanel: vscode.WebviewPanel, uiOptions?: any) {
 		super.setWebviewPanel(webViewPanel, uiOptions);
-
-		const contributerInfo = _.get(uiOptions, "contributerInfo", uiOptions);
-		Contributors.getSnippet(contributerInfo).then(snippet => {
+		const contributorInfo = _.get(uiOptions, "contributorInfo", uiOptions);
+		
+		Contributors.getSnippet(contributorInfo).then(snippet => {
 			if (_.isNil(snippet)) {
 				this.webViewPanel.dispose();
 				return vscode.window.showErrorMessage("Can not find snippet.");
@@ -40,7 +40,7 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 				vscodeEvents,
 				this.outputChannel,
 				this.logger,
-				{ messages: this.messages, snippet, contributerInfo});
+				{ messages: this.messages, snippet, contributorInfo});
 			this.codeSnippet.registerCustomQuestionEventHandler("file-browser", "getFilePath", this.showOpenFileDialog.bind(this));
 			this.codeSnippet.registerCustomQuestionEventHandler("folder-browser", "getPath", this.showOpenFolderDialog.bind(this));
 
