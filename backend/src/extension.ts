@@ -29,8 +29,8 @@ function registerAndSubscribeCommand(cId: string, cAction: any) {
 
 function registerWebviewPanelSerializer(abstractPanel: AbstractWebviewPanel) {
 	vscode.window.registerWebviewPanelSerializer(abstractPanel.viewType, {
-		async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel, state?: any) {
-			abstractPanel.setWebviewPanel(webviewPanel, state);
+		async deserializeWebviewPanel(webViewPanel: vscode.WebviewPanel, state?: any) { 
+			abstractPanel.setWebviewPanel(webViewPanel, state);
 		}
 	});
 }

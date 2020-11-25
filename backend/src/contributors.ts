@@ -20,8 +20,8 @@ export class Contributors {
         }
     }
 
-    private static getApiPromise(extension: vscode.Extension<any>) {
-        return (extension.isActive ? extension.exports : extension.activate());
+    private static getApiPromise(extension: vscode.Extension<any>): Thenable<any> {
+        return (extension.isActive ? Promise.resolve(extension.exports) : extension.activate());
     }
 
     private static getContributorExtension(contributorId: string) {

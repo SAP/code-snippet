@@ -1,5 +1,4 @@
 import * as _ from "lodash";
-import * as Environment from "yeoman-environment";
 import * as inquirer from "inquirer";
 import { AppLog } from "./app-log";
 import { AppEvents } from "./app-events";
@@ -7,6 +6,7 @@ import { IRpc } from "@sap-devx/webview-rpc/out.ext/rpc-common";
 import Generator = require("yeoman-generator");
 import { IChildLogger } from "@vscode-logging/logger";
 import TerminalAdapter = require("yeoman-environment/lib/adapter");
+
 
 export class CodeSnippet {
 
@@ -50,7 +50,16 @@ export class CodeSnippet {
   }
 
   private async getState() {
-    const state = _.omit(this.uiOptions, ["snippet", "contributorInfo.context"]);
+    let state = _.omit(this.uiOptions, ["snippet"]);
+    try {
+      // valiation for rpc
+      JSON.stringify(state);
+    } catch (error) {
+      // only stateError and contributorInfo will be saved
+      state = _.omit(state, ["contributorInfo.context"]);
+      _.set(state, "stateError", true);
+    }
+
     return state;
   }
 

@@ -23,14 +23,20 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 	}
 
 	public setWebviewPanel(webViewPanel: vscode.WebviewPanel, uiOptions?: any) {
-		super.setWebviewPanel(webViewPanel, uiOptions);
 		const contributorInfo = _.get(uiOptions, "contributorInfo", uiOptions);
-		
+
+		if (_.get(uiOptions, "stateError")) {
+			console.error(`ERROR: '${contributorInfo.contributorId}' snippet state was not saved. Serialization issue.`); //TODO: use logger.error
+			return webViewPanel.dispose();
+		}
+
 		Contributors.getSnippet(contributorInfo).then(snippet => {
 			if (_.isNil(snippet)) {
-				this.webViewPanel.dispose();
-				return vscode.window.showErrorMessage("Can not find snippet.");
+				console.error(`ERROR: '${contributorInfo.contributorId}' snippet was not found`); //TODO: use logger.error
+				return this.webViewPanel.dispose();
 			}
+
+			super.setWebviewPanel(webViewPanel, uiOptions);
 
 			this.messages = _.assign({}, backendMessages, snippet.getMessages());
 			const rpc = new RpcExtension(this.webViewPanel.webview);
