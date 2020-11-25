@@ -27,7 +27,7 @@
     "vue": "2.6.12",
     "vue-loading-overlay": "3.3.0",
     "vuetify": "2.3.10",
-    "@sap-devx/webview-rpc": "0.2.2"
+    "@sap-devx/webview-rpc": "0.2.3"
   },
   "devDependencies": {
     "@babel/preset-env": "7.11.5",
