@@ -117,13 +117,14 @@
 	},
 	"dependencies": {
 		"@sap-devx/webview-rpc": "0.2.3",
-		"@vscode-logging/logger": "1.1.0",
+		"@vscode-logging/logger": "1.2.1",
 		"datauri": "3.0.0",
 		"fs-extra": "9.0.1",
 		"lodash": "4.17.20",
 		"strip-ansi": "6.0.0",
 		"ws": "7.4.0",
-		"yeoman-environment": "2.10.3"
+		"yeoman-environment": "2.10.3",
+		"@sap/swa-for-sapbas-vsx": "1.1.5"
 	},
 	"devDependencies": {
 		"flatted": "3.1.0",

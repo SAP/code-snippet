@@ -26,13 +26,13 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 		const contributorInfo = _.get(uiOptions, "contributorInfo", uiOptions);
 
 		if (_.get(uiOptions, "stateError")) {
-			console.error(`ERROR: '${contributorInfo.contributorId}' snippet state was not saved. Serialization issue.`); //TODO: use logger.error
+			this.logger.error(`'${contributorInfo.contributorId}' snippet state could not be saved. JSON.stringify issue.`); 
 			return webViewPanel.dispose();
 		}
 
 		Contributors.getSnippet(contributorInfo).then(snippet => {
 			if (_.isNil(snippet)) {
-				console.error(`ERROR: '${contributorInfo.contributorId}' snippet was not found`); //TODO: use logger.error
+				this.logger.error(`'${contributorInfo.contributorId}' snippet could not be found.`); 
 				return this.webViewPanel.dispose();
 			}
 

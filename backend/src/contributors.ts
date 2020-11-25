@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as _ from 'lodash';
 
+
 export class Contributors {
     public static async getSnippet(contributorInfo: any) {
         const contributorId = _.get(contributorInfo, "contributorId");
@@ -14,8 +15,7 @@ export class Contributors {
                 return snippets.get(snippetName);
             } catch (error) {
                 const errorMessage = _.get(error, "stack", _.get(error, "message", error));
-                console.error(errorMessage);
-                // TODO: Add Logger.error
+                console.error(`Could not get '${contributorId}' snippet`, errorMessage); //TODO: use logger.error
             }
         }
     }

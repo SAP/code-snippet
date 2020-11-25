@@ -9,6 +9,7 @@ _.set(testVscode, "extensions.all", []);
 mockVscode(testVscode, "src/contributors.ts");
 import { Contributors } from "../src/contributors";
 
+
 describe('Contributors unit test', () => {
     describe('getSnippet', () => {
         function createCodeSnippetQuestions(): any[] {
@@ -118,6 +119,7 @@ describe('Contributors unit test', () => {
                 "contributorId": extensionId,
                 "snippetName": snippetName
             };
+            
             const res = await Contributors.getSnippet(uiOptions);
             expect(res).to.be.undefined;
         });

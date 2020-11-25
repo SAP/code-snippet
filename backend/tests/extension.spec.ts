@@ -3,7 +3,6 @@ import { expect } from "chai";
 import * as sinon from "sinon";
 import * as _ from "lodash";
 import { mockVscode } from "./mockUtil";
-import { Contributors } from "../src/contributors";
 
 const oRegisteredCommands = {};
 const testVscode = {
@@ -59,7 +58,7 @@ describe('extension unit test', () => {
     describe('activate', () => {
         it("commands registration", () => {
             loggerWrapperMock.expects("createExtensionLoggerAndSubscribeToLogSettingsChanges");
-            loggerWrapperMock.expects("getLogger").once();
+            loggerWrapperMock.expects("getClassLogger");
             extension.activate(testContext);
             expect(_.size(_.keys(oRegisteredCommands))).to.be.equal(2);
             expect( _.get(oRegisteredCommands, "loadCodeSnippet")).to.be.not.undefined;
