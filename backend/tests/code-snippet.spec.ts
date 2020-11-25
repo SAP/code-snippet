@@ -145,11 +145,19 @@ describe('codeSnippet unit test', () => {
         }
     });
 
-    it("getState", async () => {
-        const state = await codeSnippet["getState"]();
-        expect(state.messages).to.be.not.empty;
-    });
+    describe("getState", () => {
+        it("valid uiOptions", async () => {
+            const state = await codeSnippet["getState"]();
+            expect(state.messages).to.be.not.empty;
+        });
 
+        it("invalid uiOptions", async () => {
+            codeSnippet["uiOptions"].test = codeSnippet["uiOptions"]
+            const state = await codeSnippet["getState"]();
+            expect(state.stateError).to.be.true;
+        });
+    });
+    
     describe("receiveIsWebviewReady", () => {
         it("flow is successfull", async () => {
             rpcMock.expects("invoke").withArgs("showPrompt").resolves(
