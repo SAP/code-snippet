@@ -423,6 +423,12 @@ describe('codeSnippet unit test', () => {
             const we = await myCodeSnippet["createCodeSnippetQuestions"]();
             expect(we).to.be.equal("createCodeSnippetQuestions");
         });
+
+        it("no snippet provided ---> call getQuestions", async () => {
+            const myCodeSnippet = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, { snippet: null });
+            const we = await myCodeSnippet["createCodeSnippetQuestions"]();
+            expect(we).to.be.empty;
+        });
     });
 
     describe("registerCustomQuestionEventHandler", () => {
