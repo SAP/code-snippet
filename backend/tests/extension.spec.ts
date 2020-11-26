@@ -58,7 +58,7 @@ describe('extension unit test', () => {
     describe('activate', () => {
         it("commands registration", () => {
             loggerWrapperMock.expects("createExtensionLoggerAndSubscribeToLogSettingsChanges");
-            loggerWrapperMock.expects("getClassLogger");
+            loggerWrapperMock.expects("getClassLogger").twice();
             extension.activate(testContext);
             expect(_.size(_.keys(oRegisteredCommands))).to.be.equal(2);
             expect( _.get(oRegisteredCommands, "loadCodeSnippet")).to.be.not.undefined;

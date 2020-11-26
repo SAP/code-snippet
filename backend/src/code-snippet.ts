@@ -24,7 +24,6 @@ export class CodeSnippet {
   private currentQuestions: TerminalAdapter.Questions<any>;
   private snippetName: string;
   private readonly customQuestionEventHandlers: Map<string, Map<string, Function>>;
-  private errorThrown = false;
 
   constructor(rpc: IRpc, appEvents: AppEvents, outputChannel: AppLog, logger: IChildLogger, uiOptions: any) {
     this.rpc = rpc;
@@ -175,7 +174,6 @@ export class CodeSnippet {
   }
 
   private async onFailure(snippetrName: string, error: any) {
-    this.errorThrown = true;
     const messagePrefix = `${snippetrName} snippet failed.`;
     const errorMessage: string = await this.logError(error, messagePrefix);
     this.appEvents.doSnippeDone(false, errorMessage);

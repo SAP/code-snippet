@@ -15,7 +15,6 @@ import { Contributors } from "../contributors";
 
 export class CodeSnippetPanel extends AbstractWebviewPanel {
 	public static CODE_SNIPPET = "Code Snippet";
-
 	private static channel: vscode.OutputChannel;
 
 	public toggleOutput() {
@@ -26,11 +25,12 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 		const contributorInfo = _.get(uiOptions, "contributorInfo", uiOptions);
 
 		if (_.get(uiOptions, "stateError")) {
+			this.logger.error("test");
 			this.logger.error(`'${contributorInfo.contributorId}' snippet state could not be saved. JSON.stringify issue.`); 
 			return webViewPanel.dispose();
 		}
 
-		Contributors.getSnippet(contributorInfo).then(snippet => {
+		this.contributors.getSnippet(contributorInfo).then(snippet => {
 			if (_.isNil(snippet)) {
 				this.logger.error(`'${contributorInfo.contributorId}' snippet could not be found.`); 
 				return this.webViewPanel.dispose();
@@ -65,12 +65,14 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 	private codeSnippet: CodeSnippet;
 	private messages: any;
 	private outputChannel: AppLog;
+	private contributors: Contributors;
 
 	public constructor(context: vscode.ExtensionContext) {
 		super(context);
 		this.viewType = "codeSnippet";
 		this.viewTitle = CodeSnippetPanel.CODE_SNIPPET;
 		this.focusedKey = "codeSnippet.Focused";
+		this.contributors = new Contributors();
 	}
 
 	private async showOpenFileDialog(currentPath: string): Promise<string> {
