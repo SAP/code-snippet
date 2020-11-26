@@ -110,7 +110,7 @@
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
 		"package": "npm run webpack && vsce package .",
-		"test": "nyc mocha -p tsconfig.json --opts ./mocha.opts",
+		"test": "nyc mocha -p tsconfig.json --recursive tests/**/*.spec.ts",
 		"ws:run": "node ./out/src/webSocketServer/index.js",
 		"lint": "eslint . --ext .ts,.tsx --cache",
 		"lint:fix": "eslint . --ext .ts,.tsx --cache --fix"
