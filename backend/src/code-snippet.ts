@@ -54,7 +54,7 @@ export class CodeSnippet {
       // valiation for rpc
       JSON.stringify(state);
     } catch (error) {
-      // only stateError and contributorInfo will be saved
+      // save stateError and remove contributorInfo.context
       state = _.omit(state, ["contributorInfo.context"]);
       _.set(state, "stateError", true);
     }
