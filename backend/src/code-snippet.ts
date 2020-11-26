@@ -1,5 +1,4 @@
 import * as _ from "lodash";
-import * as Environment from "yeoman-environment";
 import * as inquirer from "inquirer";
 import { AppLog } from "./app-log";
 import { AppEvents } from "./app-events";
@@ -7,6 +6,7 @@ import { IRpc } from "@sap-devx/webview-rpc/out.ext/rpc-common";
 import Generator = require("yeoman-generator");
 import { IChildLogger } from "@vscode-logging/logger";
 import TerminalAdapter = require("yeoman-environment/lib/adapter");
+
 
 export class CodeSnippet {
 
@@ -24,7 +24,6 @@ export class CodeSnippet {
   private currentQuestions: TerminalAdapter.Questions<any>;
   private snippetName: string;
   private readonly customQuestionEventHandlers: Map<string, Map<string, Function>>;
-  private errorThrown = false;
 
   constructor(rpc: IRpc, appEvents: AppEvents, outputChannel: AppLog, logger: IChildLogger, uiOptions: any) {
     this.rpc = rpc;
@@ -50,7 +49,17 @@ export class CodeSnippet {
   }
 
   private async getState() {
-    return this.uiOptions;
+    let state = _.omit(this.uiOptions, ["snippet"]);
+    try {
+      // valiation for rpc
+      JSON.stringify(state);
+    } catch (error) {
+      // save stateError and remove contributorInfo.context
+      state = _.omit(state, ["contributorInfo.context"]);
+      _.set(state, "stateError", true);
+    }
+
+    return state;
   }
 
   public registerCustomQuestionEventHandler(questionType: string, methodName: string, handler: Function): void {
@@ -165,7 +174,6 @@ export class CodeSnippet {
   }
 
   private async onFailure(snippetrName: string, error: any) {
-    this.errorThrown = true;
     const messagePrefix = `${snippetrName} snippet failed.`;
     const errorMessage: string = await this.logError(error, messagePrefix);
     this.appEvents.doSnippeDone(false, errorMessage);

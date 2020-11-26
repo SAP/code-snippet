@@ -15,7 +15,6 @@ import { Contributors } from "../contributors";
 
 export class CodeSnippetPanel extends AbstractWebviewPanel {
 	public static CODE_SNIPPET = "Code Snippet";
-
 	private static channel: vscode.OutputChannel;
 
 	public toggleOutput() {
@@ -23,14 +22,21 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 	}
 
 	public setWebviewPanel(webViewPanel: vscode.WebviewPanel, uiOptions?: any) {
-		super.setWebviewPanel(webViewPanel, uiOptions);
+		const contributorInfo = _.get(uiOptions, "contributorInfo", uiOptions);
 
-		const contributerInfo = _.get(uiOptions, "contributerInfo", uiOptions);
-		Contributors.getSnippet(contributerInfo).then(snippet => {
+		if (_.get(uiOptions, "stateError")) {
+			this.logger.error("test");
+			this.logger.error(`'${contributorInfo.contributorId}' snippet state could not be saved. JSON.stringify issue.`); 
+			return webViewPanel.dispose();
+		}
+
+		this.contributors.getSnippet(contributorInfo).then(snippet => {
 			if (_.isNil(snippet)) {
-				this.webViewPanel.dispose();
-				return vscode.window.showErrorMessage("Can not find snippet.");
+				this.logger.error(`'${contributorInfo.contributorId}' snippet could not be found.`); 
+				return this.webViewPanel.dispose();
 			}
+
+			super.setWebviewPanel(webViewPanel, uiOptions);
 
 			this.messages = _.assign({}, backendMessages, snippet.getMessages());
 			const rpc = new RpcExtension(this.webViewPanel.webview);
@@ -40,7 +46,7 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 				vscodeEvents,
 				this.outputChannel,
 				this.logger,
-				{ messages: this.messages, snippet, contributerInfo});
+				{ messages: this.messages, snippet, contributorInfo});
 			this.codeSnippet.registerCustomQuestionEventHandler("file-browser", "getFilePath", this.showOpenFileDialog.bind(this));
 			this.codeSnippet.registerCustomQuestionEventHandler("folder-browser", "getPath", this.showOpenFolderDialog.bind(this));
 
@@ -59,12 +65,14 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 	private codeSnippet: CodeSnippet;
 	private messages: any;
 	private outputChannel: AppLog;
+	private readonly contributors: Contributors;
 
 	public constructor(context: vscode.ExtensionContext) {
 		super(context);
 		this.viewType = "codeSnippet";
 		this.viewTitle = CodeSnippetPanel.CODE_SNIPPET;
 		this.focusedKey = "codeSnippet.Focused";
+		this.contributors = new Contributors();
 	}
 
 	private async showOpenFileDialog(currentPath: string): Promise<string> {

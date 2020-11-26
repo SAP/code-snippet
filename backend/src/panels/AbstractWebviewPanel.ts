@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as _ from 'lodash';
 import * as fsextra from 'fs-extra';
 import { IChildLogger } from '@vscode-logging/logger';
-import { getLogger } from '../logger/logger-wrapper';
+import { getClassLogger } from '../logger/logger-wrapper';
 
 
 export abstract class AbstractWebviewPanel {
@@ -24,7 +24,7 @@ export abstract class AbstractWebviewPanel {
 		this.extensionPath = context.extensionPath;
 		this.mediaPath = path.join(context.extensionPath, "dist", "media");
 		this.htmlFileName = "index.html";
-		this.logger = getLogger();
+		this.logger = getClassLogger("AbstractWebviewPanel");
 		this.disposables = [];
 	}
 

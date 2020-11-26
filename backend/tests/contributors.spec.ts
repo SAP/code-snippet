@@ -1,6 +1,7 @@
 import * as mocha from 'mocha';
 import { expect } from 'chai';
 import * as _ from 'lodash';
+import * as sinon from "sinon";
 import { mockVscode } from './mockUtil';
 
 const testVscode = {};
@@ -8,8 +9,33 @@ _.set(testVscode, "extensions.all", []);
 
 mockVscode(testVscode, "src/contributors.ts");
 import { Contributors } from "../src/contributors";
+import * as loggerWrapper from "../src/logger/logger-wrapper";
+
 
 describe('Contributors unit test', () => {
+    let sandbox: any;
+    let loggerWrapperMock: any;
+    const logger = {
+        error: () => "",
+        warn: () => ""
+    };
+    
+    before(() => {
+        sandbox = sinon.createSandbox();
+    });
+
+    after(() => {
+        sandbox.restore();
+    });
+
+    beforeEach(() => {
+        loggerWrapperMock = sandbox.mock(loggerWrapper);
+    });
+
+    afterEach(() => {
+        loggerWrapperMock.verify();
+    });
+
     describe('getSnippet', () => {
         function createCodeSnippetQuestions(): any[] {
             const questions: any[] = [{
@@ -77,10 +103,11 @@ describe('Contributors unit test', () => {
             }
         };
         const extensionId = "BLABLA3.vscode-snippet-contrib";
-        
+
         it("receives no contributorId and no snippetName ---> returns undefined snippet", async () => {
-            const uiOptions = {};
-            const snippet = await Contributors.getSnippet(uiOptions);
+            loggerWrapperMock.expects("getClassLogger").returns(logger);
+            const contributors = new Contributors();
+            const snippet = await contributors.getSnippet({});
             expect(snippet).to.be.undefined;
         });
 
@@ -91,7 +118,10 @@ describe('Contributors unit test', () => {
                 "contributorId": extensionId,
                 "snippetName": snippetName
             };
-            const snippet = await Contributors.getSnippet(uiOptions);
+
+            loggerWrapperMock.expects("getClassLogger").returns(logger);
+            const contributors = new Contributors();
+            const snippet = await contributors.getSnippet(uiOptions);
             expect(snippet.getMessages()).to.deep.equal(messageValue);
         });
 
@@ -103,7 +133,10 @@ describe('Contributors unit test', () => {
                 "contributorId": extensionId,
                 "snippetName": snippetName
             };
-            const snippet = await Contributors.getSnippet(uiOptions);
+
+            loggerWrapperMock.expects("getClassLogger").returns(logger);
+            const contributors = new Contributors();
+            const snippet = await contributors.getSnippet(uiOptions);
             expect(snippet.getMessages()).to.deep.equal(messageValue);
         });
 
@@ -118,11 +151,17 @@ describe('Contributors unit test', () => {
                 "contributorId": extensionId,
                 "snippetName": snippetName
             };
-            const res = await Contributors.getSnippet(uiOptions);
+
+            loggerWrapperMock.expects("getClassLogger").returns(logger);
+            const errorSpy = sinon.spy(logger, "error");
+            const contributors = new Contributors();
+            const res = await contributors.getSnippet(uiOptions);
             expect(res).to.be.undefined;
+            expect(errorSpy.calledOnce).to.be.true;
+            errorSpy.restore();
         });
 
-        it("no contributer extension not found", async () => {
+        it("contributer extension not found", async () => {
             api.packageJSON = {
                 name: "vscode-snippet-contrib",
                 publisher: "BLABLA3",
@@ -134,11 +173,17 @@ describe('Contributors unit test', () => {
                 "contributorId": extensionId,
                 "snippetName": snippetName
             };
-            const res = await Contributors.getSnippet(uiOptions);
+
+            loggerWrapperMock.expects("getClassLogger").returns(logger);
+            const contributors = new Contributors();
+            const warnSpy = sinon.spy(logger, "warn");
+            const res = await contributors.getSnippet(uiOptions);
             expect(res).to.be.undefined;
+            expect(warnSpy.calledOnce).to.be.true;
+            warnSpy.restore();
         });
 
-        it("no contributer extension not found by contributorId", async () => {
+        it("contributer extension not found by contributorId", async () => {
             api.packageJSON = {
                 name: "vscode-snippet-contrib",
                 publisher: "BLABLA3",
@@ -150,8 +195,15 @@ describe('Contributors unit test', () => {
                 "contributorId": extensionId + "-other",
                 "snippetName": snippetName
             };
-            const res = await Contributors.getSnippet(uiOptions);
+
+            loggerWrapperMock.expects("getClassLogger").returns(logger);
+            const warnSpy = sinon.spy(logger, "warn");
+            const contributors = new Contributors();
+            const res = await contributors.getSnippet(uiOptions);
             expect(res).to.be.undefined;
+            const warnMessage = `Extension '${uiOptions.contributorId}' could not be found.`;
+            expect(warnSpy.calledOnce).to.be.true;
+            warnSpy.restore();
         });
     });
 });

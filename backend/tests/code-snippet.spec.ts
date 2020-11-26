@@ -4,7 +4,7 @@ const datauri = require("datauri"); // eslint-disable-line @typescript-eslint/no
 import * as fsextra from "fs-extra";
 import { expect } from "chai";
 import * as _ from "lodash";
-import {CodeSnippet} from "../src/code-snippet";
+import { CodeSnippet } from "../src/code-snippet";
 import { AppLog } from "../src/app-log";
 import { AppEvents } from '../src/app-events';
 import { IMethod, IPromiseCallbacks, IRpc } from "@sap-devx/webview-rpc/out.ext/rpc-common";
@@ -31,30 +31,30 @@ describe('codeSnippet unit test', () => {
         }
     }
     class TestRpc implements IRpc {
-        public  timeout: number;
+        public timeout: number;
         public promiseCallbacks: Map<number, IPromiseCallbacks>;
         public methods: Map<string, IMethod>;
         public sendRequest(): void {
             return;
-        }            
+        }
         public sendResponse(): void {
             return;
-        } 
+        }
         public setResponseTimeout(): void {
             return;
         }
         public registerMethod(): void {
             return;
-        } 
+        }
         public unregisterMethod(): void {
             return;
-        } 
+        }
         public listLocalMethods(): string[] {
             return [];
         }
         public handleResponse(): void {
             return;
-        } 
+        }
         public listRemoteMethods(): Promise<string[]> {
             return Promise.resolve([]);
         }
@@ -68,31 +68,31 @@ describe('codeSnippet unit test', () => {
     class TestOutputChannel implements AppLog {
         public log(): void {
             return;
-        }            
+        }
         public writeln(): void {
             return;
-        } 
+        }
         public create(): void {
             return;
-        }  
+        }
         public force(): void {
             return;
-        } 
+        }
         public conflict(): void {
             return;
-        }  
+        }
         public identical(): void {
             return;
-        }  
+        }
         public skip(): void {
             return;
-        } 
+        }
         public showOutput(): boolean {
             return false;
-        }  
+        }
     }
 
-    const testLogger = { debug: () => "", error: () => "", fatal: () => "", warn: () => "", info: () => "", trace: () => "", getChildLogger: () => ({} as IChildLogger)};
+    const testLogger = { debug: () => "", error: () => "", fatal: () => "", warn: () => "", info: () => "", trace: () => "", getChildLogger: () => ({} as IChildLogger) };
 
     const snippet: any = {
         getMessages() {
@@ -109,7 +109,7 @@ describe('codeSnippet unit test', () => {
     const rpc = new TestRpc();
     const outputChannel = new TestOutputChannel();
     const appEvents = new TestEvents();
-    const uiOptions = {messages: {title: "snippet title"}, snippet: snippet};
+    const uiOptions = { messages: { title: "snippet title" }, snippet: snippet };
     const codeSnippet: CodeSnippet = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, uiOptions);
 
     before(() => {
@@ -145,17 +145,25 @@ describe('codeSnippet unit test', () => {
         }
     });
 
-    it("getState", async () => {
-        const state = await codeSnippet["getState"]();
-        expect(state).to.deep.equal(uiOptions);
+    describe("getState", () => {
+        it("valid uiOptions", async () => {
+            const state = await codeSnippet["getState"]();
+            expect(state.messages).to.be.not.empty;
+        });
+
+        it("invalid uiOptions", async () => {
+            codeSnippet["uiOptions"].test = codeSnippet["uiOptions"];
+            const state = await codeSnippet["getState"]();
+            expect(state.stateError).to.be.true;
+        });
     });
 
     describe("receiveIsWebviewReady", () => {
         it("flow is successfull", async () => {
             rpcMock.expects("invoke").withArgs("showPrompt").resolves(
-                {actionName: "actionName"},
-                {actionTemplate: "OData action"},
-                {actionType: "Create entity"});
+                { actionName: "actionName" },
+                { actionTemplate: "OData action" },
+                { actionType: "Create entity" });
             appEventsMock.expects("doApply");
             await codeSnippet["receiveIsWebviewReady"]();
         });
@@ -209,9 +217,9 @@ describe('codeSnippet unit test', () => {
     describe("answersUtils", () => {
         it("setDefaults", () => {
             const questions = [
-                {name: "q1", default: "a"},
-                {name: "q2", default: () => { return "b";}},
-                {name: "q3"}
+                { name: "q1", default: "a" },
+                { name: "q2", default: () => { return "b"; } },
+                { name: "q3" }
             ];
             const answers = {
                 q1: "x",
@@ -244,9 +252,9 @@ describe('codeSnippet unit test', () => {
                 };
             };
             const codeSnippetInstance: CodeSnippet = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, {});
-            const questions = [{name: "q1"}];
+            const questions = [{ name: "q1" }];
             const response = await codeSnippetInstance.showPrompt(questions);
-            expect (response.firstName).to.equal(firstName);
+            expect(response.firstName).to.equal(firstName);
         });
 
     });
@@ -280,7 +288,7 @@ describe('codeSnippet unit test', () => {
             };
             const questions = [
                 {
-                    name:"q1",
+                    name: "q1",
                     guiType: "questionType"
                 }
             ];
@@ -303,25 +311,29 @@ describe('codeSnippet unit test', () => {
             };
             const codeSnippetInstance: CodeSnippet = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, {});
             codeSnippetInstance.registerCustomQuestionEventHandler("questionType", "testEvent", testEventFunction);
-            codeSnippetInstance["currentQuestions"] = [{name:"question1", guiType: "questionType"}];
+            codeSnippetInstance["currentQuestions"] = [{ name: "question1", guiType: "questionType" }];
             const response = await codeSnippetInstance["evaluateMethod"](null, "question1", "testEvent");
             expect(response).to.be.true;
         });
 
         it("question method is called", async () => {
             const codeSnippetInstance: CodeSnippet = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, {});
-            codeSnippetInstance["currentQuestions"] = [{name:"question1", method1:()=>{
-                return true;
-            }}];
+            codeSnippetInstance["currentQuestions"] = [{
+                name: "question1", method1: () => {
+                    return true;
+                }
+            }];
             const response = await codeSnippetInstance["evaluateMethod"](null, "question1", "method1");
             expect(response).to.be.true;
         });
 
         it("no relevant question", async () => {
             const codeSnippetInstance: CodeSnippet = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, {});
-            codeSnippetInstance["currentQuestions"] = [{name:"question1", method1:()=>{
-                return true;
-            }}];
+            codeSnippetInstance["currentQuestions"] = [{
+                name: "question1", method1: () => {
+                    return true;
+                }
+            }];
             const response = await codeSnippetInstance["evaluateMethod"](null, "question2", "method2");
             expect(response).to.be.undefined;
         });
@@ -336,12 +348,14 @@ describe('codeSnippet unit test', () => {
             const codeSnippetInstance: CodeSnippet = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, {});
             codeSnippetInstance["gen"] = Object.create({});
             codeSnippetInstance["gen"].options = {};
-            codeSnippetInstance["currentQuestions"] = [{name:"question1", method1:()=>{
-                throw new Error("Error");
-            }}];
+            codeSnippetInstance["currentQuestions"] = [{
+                name: "question1", method1: () => {
+                    throw new Error("Error");
+                }
+            }];
             try {
                 await codeSnippetInstance["evaluateMethod"](null, "question1", "method1");
-            } catch(e) {
+            } catch (e) {
                 expect(e.toString()).to.contain("method1");
             }
         });
@@ -353,7 +367,7 @@ describe('codeSnippet unit test', () => {
         let codeSnippetInstance: CodeSnippet;
 
         beforeEach(() => {
-            codeSnippetInstance = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, {messages: {title: title}});
+            codeSnippetInstance = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, { messages: { title: title } });
             codeSnippetInstanceMock = sandbox.mock(codeSnippetInstance);
         });
 
@@ -388,10 +402,10 @@ describe('codeSnippet unit test', () => {
             onFailureSpy.restore();
         });
     });
-    
+
     describe("createCodeSnippetWorkspaceEdit", () => {
         it("snippet has getWorkspaceEdit ---> call getWorkspaceEdit", async () => {
-            const myCodeSnippet = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, {snippet: snippet});
+            const myCodeSnippet = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, { snippet: snippet });
             const we = await myCodeSnippet["createCodeSnippetWorkspaceEdit"]({});
             expect(we).to.be.equal("getWorkspaceEdit");
         });
@@ -405,9 +419,15 @@ describe('codeSnippet unit test', () => {
 
     describe("createCodeSnippetQuestions", () => {
         it("snippet has getQuestions ---> call getQuestions", async () => {
-            const myCodeSnippet = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, {snippet: snippet});
+            const myCodeSnippet = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, { snippet: snippet });
             const we = await myCodeSnippet["createCodeSnippetQuestions"]();
             expect(we).to.be.equal("createCodeSnippetQuestions");
+        });
+
+        it("no snippet provided ---> call getQuestions", async () => {
+            const myCodeSnippet = new CodeSnippet(rpc, appEvents, outputChannel, testLogger, { snippet: null });
+            const we = await myCodeSnippet["createCodeSnippetQuestions"]();
+            expect(we).to.be.empty;
         });
     });
 
@@ -421,7 +441,7 @@ describe('codeSnippet unit test', () => {
             codeSnippetInstance.registerCustomQuestionEventHandler("questionType", "testEvent1", testEventFunction);
             expect(codeSnippetInstance["customQuestionEventHandlers"].size).to.be.equal(1);
 
-            codeSnippetInstance.registerCustomQuestionEventHandler("questionType", "testEvent2", testEventFunction);  
+            codeSnippetInstance.registerCustomQuestionEventHandler("questionType", "testEvent2", testEventFunction);
             expect(codeSnippetInstance["customQuestionEventHandlers"].size).to.be.equal(1);
 
         });
