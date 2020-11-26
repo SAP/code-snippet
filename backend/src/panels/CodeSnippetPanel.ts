@@ -65,7 +65,7 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 	private codeSnippet: CodeSnippet;
 	private messages: any;
 	private outputChannel: AppLog;
-	private contributors: Contributors;
+	private readonly contributors: Contributors;
 
 	public constructor(context: vscode.ExtensionContext) {
 		super(context);

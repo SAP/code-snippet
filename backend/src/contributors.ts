@@ -5,7 +5,7 @@ import { getClassLogger } from './logger/logger-wrapper';
 
 
 export class Contributors {
-    private logger: IChildLogger;
+    private readonly logger: IChildLogger;
 
     constructor() {
         this.logger = getClassLogger("Contributors");
@@ -41,7 +41,7 @@ export class Contributors {
                 }
             }
 
-            this.logger.warn(`Extension '${contributorId}' could not be found.`)
+            this.logger.warn(`Extension '${contributorId}' could not be found.`);
         });
     }
 

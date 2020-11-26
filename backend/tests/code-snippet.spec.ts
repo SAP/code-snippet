@@ -152,7 +152,7 @@ describe('codeSnippet unit test', () => {
         });
 
         it("invalid uiOptions", async () => {
-            codeSnippet["uiOptions"].test = codeSnippet["uiOptions"]
+            codeSnippet["uiOptions"].test = codeSnippet["uiOptions"];
             const state = await codeSnippet["getState"]();
             expect(state.stateError).to.be.true;
         });
