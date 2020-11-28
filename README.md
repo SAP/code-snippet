@@ -1,5 +1,6 @@
 [![CircleCI](https://circleci.com/gh/SAP/code-snippet.svg?style=svg)](https://circleci.com/gh/SAP/code-snippet)
 [![Coverage Status](https://coveralls.io/repos/github/SAP/code-snippet/badge.svg?branch=master)](https://coveralls.io/github/SAP/code-snippet?branch=master)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/SAP/code-snippet.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/SAP/code-snippet/context:javascript)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 ![GitHub license](https://img.shields.io/badge/license-Apache_2.0-blue.svg)
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP/code-snippet)](https://api.reuse.software/info/github.com/SAP/code-snippet)
