@@ -143,7 +143,6 @@ export class CodeSnippet {
 
   public async showPrompt(questions: TerminalAdapter.Questions<any>): Promise<inquirer.Answers> {
     this.promptCount++;
-    const promptName = this.getPromptName(questions);
 
     this.currentQuestions = questions;
     const mappedQuestions: TerminalAdapter.Questions<any> = this.normalizeFunctions(questions);
