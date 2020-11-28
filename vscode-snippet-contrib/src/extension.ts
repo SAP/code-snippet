@@ -52,7 +52,7 @@ export function activate(context: vscode.ExtensionContext) {
 						type: answers.configType,
 						program: answers.configProgram
 					};
-					configurations['configurations'].push(config)
+					configurations['configurations'].push(config);
 
 					const we = new vscode.WorkspaceEdit();
 					we.createFile(docUri, { ignoreIfExists: true });
