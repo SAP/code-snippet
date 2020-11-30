@@ -161,11 +161,6 @@ export class CodeSnippet {
     }
   }
 
-  private getPromptName(questions: TerminalAdapter.Questions<any>): string {
-    const firstQuestionName = _.get(questions, "[0].name");
-    return (firstQuestionName ? _.startCase(firstQuestionName) : `Step ${this.promptCount}`);
-  }
-
   private onSuccess(snippetName: string) {
     const message = `'${snippetName}' snippet has been created.`;
     this.logger.debug("done running code-snippet! " + message);
