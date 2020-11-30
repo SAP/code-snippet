@@ -143,7 +143,6 @@ export class CodeSnippet {
 
   public async showPrompt(questions: TerminalAdapter.Questions<any>): Promise<inquirer.Answers> {
     this.promptCount++;
-    const promptName = this.getPromptName(questions);
 
     this.currentQuestions = questions;
     const mappedQuestions: TerminalAdapter.Questions<any> = this.normalizeFunctions(questions);
@@ -160,11 +159,6 @@ export class CodeSnippet {
     if (entry !== undefined) {
       return entry.get(methodName);
     }
-  }
-
-  private getPromptName(questions: TerminalAdapter.Questions<any>): string {
-    const firstQuestionName = _.get(questions, "[0].name");
-    return (firstQuestionName ? _.startCase(firstQuestionName) : `Step ${this.promptCount}`);
   }
 
   private onSuccess(snippetName: string) {
