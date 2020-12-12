@@ -146,7 +146,7 @@
 		"mocha": "^7.0.0",
 		"nyc": "^15.1.0",
 		"sinon": "^9.2.1",
-		"ts-loader": "^6.2.1",
+		"ts-loader": "^8.0.12",
 		"ts-node": "^8.9.1",
 		"string-replace-loader": "^2.1.1",
 		"vsce": "^1.73.0",
