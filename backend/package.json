@@ -1,6 +1,6 @@
 {
 	"name": "code-snippet",
-	"version": "0.0.24",
+	"version": "0.0.25",
 	"displayName": "Code Snippet",
 	"publisher": "SAPOSS",
 	"author": {
@@ -15,7 +15,7 @@
 	"bugs": {
 		"url": "https://github.com/SAP/code-snippet/issues"
 	},
-	"icon": "Wizard_logo.png",
+	"icon": "code-snippet-logo.png",
 	"engines": {
 		"vscode": "^1.39.2"
 	},
