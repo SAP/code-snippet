@@ -87,4 +87,11 @@ describe('vscode-events unit test', () => {
 
     });
 
+	it("executeCommand", () => {
+		const commandId = "vscode.open";
+		const commandArgs = [vscode.Uri.file("https://en.wikipedia.org")];
+		commandsMock.expects("executeCommand").withExactArgs(commandId, commandArgs).resolves();
+		events.executeCommand(commandId, commandArgs);
+	});
+
 });

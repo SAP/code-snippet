@@ -27,6 +27,10 @@ export class VSCodeEvents implements AppEvents {
         }
     }
 
+	public executeCommand(id: string, ...args: any[]): Thenable<any> {
+		return vscode.commands.executeCommand(id, ...args);
+	}
+
     private showDoneMessage(success: boolean, message: string, targetFolderPath?: string): Thenable<any> {
 
         if (success) {

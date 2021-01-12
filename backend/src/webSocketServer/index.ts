@@ -79,7 +79,13 @@ function createCodeSnippetQuestions(): any[] {
 		},
 		{
 		  guiOptions: {
-			hint: "hint actionType"
+			hint: "hint actionType",
+			link: {
+				text: "Open Global Settings",
+				command: {
+					id: "workbench.action.openGlobalSettings",
+				}
+			}
 		  },
 		  type: "list",
 		  name: "actionType",

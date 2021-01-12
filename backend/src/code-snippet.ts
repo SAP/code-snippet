@@ -41,6 +41,7 @@ export class CodeSnippet {
     this.rpc.registerMethod({ func: this.toggleOutput, thisArg: this });
     this.rpc.registerMethod({ func: this.logError, thisArg: this });
     this.rpc.registerMethod({ func: this.getState, thisArg: this });
+		this.rpc.registerMethod({ func: this.executeCommand, thisArg: this });
 
     this.promptCount = 0;
     this.currentQuestions = {};
@@ -70,6 +71,10 @@ export class CodeSnippet {
     }
     entry.set(methodName, handler);
   }
+
+	private executeCommand(id: string, ...args: any[]): void {
+		this.appEvents.executeCommand(id, ...args);
+	}
 
   private async logError(error: any, prefixMessage?: string) {
     let errorMessage = this.getErrorInfo(error);

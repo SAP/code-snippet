@@ -26,6 +26,7 @@
               <Form
                 ref="form"
                 :questions="currentPrompt ? currentPrompt.questions : []"
+                @parentExecuteCommand="executeCommand"
                 @answered="onAnswered"
               />
             </v-slide-x-transition>
@@ -154,6 +155,11 @@ export default {
       if (this.resolve) {
           this.resolve(this.currentPrompt.answers);
       }
+    },
+    executeCommand(event) {
+      const command = event.target.getAttribute("command");
+      const params = event.target.getAttribute("params");
+      this.rpc.invoke("executeCommand", [command, params]);
     },
     onAnswered(answers, issues) {
       this.stepValidated = issues === undefined;

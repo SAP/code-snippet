@@ -1,7 +1,7 @@
 {
   "name": "code-snippet-frontend",
   "displayName": "Code Snippet Frontend",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "publisher": "SAP",
   "license": "Apache 2.0",
   "description": "Frontend for the Code Snippet framework",
@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@mdi/font": "^5.1.45",
-    "@sap-devx/inquirer-gui": "0.1.19",
+    "@sap-devx/inquirer-gui": "0.1.25",
     "@sap-devx/inquirer-gui-file-browser-plugin": "0.0.5",
     "@sap-devx/inquirer-gui-folder-browser-plugin": "0.0.3",
     "@sap-devx/inquirer-gui-login-plugin": "0.0.4",
