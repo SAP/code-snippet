@@ -79,8 +79,12 @@ function createCodeSnippetQuestions(context: any) : any[] {
     questions.push(
 		{
 		  guiOptions: {
-			hint: "Select the type of configuration you want to create."
-		  },
+			hint: "Select the type of configuration you want to create.",
+			link: {
+				text: "wikipedia",
+				url: "https://en.wikipedia.org/wiki/Configuration"
+			}
+	  },
 		  type: "list",
 		  name: "configType",
 		  message: "Type",
@@ -105,7 +109,13 @@ function createCodeSnippetQuestions(context: any) : any[] {
 		  guiOptions: {
 			hint: "Select the path to the program you want to run.",
 			type: "file-browser",
-		  },
+			link: {
+				text: "Open Global Settings",
+				command: {
+					id: "workbench.action.openGlobalSettings",
+				}
+			}
+	  },
 		  type: "input",
 		  name: "configProgram",
 		  message: "Program"

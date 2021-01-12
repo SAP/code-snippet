@@ -29,6 +29,9 @@ describe('codeSnippet unit test', () => {
         public doClose(): void {
             return;
         }
+		public executeCommand(command: string, ...rest: any[]): Thenable<any> {
+			return;
+		}
     }
     class TestRpc implements IRpc {
         public timeout: number;
@@ -280,6 +283,16 @@ describe('codeSnippet unit test', () => {
             expect(doSnippeDoneSpy.calledWith(false, "testSnippetName snippet failed.\ntestError")).to.be.true;
         });
     });
+
+	describe("executeCommand", () => {
+		it("called with command id & args", async () => {
+			const commandId = "vscode.open";
+			const commandArgs = [ {	fsPath: "https://en.wikipedia.org"} ];
+			appEventsMock.expects("executeCommand").withExactArgs(commandId, commandArgs);
+			await codeSnippet["executeCommand"](commandId, commandArgs);
+		});
+
+	});
 
     describe("Custom Question Event Handlers", () => {
         it("addCustomQuestionEventHandlers()", async () => {

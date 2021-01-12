@@ -16,6 +16,10 @@ export class ServerEvents implements AppEvents {
         this.rpc.invoke("snippetDone", [suceeded, message, targetPath]);
     }
 
+    executeCommand(id: string, ...args: any[]): Thenable<any> {
+        return;
+    }
+
     public doClose(): void {
         return;
     }
