@@ -114,7 +114,7 @@ function createCodeSnippetQuestions(context: any) : any[] {
 				command: {
 					id: "workbench.action.openSettings",
 					params: ["Typescript.Format"]
-			}
+				}
 			}
 	  },
 		  type: "input",
