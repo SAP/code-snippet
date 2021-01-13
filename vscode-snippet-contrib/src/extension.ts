@@ -110,10 +110,11 @@ function createCodeSnippetQuestions(context: any) : any[] {
 			hint: "Select the path to the program you want to run.",
 			type: "file-browser",
 			link: {
-				text: "Open Global Settings",
+				text: "Open Settings",
 				command: {
-					id: "workbench.action.openGlobalSettings",
-				}
+					id: "workbench.action.openSettings",
+					params: ["Typescript.Format"]
+			}
 			}
 	  },
 		  type: "input",
