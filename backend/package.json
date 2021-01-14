@@ -15,7 +15,7 @@
 	"bugs": {
 		"url": "https://github.com/SAP/code-snippet/issues"
 	},
-	"icon": "code-snippet-logo.png",
+	"icon": "logo.png",
 	"engines": {
 		"vscode": "^1.39.2"
 	},
