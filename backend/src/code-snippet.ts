@@ -6,7 +6,7 @@ import { IRpc } from "@sap-devx/webview-rpc/out.ext/rpc-common";
 import Generator = require("yeoman-generator");
 import { IChildLogger } from "@vscode-logging/logger";
 import TerminalAdapter = require("yeoman-environment/lib/adapter");
-
+import { SWA } from "./swa-tracker/swa-tracker-wrapper";
 
 export class CodeSnippet {
 
@@ -88,15 +88,19 @@ export class CodeSnippet {
 
   private async applyCode(answers: any) {
     this.snippetName = this.uiOptions.messages.title;
+    let doWorkspaceEdit = true;
     try {
       const we: any = await this.createCodeSnippetWorkspaceEdit(answers);
       if (!we) {
-        return this.appEvents.doClose();
+        await this.appEvents.doClose();
+        doWorkspaceEdit = false;
+      } else {
+        await this.appEvents.doApply(we);
+        doWorkspaceEdit = true;
       }
-      await this.appEvents.doApply(we);
-      this.onSuccess(this.snippetName);
+      this.onSuccess(doWorkspaceEdit, this.snippetName);
     } catch (error) {
-      this.onFailure(this.snippetName, error);
+      this.onFailure(doWorkspaceEdit, this.snippetName, error);
     }
   }
 
@@ -122,7 +126,7 @@ export class CodeSnippet {
     } catch (error) {
       const questionInfo = `Could not update method '${methodName}' in '${questionName}' question in generator '${this.gen.options.namespace}'`;
       const errorMessage = await this.logError(error, questionInfo);
-      this.onFailure(this.snippetName, errorMessage);
+      this.onFailure(true, this.snippetName, errorMessage);
     } 
   }
 
@@ -131,6 +135,7 @@ export class CodeSnippet {
       const questions: any[] = await this.createCodeSnippetQuestions();
       this.currentQuestions = questions;
       const normalizedQuestions = this.normalizeFunctions(questions);
+      SWA.updateSnippetStarted(this.uiOptions.messages.title, this.logger);
       const response: any = await this.rpc.invoke("showPrompt", [normalizedQuestions]);
       if (_.isEmpty(response)) {
         this.logError(this.uiOptions.messages.noResponse);
@@ -166,16 +171,22 @@ export class CodeSnippet {
     }
   }
 
-  private onSuccess(snippetName: string) {
+  private onSuccess(showDoneMessage: boolean, snippetName: string) {
     const message = `'${snippetName}' snippet has been created.`;
     this.logger.debug("done running code-snippet! " + message);
-    this.appEvents.doSnippeDone(true, message);
+    SWA.updateSnippetEnded(snippetName, true, this.logger);
+    if (showDoneMessage) {
+      this.appEvents.doSnippeDone(true, message);
+    }
   }
 
-  private async onFailure(snippetrName: string, error: any) {
+  private async onFailure(showDoneMessage: boolean, snippetrName: string, error: any) {
     const messagePrefix = `${snippetrName} snippet failed.`;
     const errorMessage: string = await this.logError(error, messagePrefix);
-    this.appEvents.doSnippeDone(false, errorMessage);
+    SWA.updateSnippetEnded(snippetrName, false, this.logger, errorMessage);
+    if (showDoneMessage) {
+      this.appEvents.doSnippeDone(false, errorMessage);
+    }
   }
 
   private getErrorInfo(error: any = "") {

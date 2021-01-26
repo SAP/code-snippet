@@ -10,6 +10,7 @@ import { AppEvents } from '../src/app-events';
 import { IMethod, IPromiseCallbacks, IRpc } from "@sap-devx/webview-rpc/out.ext/rpc-common";
 import { IChildLogger } from "@vscode-logging/logger";
 import { fail } from "assert";
+import { SWA } from "../src/swa-tracker/swa-tracker-wrapper";
 
 describe('codeSnippet unit test', () => {
     let sandbox: any;
@@ -18,6 +19,7 @@ describe('codeSnippet unit test', () => {
     let loggerMock: any;
     let rpcMock: any;
     let appEventsMock: any;
+    let swaTrackerWrapperMock: any;
 
     class TestEvents implements AppEvents {
         public async doApply(we: any): Promise<any> {
@@ -129,6 +131,7 @@ describe('codeSnippet unit test', () => {
         rpcMock = sandbox.mock(rpc);
         loggerMock = sandbox.mock(testLogger);
         appEventsMock = sandbox.mock(appEvents);
+        swaTrackerWrapperMock = sandbox.mock(SWA);
     });
 
     afterEach(() => {
@@ -137,6 +140,7 @@ describe('codeSnippet unit test', () => {
         rpcMock.verify();
         loggerMock.verify();
         appEventsMock.verify();
+        swaTrackerWrapperMock.verify();
     });
 
     it("constructor", () => {
@@ -163,21 +167,25 @@ describe('codeSnippet unit test', () => {
 
     describe("receiveIsWebviewReady", () => {
         it("flow is successfull", async () => {
+            swaTrackerWrapperMock.expects("updateSnippetStarted").withArgs("snippet title");
             rpcMock.expects("invoke").withArgs("showPrompt").resolves(
                 { actionName: "actionName" },
                 { actionTemplate: "OData action" },
                 { actionType: "Create entity" });
             appEventsMock.expects("doApply");
+			swaTrackerWrapperMock.expects("updateSnippetEnded").withArgs("snippet title", true);
             await codeSnippet["receiveIsWebviewReady"]();
         });
 
         it("no prompt ---> an error is thrown", async () => {
+            swaTrackerWrapperMock.expects("updateSnippetStarted").withArgs("snippet title");
             loggerMock.expects("error");
             appEventsMock.expects("doApply").never();
             await codeSnippet["receiveIsWebviewReady"]();
         });
 
         it("prompt throws exception ---> an error is thrown", async () => {
+            swaTrackerWrapperMock.expects("updateSnippetStarted").withArgs("snippet title");
             rpcMock.expects("invoke").withArgs("showPrompt").rejects(new Error());
             loggerMock.expects("error");
             appEventsMock.expects("doApply").never();
@@ -274,12 +282,14 @@ describe('codeSnippet unit test', () => {
         });
 
         it("onSuccess", () => {
-            codeSnippet["onSuccess"]("testSnippetName");
+            swaTrackerWrapperMock.expects("updateSnippetEnded").withArgs("testSnippetName", true);
+            codeSnippet["onSuccess"](true, "testSnippetName");
             expect(doSnippeDoneSpy.calledWith(true, "'testSnippetName' snippet has been created.")).to.be.true;
         });
 
         it("onFailure", async () => {
-            await codeSnippet["onFailure"]("testSnippetName", "testError");
+            swaTrackerWrapperMock.expects("updateSnippetEnded").withArgs("testSnippetName", false);
+            await codeSnippet["onFailure"](true, "testSnippetName", "testError");
             expect(doSnippeDoneSpy.calledWith(false, "testSnippetName snippet failed.\ntestError")).to.be.true;
         });
     });
@@ -391,18 +401,20 @@ describe('codeSnippet unit test', () => {
         it("createCodeSnippetWorkspaceEdit succeeds ---> onSuccess is called", async () => {
             const onSuccessSpy = sandbox.spy(codeSnippetInstance, "onSuccess");
             codeSnippetInstanceMock.expects("createCodeSnippetWorkspaceEdit").resolves({});
+            swaTrackerWrapperMock.expects("updateSnippetEnded").withArgs("snippet title", true);
             await codeSnippetInstance["applyCode"]({});
-            expect(onSuccessSpy.calledWith(title)).to.be.true;
+            expect(onSuccessSpy.calledWith(true, title)).to.be.true;
             onSuccessSpy.restore();
         });
 
         it("createCodeSnippetWorkspaceEdit fails (we is undefined) ---> onFailure is not called", async () => {
             const onSuccessSpy = sandbox.spy(codeSnippetInstance, "onSuccess");
             codeSnippetInstanceMock.expects("createCodeSnippetWorkspaceEdit").resolves(undefined);
+            swaTrackerWrapperMock.expects("updateSnippetEnded").withArgs("snippet title", true);
             appEventsMock.expects("doApply").never();
             appEventsMock.expects("doClose");
             await codeSnippetInstance["applyCode"]({});
-            expect(onSuccessSpy.calledWith(title)).to.be.false;
+            expect(onSuccessSpy.calledWith(true, title)).to.be.false;
             onSuccessSpy.restore();
         });
 
@@ -410,8 +422,9 @@ describe('codeSnippet unit test', () => {
             const onFailureSpy = sandbox.spy(codeSnippetInstance, "onFailure");
             const error = new Error("error");
             codeSnippetInstanceMock.expects("createCodeSnippetWorkspaceEdit").rejects(error);
+            swaTrackerWrapperMock.expects("updateSnippetEnded").withArgs("snippet title", false);
             await codeSnippetInstance["applyCode"]({});
-            expect(onFailureSpy.calledWith(title, error)).to.be.true;
+            expect(onFailureSpy.calledWith(true, title, error)).to.be.true;
             onFailureSpy.restore();
         });
     });
