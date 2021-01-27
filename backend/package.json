@@ -1,6 +1,6 @@
 {
 	"name": "code-snippet",
-	"version": "0.0.27",
+	"version": "0.0.28",
 	"displayName": "Code Snippet",
 	"publisher": "SAPOSS",
 	"author": {
@@ -118,6 +118,7 @@
 	"dependencies": {
 		"@sap-devx/webview-rpc": "0.2.3",
 		"@vscode-logging/logger": "1.2.1",
+		"@sap/swa-for-sapbas-vsx": "1.1.11",
 		"datauri": "3.0.0",
 		"fs-extra": "9.0.1",
 		"lodash": "4.17.20",
