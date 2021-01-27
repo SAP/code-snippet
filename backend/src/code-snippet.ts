@@ -88,19 +88,19 @@ export class CodeSnippet {
 
   private async applyCode(answers: any) {
     this.snippetName = this.uiOptions.messages.title;
-    let doWorkspaceEdit = true;
+    let showDoneMessage = true;
     try {
       const we: any = await this.createCodeSnippetWorkspaceEdit(answers);
       if (!we) {
         await this.appEvents.doClose();
-        doWorkspaceEdit = false;
+        showDoneMessage = false;
       } else {
         await this.appEvents.doApply(we);
-        doWorkspaceEdit = true;
+        showDoneMessage = true;
       }
-      this.onSuccess(doWorkspaceEdit, this.snippetName);
+      this.onSuccess(showDoneMessage, this.snippetName);
     } catch (error) {
-      this.onFailure(doWorkspaceEdit, this.snippetName, error);
+      this.onFailure(showDoneMessage, this.snippetName, error);
     }
   }
 
