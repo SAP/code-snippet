@@ -105,11 +105,3 @@ function createExtensionLogger(context: vscode.ExtensionContext) {
 	initLoggerWrapper(extensionLogger);
 	logLoggerDetails(context, logLevelSetting);
 }
-
-module.exports = {
-  getLogger,
-  createExtensionLoggerAndSubscribeToLogSettingsChanges,
-  getClassLogger,
-  getCodeSnippetLibraryLogger,
-  ERROR_LOGGER_NOT_INITIALIZED
-}; 
