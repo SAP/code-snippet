@@ -1,6 +1,6 @@
 {
 	"name": "code-snippet",
-	"version": "0.0.27",
+	"version": "0.0.29",
 	"displayName": "Code Snippet",
 	"publisher": "SAPOSS",
 	"author": {
@@ -116,13 +116,14 @@
 		"lint:fix": "eslint . --ext .ts,.tsx --cache --fix"
 	},
 	"dependencies": {
-		"@sap-devx/webview-rpc": "0.2.3",
+		"@sap-devx/webview-rpc": "0.3.1",
 		"@vscode-logging/logger": "1.2.1",
+		"@sap/swa-for-sapbas-vsx": "1.1.11",
 		"datauri": "3.0.0",
 		"fs-extra": "9.0.1",
 		"lodash": "4.17.20",
 		"strip-ansi": "6.0.0",
-		"ws": "7.4.0",
+		"ws": "7.4.4",
 		"yeoman-environment": "2.10.3"
 	},
 	"devDependencies": {
@@ -130,7 +131,7 @@
 		"@types/fs-extra": "^9.0.4",
 		"@types/inquirer": "^6.5.0",
 		"@types/lodash": "^4.14.165",
-		"@types/mocha": "^7.0.0",
+		"@types/mocha": "^8.2.1",
 		"@types/node": "^10.17.21",
 		"@types/sinon": "^9.0.9",
 		"@types/ws": "^7.4.0",
@@ -157,7 +158,7 @@
 		"cz-conventional-changelog": "3.3.0",
 		"@commitlint/cli": "11.0.0",
 		"@commitlint/config-conventional": "11.0.0",
-		"husky": "4.3.0"
+		"husky": "4.3.8"
 	},
 	"husky": {
 		"hooks": {
