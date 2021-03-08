@@ -134,7 +134,7 @@
 		"@types/mocha": "^8.2.1",
 		"@types/node": "^10.17.21",
 		"@types/sinon": "^9.0.9",
-		"@types/ws": "^6.0.3",
+		"@types/ws": "^7.4.0",
 		"@types/yeoman-environment": "2.10.2",
 		"@typescript-eslint/parser": "^2.30.0",
 		"@typescript-eslint/eslint-plugin": "^2.30.0",
