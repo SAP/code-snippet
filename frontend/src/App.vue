@@ -70,6 +70,7 @@ import FileBrowserPlugin from "@sap-devx/inquirer-gui-file-browser-plugin";
 import FolderBrowserPlugin from "@sap-devx/inquirer-gui-folder-browser-plugin";
 import LoginPlugin from "@sap-devx/inquirer-gui-login-plugin";
 import TilesPlugin from "@sap-devx/inquirer-gui-tiles-plugin";
+import LabelPlugin from "@sap-devx/inquirer-gui-label-plugin";
 
 const FUNCTION = "__Function";
 const PENDING = "pending";
@@ -322,6 +323,7 @@ export default {
       this.registerPlugin(FolderBrowserPlugin);
       this.registerPlugin(LoginPlugin);
       this.registerPlugin(TilesPlugin);
+      this.registerPlugin(LabelPlugin);
 
       this.isInVsCode()
         ? (this.consoleClass = "consoleClassHidden")

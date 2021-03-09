@@ -20,6 +20,7 @@ const testVscode = {
 mockVscode(testVscode, "src/extension.ts");
 import * as extension from "../src/extension";
 import * as loggerWrapper from "../src/logger/logger-wrapper";
+import { SWA } from "../src/swa-tracker/swa-tracker-wrapper";
 
 describe('extension unit test', () => {
     let sandbox: any;
@@ -27,6 +28,7 @@ describe('extension unit test', () => {
     let windowMock: any;
     let workspaceMock: any;
     let loggerWrapperMock: any;
+    let swaTrackerWrapperMock: any;
     const testContext: any = { 
         subscriptions: [], 
         extensionPath: "testExtensionpath", 
@@ -45,6 +47,7 @@ describe('extension unit test', () => {
         loggerWrapperMock = sandbox.mock(loggerWrapper);
         commandsMock = sandbox.mock(testVscode.commands);
         windowMock = sandbox.mock(testVscode.window);
+        swaTrackerWrapperMock = sandbox.mock(SWA);
         workspaceMock = sandbox.mock(testVscode.workspace);
     });
 
@@ -52,13 +55,16 @@ describe('extension unit test', () => {
         loggerWrapperMock.verify();
         commandsMock.verify();
         windowMock.verify();
+        swaTrackerWrapperMock.verify();
         workspaceMock.verify();
     });
 
     describe('activate', () => {
         it("commands registration", () => {
             loggerWrapperMock.expects("createExtensionLoggerAndSubscribeToLogSettingsChanges");
+            loggerWrapperMock.expects("getLogger");
             loggerWrapperMock.expects("getClassLogger").twice();
+            swaTrackerWrapperMock.expects("createSWATracker");
             extension.activate(testContext);
             expect(_.size(_.keys(oRegisteredCommands))).to.be.equal(2);
             expect( _.get(oRegisteredCommands, "loadCodeSnippet")).to.be.not.undefined;
