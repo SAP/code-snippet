@@ -132,7 +132,7 @@
 		"@types/inquirer": "^6.5.0",
 		"@types/lodash": "^4.14.165",
 		"@types/mocha": "^8.2.1",
-		"@types/node": "^10.17.21",
+		"@types/node": "^14.14.32",
 		"@types/sinon": "^9.0.9",
 		"@types/ws": "^7.4.0",
 		"@types/yeoman-environment": "2.10.2",
