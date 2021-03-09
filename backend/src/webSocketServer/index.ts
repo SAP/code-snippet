@@ -7,6 +7,7 @@ import { ServerEvents } from './server-events';
 import backendMessages from "../messages";
 import { IChildLogger } from "@vscode-logging/logger";
 import { AppEvents } from '../app-events';
+import { getConsoleWarnLogger } from '../logger/logger-wrapper';
 
 class CodeSnippetWebSocketServer {
   private rpc: RpcExtensionWebSockets | undefined;
@@ -32,7 +33,7 @@ class CodeSnippetWebSocketServer {
     wss.on('connection', (ws) => {
       console.log('new ws connection');
 
-      this.rpc = new RpcExtensionWebSockets(ws);
+      this.rpc = new RpcExtensionWebSockets(ws, getConsoleWarnLogger());
       //TODO: Use RPC to send it to the browser log (as a collapsed pannel in Vue)
       const logger: AppLog = new ServerLog(this.rpc);
       const childLogger = {debug: () => "", error: () => "", fatal: () => "", warn: () => "", info: () => "", trace: () => "", getChildLogger: () => {return {} as IChildLogger;}};
