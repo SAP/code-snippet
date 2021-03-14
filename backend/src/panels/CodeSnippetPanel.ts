@@ -11,6 +11,7 @@ import { AppEvents } from "../app-events";
 import { VSCodeEvents } from '../vscode-events';
 import { AbstractWebviewPanel } from './AbstractWebviewPanel';
 import { Contributors } from "../contributors";
+import { getWebviewRpcLibraryLogger } from '../logger/logger-wrapper';
 
 
 export class CodeSnippetPanel extends AbstractWebviewPanel {
@@ -39,7 +40,7 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
 			super.setWebviewPanel(webViewPanel, uiOptions);
 
 			this.messages = _.assign({}, backendMessages, snippet.getMessages());
-			const rpc = new RpcExtension(this.webViewPanel.webview);
+			const rpc = new RpcExtension(this.webViewPanel.webview, getWebviewRpcLibraryLogger());
 			this.outputChannel = new OutputChannelLog(this.messages.channelName);
 			const vscodeEvents: AppEvents = new VSCodeEvents(rpc, this.webViewPanel);
 			this.codeSnippet = new CodeSnippet(rpc,

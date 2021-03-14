@@ -1,11 +1,41 @@
 version: 2.1 # use CircleCI 2.1
 
-defaults: &defaults
+default-build: &default-build
   working_directory: ~/repo
-  docker:
-    - image: circleci/node:10.17.0
+  steps:
+    - checkout 
+    - run:
+        name: install frontend
+        working_directory: frontend
+        command: npm install
+    - run:
+        name: build frontend
+        working_directory: frontend
+        command: npm run build
+    - run:
+        name: test frontend
+        working_directory: frontend
+        command: npm run test
+    - run:
+        name: build backend
+        working_directory: backend
+        command: npm run backend
+    - run:
+        name: test backend 
+        working_directory: backend
+        command: npm run test
 
 jobs: # a collection of steps
+  build-and-test-node10:
+    docker:
+      - image: circleci/node:10.23 # Current BAS node version
+    <<: *default-build
+
+  build-and-test-node12:
+    docker:
+      - image: circleci/node:12 # Future BAS node version
+    <<: *default-build
+
   compliance:
     docker:
       - image: circleci/python:3.6.4
@@ -18,7 +48,9 @@ jobs: # a collection of steps
             pip3 install --user reuse
             ~/.local/bin/reuse lint
   build-and-test:
-    <<: *defaults  
+    docker:
+      - image: circleci/node:14
+    working_directory: ~/repo
     steps:
       - checkout
       - restore_cache:
@@ -111,6 +143,8 @@ workflows:
   version: 2
   test-deploy:
     jobs:
+      - build-and-test-node10
+      - build-and-test-node12
       - compliance
       - build-and-test:
           filters:
