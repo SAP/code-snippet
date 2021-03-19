@@ -1,6 +1,6 @@
 {
 	"name": "code-snippet",
-	"version": "0.0.29",
+	"version": "0.0.30",
 	"displayName": "Code Snippet",
 	"publisher": "SAPOSS",
 	"author": {
@@ -121,7 +121,7 @@
 		"@sap/swa-for-sapbas-vsx": "1.1.11",
 		"datauri": "3.0.0",
 		"fs-extra": "9.1.0",
-		"lodash": "4.17.20",
+		"lodash": "4.17.21",
 		"strip-ansi": "6.0.0",
 		"ws": "7.4.4",
 		"yeoman-environment": "2.10.3"
