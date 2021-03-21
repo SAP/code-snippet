@@ -49,7 +49,7 @@
 	},
 	"dependencies": {
 		"@sap-devx/code-snippet-types": "0.0.6",
-		"lodash": "^4.17.15",
+		"lodash": "4.17.21",
 		"comment-json": "2.1.0",
 		"fs-extra": "7.0.1"
 	},
