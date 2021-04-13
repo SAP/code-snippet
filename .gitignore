@@ -5,3 +5,5 @@ reports
 **/out
 **/*.vsix
 **/coverage
+
+/.idea

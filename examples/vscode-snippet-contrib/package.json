@@ -41,11 +41,11 @@
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
+		"compile": "tsc -p ",
+		"watch": "tsc -watch -p ",
 		"pretest": "npm run compile",
 		"test": "node ./out/test/runTest.js",
-		"package": "vsce package ."
+		"package": "vsce package "
 	},
 	"dependencies": {
 		"@sap-devx/code-snippet-types": "0.0.6",

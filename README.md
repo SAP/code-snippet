@@ -27,7 +27,7 @@ To test run the framework you only need to build and install the backend package
 * Clone this repository
 * cd into the backend folder
     ```bash
-    cd backend
+    cd packages/backend
     ```
 * To install, compile and prepare the static resources run the following commands:
     ```bash
@@ -55,8 +55,8 @@ To run it do the following:
 
 #### Advanced scenarios
 To develop and contribute you can build and install each package separately. Instruction on each package in the dedicated readme.md file.
-* [Build & install the client](frontend/README.md)
-* [Build & install the backend](backend/README.md)
+* [Build & install the client](packages/frontend/README.md)
+* [Build & install the backend](packages/backend/README.md)
 
 ## How to obtain support
 To get more help, support, and information please open a github [issue](https://github.com/SAP/code-snippet/issues).

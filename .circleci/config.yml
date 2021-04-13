@@ -6,23 +6,23 @@ default-build: &default-build
     - checkout 
     - run:
         name: install frontend
-        working_directory: frontend
+        working_directory: packages/frontend
         command: npm install
     - run:
         name: build frontend
-        working_directory: frontend
+        working_directory: packages/frontend
         command: npm run build
     - run:
         name: test frontend
-        working_directory: frontend
+        working_directory: packages/frontend
         command: npm run test
     - run:
         name: build backend
-        working_directory: backend
+        working_directory: packages/backend
         command: npm run backend
     - run:
         name: test backend 
-        working_directory: backend
+        working_directory: packages/backend
         command: npm run test
 
 jobs: # a collection of steps
@@ -54,54 +54,54 @@ jobs: # a collection of steps
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "backend/package.json" }}-{{ checksum "frontend/package.json" }}
+          key: dependency-cache-{{ checksum "packages/backend/package.json" }}-{{ checksum "packages/frontend/package.json" }}
       - run:
           name: install frontend
-          working_directory: frontend
+          working_directory: packages/frontend
           command: npm install
       - run:
           name: build frontend
-          working_directory: frontend
+          working_directory: packages/frontend
           command: npm run build
       - run:
           name: test frontend
-          working_directory: frontend
+          working_directory: packages/frontend
           command: npm run test
       - store_artifacts: # special step to save test results as as artifact
-          path: frontend/coverage
+          path: packages/frontend/coverage
           destination: frontend-coverage
       - run:
           name: build backend
-          working_directory: backend
+          working_directory: packages/backend
           command: npm run backend
       - run:
           name: prepare frontend artifact
-          working_directory: backend
+          working_directory: packages/backend
           command: npm run frontend:copy
       - run:
           name: webpack backend
-          working_directory: backend
+          working_directory: packages/backend
           command: npm run webpack-prod
       - run:
           name: create .vsix
-          working_directory: backend
+          working_directory: packages/backend
           command: npx vsce package .
       - run:
           name: test backend 
-          working_directory: backend
+          working_directory: packages/backend
           command: npm run test
       - store_artifacts: # special step to save test results as as artifact
           # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/ 
-          path: backend/reports/coverage/lcov-report
+          path: packages/backend/reports/coverage/lcov-report
           destination: backend-coverage
       - run:
           name: copy frontend coverage
-          command: cp ./frontend/coverage/lcov.info ./backend/reports/coverage/lcov_frontend.info  
+          command: cp ./packages/frontend/coverage/lcov.info ./packages/backend/reports/coverage/lcov_frontend.info
       - run:
           name: merge frontend and backend coverage
-          command: ./backend/node_modules/.bin/lcov-result-merger './backend/reports/coverage/lco*.info' './backend/reports/coverage/lcov_merged.info'
+          command: ./packages/backend/node_modules/.bin/lcov-result-merger './packages/backend/reports/coverage/lco*.info' './packages/backend/reports/coverage/lcov_merged.info'
       - run:
-          command: cat ./backend/reports/coverage/lcov_merged.info | ./backend/node_modules/.bin/coveralls
+          command: cat ./packages/backend/reports/coverage/lcov_merged.info | ./packages/backend/node_modules/.bin/coveralls
           environment:
             COVERALLS_SERVICE_NAME: circle-ci
             COVERALLS_GIT_BRANCH: ${CIRCLE_BRANCH}    
@@ -112,15 +112,15 @@ jobs: # a collection of steps
             source $BASH_ENV
       - run:
           name: Lint commit message
-          working_directory: backend
+          working_directory: packages/backend
           command: echo "$COMMIT_MESSAGE" | npx commitlint  
       - save_cache:
           paths:
-            - backend/node_modules
-            - frontend/node_modules
-          key: dependency-cache-{{ checksum "backend/package.json" }}-{{ checksum "frontend/package.json" }}
+            - packages/backend/node_modules
+            - packages/frontend/node_modules
+          key: dependency-cache-{{ checksum "packages/backend/package.json" }}-{{ checksum "packages/frontend/package.json" }}
       - persist_to_workspace:
-          root: backend
+          root: packages/backend
           paths: 
            # https://golang.org/pkg/path/filepath/#Match
             - code-snippet-*
