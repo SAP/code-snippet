@@ -40,15 +40,15 @@
 		}
 	},
 	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ",
+		"ci": "npm-run-all clean compile package",
+		"clean": "rimraf ./dist",
+		"compile": "tsc -p .",
 		"watch": "tsc -watch -p ",
-		"pretest": "npm run compile",
 		"test": "node ./out/test/runTest.js",
-		"package": "vsce package "
+		"package": "vsce package --yarn"
 	},
 	"dependencies": {
-		"@sap-devx/code-snippet-types": "0.0.6",
+		"@sap-devx/code-snippet-types": "0.1.0",
 		"lodash": "4.17.21",
 		"comment-json": "2.1.0",
 		"fs-extra": "7.0.1"

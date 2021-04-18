@@ -1,17 +1,20 @@
 {
   "name": "code-snippet-frontend",
   "displayName": "Code Snippet Frontend",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "publisher": "SAP",
   "license": "Apache 2.0",
   "description": "Frontend for the Code Snippet framework",
   "private": true,
   "scripts": {
+    "ci": "npm-run-all clean build coverage coverage:copy",
+    "clean": "rimraf ./dist ./coverage",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "build-dev": "vue-cli-service build --mode development",
     "lint": "vue-cli-service lint",
-    "test": "vue-cli-service test:unit",
+    "coverage": "vue-cli-service test:unit",
+    "coverage:copy": "shx mkdir -p ../../coverage && shx cp -u ./coverage/lcov.info ../../coverage/lcov_frontend.info",
     "precommit": "lint-staged"
   },
   "dependencies": {

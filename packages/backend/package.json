@@ -1,6 +1,6 @@
 {
 	"name": "code-snippet",
-	"version": "0.0.30",
+	"version": "0.1.0",
 	"displayName": "Code Snippet",
 	"publisher": "SAPOSS",
 	"author": {
@@ -98,19 +98,16 @@
 		}
 	},
 	"scripts": {
+		"ci": "npm-run-all clean compile coverage bundle frontend:copy package coverage coverage:copy",
+		"clean": "rimraf ./dist ./coverage *.vsix",
 		"backend": "npm i && npm run compile",
-		"types": "cd ../types && npm i && npm run compile",
-		"frontend": "npm run frontend:install && npm run frontend:build && npm run frontend:copy",
-		"frontend:install": "cd ../frontend && npm i",
-		"frontend:build": "cd ../frontend && npm run build",
 		"frontend:copy": "webpack --mode none --config ./copy.frontend.webpack.config.js",
-		"webpack": "webpack --mode development",
-		"webpack-dev": "webpack --mode development --watch",
-		"webpack-prod": "webpack --mode production",
+		"bundle": "webpack --mode production",
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
-		"package": "npm run webpack && vsce package .",
-		"test": "nyc mocha -p tsconfig.json --recursive tests/**/*.spec.ts",
+		"package": "vsce package --yarn .",
+		"coverage": "nyc mocha -p tsconfig.json --recursive tests/**/*.spec.ts",
+		"coverage:copy": "shx mkdir -p ../../coverage && shx cp -u ./reports/coverage/lcov.info ../../coverage/lcov_backend.info",
 		"ws:run": "node ./out/src/webSocketServer/index.js",
 		"lint": "eslint . --ext .ts,.tsx --cache",
 		"lint:fix": "eslint . --ext .ts,.tsx --cache --fix"
@@ -124,7 +121,8 @@
 		"lodash": "4.17.21",
 		"strip-ansi": "6.0.0",
 		"ws": "7.4.4",
-		"yeoman-environment": "2.10.3"
+		"yeoman-environment": "2.10.3",
+		"code-snippet-frontend": "0.1.0"
 	},
 	"devDependencies": {
 		"@types/chai": "^4.2.14",

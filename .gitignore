@@ -1,3 +1,13 @@
+# sub-packages files for https://reuse.software (avoid duplication)
+.reuse
+LICENSES
+LICENSE
+
+# root files for https://reuse.software
+!/.reuse
+!/LICENSES
+!LICENSE
+
 package-lock.json
 reports
 **/node_modules
@@ -7,3 +17,4 @@ reports
 **/coverage
 
 /.idea
+package-lock.json

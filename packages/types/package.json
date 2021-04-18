@@ -2,7 +2,7 @@
   "name": "@sap-devx/code-snippet-types",
   "displayName": "code-snippet-types",
   "description": "code-snippet types",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "author": "SAP SE",
   "publisher": "SAP",
   "license": "Apache-2.0",
@@ -16,6 +16,8 @@
     "out/src/*"
   ],
   "scripts": {
+    "ci": "npm-run-all clean compile",
+    "clean": "rimraf ./dist",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./"
   },
