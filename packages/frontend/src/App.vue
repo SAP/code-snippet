@@ -6,10 +6,10 @@
       :height="64"
       :width="64"
       :color="isLoadingColor"
-      background-color="transparent" 
+      background-color="transparent"
       loader="spinner"
     ></loading>
-    
+
     <v-row class="main-row ma-0 pa-0">
       <v-col class="right-col">
         <v-row class="prompts-col">
@@ -21,7 +21,10 @@
               :donePath="donePath"
             />
 
-            <PromptInfo v-if="currentPrompt && !isDone" :currentPrompt="currentPrompt" />
+            <PromptInfo
+              v-if="currentPrompt && !isDone"
+              :currentPrompt="currentPrompt"
+            />
             <v-slide-x-transition>
               <Form
                 ref="form"
@@ -38,9 +41,12 @@
           style="height: 4rem; margin: 0"
           sm="auto"
         >
-          <v-col class="bottom-buttons-col" style="display:flex;align-items: center;">
+          <v-col
+            class="bottom-buttons-col"
+            style="display: flex; align-items: center"
+          >
             <v-btn id="apply" :disabled="!stepValidated" @click="apply">
-              {{messages.applyButton}}
+              {{ messages.applyButton }}
             </v-btn>
           </v-col>
         </v-row>
@@ -49,9 +55,13 @@
 
     <!-- TODO Handle scroll of above content when console is visible. low priority because it is for localhost console only -->
     <v-card :class="consoleClass" v-show="showConsole">
-      <v-footer absolute class="font-weight-medium" style="max-height: 300px; overflow-y: auto;">
+      <v-footer
+        absolute
+        class="font-weight-medium"
+        style="max-height: 300px; overflow-y: auto"
+      >
         <v-col class cols="12">
-          <div id="logArea" placeholder="No log entry">{{logText}}</div>
+          <div id="logArea" placeholder="No log entry">{{ logText }}</div>
         </v-col>
       </v-footer>
     </v-card>
@@ -96,12 +106,12 @@ function initialState() {
     showBusyIndicator: false,
     promptsInfoToDisplay: [],
     numOfSteps: 1,
-    code: 'const noop = () => {}',
-    originalCode: 'let nuup = () => {}',
+    code: "const noop = () => {}",
+    originalCode: "let nuup = () => {}",
     editrOptions: {
       lineNumbers: false,
-      renderSideBySide: false
-    }
+      renderSideBySide: false,
+    },
   };
 }
 
@@ -110,7 +120,7 @@ export default {
   components: {
     Done,
     PromptInfo,
-    Loading
+    Loading,
   },
   data() {
     return initialState();
@@ -125,36 +135,37 @@ export default {
     },
     currentPrompt() {
       return _.get(this.prompts, "[" + this.promptIndex + "]");
-    }
+    },
   },
   watch: {
     prompts: {
       handler() {
         this.setBusyIndicator();
-      }
+      },
     },
     "currentPrompt.status": {
       handler() {
         this.setBusyIndicator();
-      }
+      },
     },
     isDone: {
       handler() {
         this.setBusyIndicator();
-      }
-    }
+      },
+    },
   },
   methods: {
     setBusyIndicator() {
       this.showBusyIndicator =
         _.isEmpty(this.prompts) ||
-        (this.currentPrompt 
-         && (this.currentPrompt.status === PENDING || this.currentPrompt.status === EVALUATING) 
-         && !this.isDone);
+        (this.currentPrompt &&
+          (this.currentPrompt.status === PENDING ||
+            this.currentPrompt.status === EVALUATING) &&
+          !this.isDone);
     },
     apply() {
       if (this.resolve) {
-          this.resolve(this.currentPrompt.answers);
+        this.resolve(this.currentPrompt.answers);
       }
     },
     executeCommand(event) {
@@ -204,20 +215,21 @@ export default {
           if (question[prop] === FUNCTION) {
             const that = this;
             question[prop] = async (...args) => {
-            if (this.currentPrompt) {
-              this.currentPrompt.status = EVALUATING;
-            }
+              if (this.currentPrompt) {
+                this.currentPrompt.status = EVALUATING;
+              }
 
-            try {
-              return await that.rpc.invoke("evaluateMethod", [
-                args,
-                question.name,
-                prop
-              ]);
-            } catch(e) {
-              that.showBusyIndicator = false;
-              throw(e);
-            }};
+              try {
+                return await that.rpc.invoke("evaluateMethod", [
+                  args,
+                  question.name,
+                  prop,
+                ]);
+              } catch (e) {
+                that.showBusyIndicator = false;
+                throw e;
+              }
+            };
           }
         }
       }
@@ -249,7 +261,7 @@ export default {
         description: promptDescription,
         answers: {},
         active: true,
-        status: _.get(this.currentPrompt, "status")
+        status: _.get(this.currentPrompt, "status"),
       });
       return prompt;
     },
@@ -284,21 +296,16 @@ export default {
       }
     },
     initRpc() {
-      const functions = [
-        "showPrompt",
-        "setPromptList",
-        "snippetDone",
-        "log"
-      ];
-      _.forEach(functions, funcName => {
+      const functions = ["showPrompt", "setPromptList", "snippetDone", "log"];
+      _.forEach(functions, (funcName) => {
         this.rpc.registerMethod({
           func: this[funcName],
           thisArg: this,
-          name: funcName
+          name: funcName,
         });
       });
 
-      this.displayGeneratorsPrompt(); 
+      this.displayGeneratorsPrompt();
     },
     async displayGeneratorsPrompt() {
       await this.setState();
@@ -316,7 +323,7 @@ export default {
         registerPluginFunc(options.plugin);
       }
     },
-    
+
     init() {
       // register custom inquirer-gui plugins
       this.registerPlugin(FileBrowserPlugin);
@@ -334,7 +341,7 @@ export default {
       dataObj.rpc = this.rpc;
       Object.assign(this.$data, dataObj);
       this.init();
-      
+
       this.displayGeneratorsPrompt();
     },
     async setState() {
@@ -343,14 +350,14 @@ export default {
       if (this.isInVsCode()) {
         window.vscode.setState(uiOptions);
       }
-    }
+    },
   },
   created() {
     this.setupRpc();
   },
   mounted() {
     this.init();
-  }
+  },
 };
 </script>
 <style scoped>
@@ -394,10 +401,10 @@ div.consoleClassVisible .v-footer {
   padding: 0 !important;
 }
 .bottom-buttons-col {
-  border-top: 2px solid  var(--vscode-editorWidget-background, #252526);
+  border-top: 2px solid var(--vscode-editorWidget-background, #252526);
   padding-right: 25px;
 }
 .bottom-buttons-col > .v-btn:not(:last-child) {
-    margin-right: 10px !important;
+  margin-right: 10px !important;
 }
 </style>

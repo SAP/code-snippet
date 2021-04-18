@@ -1,10 +1,6 @@
 {
-  "require": [
-    "ts-node/register/transpile-only"
-  ],
-  "include": [
-    "src/**/*.ts"
-  ],
+  "require": ["ts-node/register/transpile-only"],
+  "include": ["src/**/*.ts"],
   "exclude": [
     "src/logger/*.ts",
     "src/panels/*.ts",
@@ -13,13 +9,8 @@
     "src/output-channel-log.ts",
     "src/youi-adapter.ts"
   ],
-  "reporter": [
-    "lcov",
-    "text"
-  ],
-  "extension": [
-    ".ts"
-  ],
+  "reporter": ["lcov", "text"],
+  "extension": [".ts"],
   "all": true,
   "temp-dir": "./reports/.nyc_output",
   "report-dir": "./reports/coverage",

@@ -9,7 +9,6 @@ import TerminalAdapter = require("yeoman-environment/lib/adapter");
 import { SWA } from "./swa-tracker/swa-tracker-wrapper";
 
 export class CodeSnippet {
-
   private static funcReplacer(key: any, value: any) {
     return _.isFunction(value) ? "__Function" : value;
   }
@@ -23,9 +22,18 @@ export class CodeSnippet {
   private promptCount: number;
   private currentQuestions: TerminalAdapter.Questions<any>;
   private snippetName: string;
-  private readonly customQuestionEventHandlers: Map<string, Map<string, Function>>;
+  private readonly customQuestionEventHandlers: Map<
+    string,
+    Map<string, Function>
+  >;
 
-  constructor(rpc: IRpc, appEvents: AppEvents, outputChannel: AppLog, logger: IChildLogger, uiOptions: any) {
+  constructor(
+    rpc: IRpc,
+    appEvents: AppEvents,
+    outputChannel: AppLog,
+    logger: IChildLogger,
+    uiOptions: any
+  ) {
     this.rpc = rpc;
     if (!this.rpc) {
       throw new Error("rpc must be set");
@@ -35,13 +43,16 @@ export class CodeSnippet {
     this.outputChannel = outputChannel;
     this.logger = logger;
     this.rpc.setResponseTimeout(3600000);
-    this.rpc.registerMethod({ func: this.receiveIsWebviewReady, thisArg: this });
+    this.rpc.registerMethod({
+      func: this.receiveIsWebviewReady,
+      thisArg: this,
+    });
     this.rpc.registerMethod({ func: this.applyCode, thisArg: this });
     this.rpc.registerMethod({ func: this.evaluateMethod, thisArg: this });
     this.rpc.registerMethod({ func: this.toggleOutput, thisArg: this });
     this.rpc.registerMethod({ func: this.logError, thisArg: this });
     this.rpc.registerMethod({ func: this.getState, thisArg: this });
-		this.rpc.registerMethod({ func: this.executeCommand, thisArg: this });
+    this.rpc.registerMethod({ func: this.executeCommand, thisArg: this });
 
     this.promptCount = 0;
     this.currentQuestions = {};
@@ -63,8 +74,14 @@ export class CodeSnippet {
     return state;
   }
 
-  public registerCustomQuestionEventHandler(questionType: string, methodName: string, handler: Function): void {
-    let entry: Map<string, Function> = this.customQuestionEventHandlers.get(questionType);
+  public registerCustomQuestionEventHandler(
+    questionType: string,
+    methodName: string,
+    handler: Function
+  ): void {
+    let entry: Map<string, Function> = this.customQuestionEventHandlers.get(
+      questionType
+    );
     if (entry === undefined) {
       this.customQuestionEventHandlers.set(questionType, new Map());
       entry = this.customQuestionEventHandlers.get(questionType);
@@ -72,9 +89,9 @@ export class CodeSnippet {
     entry.set(methodName, handler);
   }
 
-	private executeCommand(id: string, ...args: any[]): void {
-		this.appEvents.executeCommand(id, ...args);
-	}
+  private executeCommand(id: string, ...args: any[]): void {
+    this.appEvents.executeCommand(id, ...args);
+  }
 
   private async logError(error: any, prefixMessage?: string) {
     let errorMessage = this.getErrorInfo(error);
@@ -105,29 +122,43 @@ export class CodeSnippet {
   }
 
   /**
-   * 
+   *
    * @param answers - partial answers for the current prompt -- the input parameter to the method to be evaluated
    * @param method
    */
-  private async evaluateMethod(params: any[], questionName: string, methodName: string): Promise<any> {
+  private async evaluateMethod(
+    params: any[],
+    questionName: string,
+    methodName: string
+  ): Promise<any> {
     try {
       if (!_.isEmpty(this.currentQuestions)) {
-        const relevantQuestion: any = _.find(this.currentQuestions, question => {
-          return _.get(question, "name") === questionName;
-        });
+        const relevantQuestion: any = _.find(
+          this.currentQuestions,
+          (question) => {
+            return _.get(question, "name") === questionName;
+          }
+        );
         if (relevantQuestion) {
-          const guiType = _.get(relevantQuestion, "guiOptions.type", relevantQuestion.guiType);
-          const customQuestionEventHandler: Function = this.getCustomQuestionEventHandler(guiType, methodName);
-          return _.isUndefined(customQuestionEventHandler) ? 
-            await relevantQuestion[methodName].apply(this.gen, params) : 
-            await customQuestionEventHandler.apply(this.gen, params);
+          const guiType = _.get(
+            relevantQuestion,
+            "guiOptions.type",
+            relevantQuestion.guiType
+          );
+          const customQuestionEventHandler: Function = this.getCustomQuestionEventHandler(
+            guiType,
+            methodName
+          );
+          return _.isUndefined(customQuestionEventHandler)
+            ? await relevantQuestion[methodName].apply(this.gen, params)
+            : await customQuestionEventHandler.apply(this.gen, params);
         }
       }
     } catch (error) {
       const questionInfo = `Could not update method '${methodName}' in '${questionName}' question in generator '${this.gen.options.namespace}'`;
       const errorMessage = await this.logError(error, questionInfo);
       this.onFailure(true, this.snippetName, errorMessage);
-    } 
+    }
   }
 
   private async receiveIsWebviewReady() {
@@ -136,7 +167,9 @@ export class CodeSnippet {
       this.currentQuestions = questions;
       const normalizedQuestions = this.normalizeFunctions(questions);
       SWA.updateSnippetStarted(this.uiOptions.messages.title, this.logger);
-      const response: any = await this.rpc.invoke("showPrompt", [normalizedQuestions]);
+      const response: any = await this.rpc.invoke("showPrompt", [
+        normalizedQuestions,
+      ]);
       if (_.isEmpty(response)) {
         this.logError(this.uiOptions.messages.noResponse);
       } else {
@@ -151,11 +184,15 @@ export class CodeSnippet {
     return this.outputChannel.showOutput();
   }
 
-  public async showPrompt(questions: TerminalAdapter.Questions<any>): Promise<inquirer.Answers> {
+  public async showPrompt(
+    questions: TerminalAdapter.Questions<any>
+  ): Promise<inquirer.Answers> {
     this.promptCount++;
 
     this.currentQuestions = questions;
-    const mappedQuestions: TerminalAdapter.Questions<any> = this.normalizeFunctions(questions);
+    const mappedQuestions: TerminalAdapter.Questions<any> = this.normalizeFunctions(
+      questions
+    );
     if (_.isEmpty(mappedQuestions)) {
       return {};
     }
@@ -164,8 +201,13 @@ export class CodeSnippet {
     return answers;
   }
 
-  private getCustomQuestionEventHandler(questionType: string, methodName: string): Function {
-    const entry: Map<string, Function> = this.customQuestionEventHandlers.get(questionType);
+  private getCustomQuestionEventHandler(
+    questionType: string,
+    methodName: string
+  ): Function {
+    const entry: Map<string, Function> = this.customQuestionEventHandlers.get(
+      questionType
+    );
     if (entry !== undefined) {
       return entry.get(methodName);
     }
@@ -180,7 +222,11 @@ export class CodeSnippet {
     }
   }
 
-  private async onFailure(showDoneMessage: boolean, snippetrName: string, error: any) {
+  private async onFailure(
+    showDoneMessage: boolean,
+    snippetrName: string,
+    error: any
+  ) {
     const messagePrefix = `${snippetrName} snippet failed.`;
     const errorMessage: string = await this.logError(error, messagePrefix);
     SWA.updateSnippetEnded(snippetrName, false, this.logger, errorMessage);
@@ -192,7 +238,7 @@ export class CodeSnippet {
   private getErrorInfo(error: any = "") {
     if (_.isString(error)) {
       return error;
-    } 
+    }
 
     const name = _.get(error, "name", "");
     const message = _.get(error, "message", "");
@@ -200,7 +246,7 @@ export class CodeSnippet {
 
     return `name: ${name}\n message: ${message}\n stack: ${stack}\n string: ${error.toString()}\n`;
   }
-  
+
   private async createCodeSnippetQuestions(): Promise<any[]> {
     const snippet = this.uiOptions.snippet;
     // if (_.isNil(snippet)) {
@@ -222,7 +268,6 @@ export class CodeSnippet {
     //   throw new Error(this.uiOptions.snippetMustExist);
     // }
 
-
     let we: any = undefined;
 
     if (snippet && snippet.getWorkspaceEdit) {
@@ -236,25 +281,29 @@ export class CodeSnippet {
   }
 
   /**
-   * 
-   * @param questions 
+   *
+   * @param questions
    * returns a deep copy of the original questions, but replaces Function properties with a placeholder
-   * 
+   *
    * Functions are lost when being passed to client (using JSON.Stringify)
    * Also functions cannot be evaluated on client)
    */
-  private normalizeFunctions(questions: TerminalAdapter.Questions<any>): TerminalAdapter.Questions<any> {
+  private normalizeFunctions(
+    questions: TerminalAdapter.Questions<any>
+  ): TerminalAdapter.Questions<any> {
     this.addCustomQuestionEventHandlers(questions);
     return JSON.parse(JSON.stringify(questions, CodeSnippet.funcReplacer));
   }
 
-  private addCustomQuestionEventHandlers(questions: TerminalAdapter.Questions<any>): void {
-    for (const question of (questions as any[])) {
+  private addCustomQuestionEventHandlers(
+    questions: TerminalAdapter.Questions<any>
+  ): void {
+    for (const question of questions as any[]) {
       const guiType = _.get(question, "guiOptions.type", question.guiType);
       const questionHandlers = this.customQuestionEventHandlers.get(guiType);
       if (questionHandlers) {
         questionHandlers.forEach((handler, methodName) => {
-          (question)[methodName] = handler;
+          question[methodName] = handler;
         });
       }
     }

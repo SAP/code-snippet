@@ -1,18 +1,18 @@
 //@ts-check
 
-'use strict';
+"use strict";
 
-const CopyPlugin = require('copy-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 const path = require("path");
 
 /**@type {import('webpack').Configuration}*/
 const config = {
   entry: "./src/dummy.js",
-  output: {path: path.resolve(__dirname, 'dummy')},
+  output: { path: path.resolve(__dirname, "dummy") },
   plugins: [
     new CopyPlugin([
-      { from: '../frontend/dist/', to: '../dist/media/', force: true }
+      { from: "../frontend/dist/", to: "../dist/media/", force: true },
     ]),
-  ]
+  ],
 };
 module.exports = config;
