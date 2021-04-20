@@ -1,5 +1,4 @@
 import * as vscode from "vscode";
-import * as _ from "lodash";
 import { AppEvents } from "./app-events";
 import { RpcCommon } from "@sap-devx/webview-rpc/out.ext/rpc-common";
 
@@ -38,7 +37,7 @@ export class VSCodeEvents implements AppEvents {
   private showDoneMessage(
     success: boolean,
     message: string,
-    targetFolderPath?: string
+    targetFolderPath?: string // eslint-disable-line @typescript-eslint/no-unused-vars -- must match interface
   ): Thenable<any> {
     if (success) {
       return vscode.window.showInformationMessage(message);

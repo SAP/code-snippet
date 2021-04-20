@@ -17,11 +17,14 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
   public static CODE_SNIPPET = "Code Snippet";
   private static channel: vscode.OutputChannel;
 
-  public toggleOutput() {
+  public toggleOutput(): void {
     this.outputChannel.showOutput();
   }
 
-  public setWebviewPanel(webViewPanel: vscode.WebviewPanel, uiOptions?: any) {
+  public setWebviewPanel(
+    webViewPanel: vscode.WebviewPanel,
+    uiOptions?: unknown
+  ): void {
     const contributorInfo = _.get(uiOptions, "contributorInfo", uiOptions);
 
     if (_.get(uiOptions, "stateError")) {
@@ -127,12 +130,12 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
     }
   }
 
-  public disposeWebviewPanel() {
+  public disposeWebviewPanel(): void {
     super.disposeWebviewPanel();
     this.codeSnippet = null;
   }
 
-  public initWebviewPanel() {
+  public initWebviewPanel(): void {
     super.initWebviewPanel();
     this.webViewPanel.title = this.messages.title;
   }

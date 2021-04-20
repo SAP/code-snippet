@@ -3,10 +3,11 @@ import * as vscode from "vscode";
 import * as _ from "lodash";
 import { ConfigHelper } from "./configHelper";
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types -- tech debt missing interface definition...
 export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "snippet1" is now active!');
 
-  let disposable = vscode.commands.registerCommand(
+  const disposable = vscode.commands.registerCommand(
     "extension.showCodeSnippetContrib",
     (uri: vscode.Uri) => {
       try {
@@ -26,7 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
   const api = {
     getCodeSnippets(context: any) {
       const snippets = new Map<string, ISnippet>();
-      let snippet: ISnippet = {
+      const snippet: ISnippet = {
         getMessages() {
           return {
             title: "Create Launch Configuration",
@@ -36,14 +37,14 @@ export function activate(context: vscode.ExtensionContext) {
           };
         },
         async getQuestions() {
-          return createCodeSnippetQuestions(context);
+          return createCodeSnippetQuestions();
         },
         async getWorkspaceEdit(answers: any) {
           let outputFile: string;
           if (context.uri) {
             outputFile = context.uri.path;
           } else {
-            let outputFolder = _.get(
+            const outputFolder = _.get(
               vscode,
               "workspace.workspaceFolders[0].uri.path"
             );
@@ -87,7 +88,7 @@ export function activate(context: vscode.ExtensionContext) {
   return api;
 }
 
-function createCodeSnippetQuestions(context: any): any[] {
+function createCodeSnippetQuestions(): any[] {
   const questions: any[] = [];
 
   questions.push(
@@ -112,6 +113,7 @@ function createCodeSnippetQuestions(context: any): any[] {
       type: "input",
       name: "configName",
       message: "Name",
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars -- should match interface
       validate: (value: any, answers: any) => {
         return value.length > 1 ? true : "Enter at least 2 characters";
       },
@@ -136,5 +138,3 @@ function createCodeSnippetQuestions(context: any): any[] {
 
   return questions;
 }
-
-export function deactivate() {}

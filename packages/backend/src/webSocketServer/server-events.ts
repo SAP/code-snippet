@@ -1,5 +1,6 @@
 import { AppEvents } from "../app-events";
 import { RpcCommon } from "@sap-devx/webview-rpc/out.ext/rpc-common";
+import { WorkspaceEdit } from "vscode";
 
 export class ServerEvents implements AppEvents {
   private readonly rpc: RpcCommon;
@@ -8,7 +9,8 @@ export class ServerEvents implements AppEvents {
     this.rpc = rpc;
   }
 
-  public async doApply(we: any): Promise<any> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- must match interface
+  public async doApply(we: WorkspaceEdit): Promise<any> {
     // Apply code
   }
 
@@ -16,6 +18,7 @@ export class ServerEvents implements AppEvents {
     this.rpc.invoke("snippetDone", [suceeded, message, targetPath]);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- must match interface
   executeCommand(id: string, ...args: any[]): Thenable<any> {
     return;
   }

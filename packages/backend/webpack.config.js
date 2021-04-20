@@ -1,11 +1,8 @@
-//@ts-check
-
 "use strict";
 
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 
-/**@type {import('webpack').Configuration}*/
 const config = {
   target: "node", // vscode extensions run in a Node.js-context 📖 -> https://webpack.js.org/configuration/node/
   node: { global: true },

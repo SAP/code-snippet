@@ -10,7 +10,8 @@ export class Contributors {
     this.logger = getClassLogger("Contributors");
   }
 
-  public async getSnippet(contributorInfo: any) {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types -- legacy code + too many 'any' types...
+  public async getSnippet(contributorInfo: unknown) {
     const contributorId = _.get(contributorInfo, "contributorId");
     const extension = this.getContributorExtension(contributorId);
     if (extension) {

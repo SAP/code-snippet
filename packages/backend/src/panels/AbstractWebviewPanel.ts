@@ -27,13 +27,18 @@ export abstract class AbstractWebviewPanel {
     this.disposables = [];
   }
 
-  public setWebviewPanel(webviewPanel: vscode.WebviewPanel, uiOptions?: any) {
+  public setWebviewPanel(
+    webviewPanel: vscode.WebviewPanel,
+    uiOptions?: { viewColumn?: vscode.ViewColumn }
+  ): void {
     this.webViewPanel = webviewPanel;
     this.uiOptions = uiOptions;
     this.viewColumn = this.uiOptions?.viewColumn || vscode.ViewColumn.One;
   }
 
-  public loadWebviewPanel(uiOptions?: any) {
+  public loadWebviewPanel(uiOptions?: {
+    viewColumn?: vscode.ViewColumn;
+  }): void {
     if (this.webViewPanel && _.isEmpty(uiOptions)) {
       this.webViewPanel.reveal();
     } else {
@@ -59,14 +64,14 @@ export abstract class AbstractWebviewPanel {
     );
   }
 
-  protected disposeWebviewPanel() {
+  protected disposeWebviewPanel(): void {
     const displayedPanel = this.webViewPanel;
     if (displayedPanel) {
       this.dispose();
     }
   }
 
-  protected initWebviewPanel() {
+  protected initWebviewPanel(): void {
     // Set the webview's initial html content
     this.initHtmlContent();
 
@@ -81,7 +86,7 @@ export abstract class AbstractWebviewPanel {
 
     // Update the content based on view changes
     this.webViewPanel.onDidChangeViewState(
-      (e) => {
+      () => {
         this.setFocused(this.webViewPanel.active);
       },
       null,
@@ -89,7 +94,7 @@ export abstract class AbstractWebviewPanel {
     );
   }
 
-  protected setFocused(focusedValue: boolean) {
+  protected setFocused(focusedValue: boolean): void {
     vscode.commands.executeCommand("setContext", this.focusedKey, focusedValue);
   }
 
@@ -108,7 +113,7 @@ export abstract class AbstractWebviewPanel {
     }
   }
 
-  protected async initHtmlContent() {
+  protected async initHtmlContent(): Promise<void> {
     let indexHtml = await fsextra.readFile(
       path.join(this.mediaPath, this.htmlFileName),
       "utf8"

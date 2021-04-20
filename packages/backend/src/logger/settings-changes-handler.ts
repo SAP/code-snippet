@@ -19,7 +19,9 @@ export function logLoggerDetails(
 /**
  * @param {vscode.ExtensionContext} context
  */
-export function listenToLogSettingsChanges(context: vscode.ExtensionContext) {
+export function listenToLogSettingsChanges(
+  context: vscode.ExtensionContext
+): void {
   // To enable dynamic logging level we must listen to VSCode configuration changes
   // on our `loggingLevelConfigProp` configuration setting.
   context.subscriptions.push(

@@ -282,7 +282,6 @@ export default {
     setupRpc() {
       /* istanbul ignore if */
       if (this.isInVsCode()) {
-        // eslint-disable-next-line
         window.vscode = acquireVsCodeApi();
         this.rpc = new RpcBrowser(window, window.vscode);
         this.initRpc();

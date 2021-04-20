@@ -94,7 +94,7 @@ function createCodeSnippetQuestions(): any[] {
       type: "input",
       name: "actionName",
       message: "Action Name",
-      validate: (value: any, answers: any) => {
+      validate: (value: any) => {
         return value.length > 1 ? true : "Enter at least 2 characters";
       },
     },

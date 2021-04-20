@@ -18,12 +18,13 @@ export class CodeSnippet {
   private readonly appEvents: AppEvents;
   private readonly outputChannel: AppLog;
   private readonly logger: IChildLogger;
-  private gen: Generator | undefined; // eslint-disable-line @typescript-eslint/prefer-readonly
+  private gen: Generator | undefined;
   private promptCount: number;
   private currentQuestions: TerminalAdapter.Questions<any>;
   private snippetName: string;
   private readonly customQuestionEventHandlers: Map<
     string,
+    // eslint-disable-next-line @typescript-eslint/ban-types -- legacy code
     Map<string, Function>
   >;
 
@@ -32,6 +33,7 @@ export class CodeSnippet {
     appEvents: AppEvents,
     outputChannel: AppLog,
     logger: IChildLogger,
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types -- legacy code
     uiOptions: any
   ) {
     this.rpc = rpc;
@@ -77,8 +79,10 @@ export class CodeSnippet {
   public registerCustomQuestionEventHandler(
     questionType: string,
     methodName: string,
+    // eslint-disable-next-line @typescript-eslint/ban-types -- legacy code
     handler: Function
   ): void {
+    // eslint-disable-next-line @typescript-eslint/ban-types -- legacy code
     let entry: Map<string, Function> = this.customQuestionEventHandlers.get(
       questionType
     );
@@ -145,6 +149,7 @@ export class CodeSnippet {
             "guiOptions.type",
             relevantQuestion.guiType
           );
+          // eslint-disable-next-line @typescript-eslint/ban-types -- legacy code
           const customQuestionEventHandler: Function = this.getCustomQuestionEventHandler(
             guiType,
             methodName
@@ -204,7 +209,9 @@ export class CodeSnippet {
   private getCustomQuestionEventHandler(
     questionType: string,
     methodName: string
+    // eslint-disable-next-line @typescript-eslint/ban-types -- legacy code
   ): Function {
+    // eslint-disable-next-line @typescript-eslint/ban-types -- legacy code
     const entry: Map<string, Function> = this.customQuestionEventHandlers.get(
       questionType
     );

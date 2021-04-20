@@ -71,6 +71,7 @@ export function getConsoleWarnLogger(): IChildLogger {
   const consoleLog = (msg: string, ...args: any[]): void => {
     console.log(msg, args);
   };
+  // eslint-disable-next-line @typescript-eslint/no-empty-function -- intentional
   const noopLog = () => {};
   const warningLogger = {
     fatal: consoleLog,
@@ -88,7 +89,7 @@ export function getConsoleWarnLogger(): IChildLogger {
 
 export function createExtensionLoggerAndSubscribeToLogSettingsChanges(
   context: vscode.ExtensionContext
-) {
+): void {
   createExtensionLogger(context);
   // Subscribe to Logger settings changes.
   listenToLogSettingsChanges(context);

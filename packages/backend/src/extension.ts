@@ -1,4 +1,3 @@
-import * as _ from "lodash";
 import * as vscode from "vscode";
 import {
   createExtensionLoggerAndSubscribeToLogSettingsChanges,
@@ -11,7 +10,7 @@ import { SWA } from "./swa-tracker/swa-tracker-wrapper";
 let extContext: vscode.ExtensionContext;
 let codeSnippetPanel: CodeSnippetPanel;
 
-export function activate(context: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext): void {
   extContext = context;
 
   try {
@@ -52,6 +51,6 @@ function registerWebviewPanelSerializer(abstractPanel: AbstractWebviewPanel) {
   });
 }
 
-export function deactivate() {
+export function deactivate(): void {
   codeSnippetPanel = null;
 }

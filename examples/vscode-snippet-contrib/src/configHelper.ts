@@ -26,7 +26,7 @@ export class ConfigHelper {
   public static async getRange(uri: vscode.Uri): Promise<vscode.Range> {
     let textRange;
     try {
-      let doc = await vscode.workspace.openTextDocument(uri);
+      const doc = await vscode.workspace.openTextDocument(uri);
       const firstLine = doc.lineAt(0);
       const lastLine = doc.lineAt(doc.lineCount - 1);
       textRange = new vscode.Range(firstLine.range.start, lastLine.range.end);

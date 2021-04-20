@@ -1,4 +1,3 @@
-import * as mocha from "mocha";
 import { expect } from "chai";
 import * as _ from "lodash";
 import * as sinon from "sinon";
@@ -57,6 +56,12 @@ describe("Contributors unit test", () => {
       return questions;
     }
 
+    const messageValue = {
+      title: "Create a new action",
+      description:
+        "Select the action, target, service and the entity set you want to connect to.",
+    };
+
     function getSnippet() {
       return {
         getMessages() {
@@ -70,12 +75,6 @@ describe("Contributors unit test", () => {
         },
       };
     }
-
-    const messageValue = {
-      title: "Create a new action",
-      description:
-        "Select the action, target, service and the entity set you want to connect to.",
-    };
 
     const snippetName = "snippet_test";
     const api = {
@@ -206,7 +205,6 @@ describe("Contributors unit test", () => {
       const contributors = new Contributors();
       const res = await contributors.getSnippet(uiOptions);
       expect(res).to.be.undefined;
-      const warnMessage = `Extension '${uiOptions.contributorId}' could not be found.`;
       expect(warnSpy.calledOnce).to.be.true;
       warnSpy.restore();
     });

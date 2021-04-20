@@ -2,6 +2,7 @@ import { SWATracker } from "@sap/swa-for-sapbas-vsx";
 import { IChildLogger } from "@vscode-logging/logger";
 import _ = require("lodash");
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires -- legacy code
 const jsonPackage = require("./../../package.json");
 
 /**
@@ -43,7 +44,7 @@ export class SWA {
     return SWA.swaTracker;
   }
 
-  public static createSWATracker(logger?: IChildLogger) {
+  public static createSWATracker(logger?: IChildLogger): void {
     try {
       const swaTracker = new SWATracker(
         jsonPackage.publisher,
@@ -86,7 +87,7 @@ export class SWA {
   public static updateSnippetStarted(
     snippetName: string,
     logger?: IChildLogger
-  ) {
+  ): void {
     try {
       if (SWA.isInitialized()) {
         const eventType = SWA.EVENT_TYPES.SNIPPET_CREATION_STARTED;
@@ -115,7 +116,7 @@ export class SWA {
     isSucceeded: boolean,
     logger?: IChildLogger,
     errorMessage?: string
-  ) {
+  ): void {
     try {
       if (SWA.isInitialized()) {
         const eventType = isSucceeded

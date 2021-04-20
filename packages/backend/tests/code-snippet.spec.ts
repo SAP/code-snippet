@@ -1,9 +1,6 @@
-import * as mocha from "mocha";
-import * as sinon from "sinon";
-const datauri = require("datauri"); // eslint-disable-line @typescript-eslint/no-var-requires
+const datauri = require("datauri"); // eslint-disable-line @typescript-eslint/no-var-requires -- legacy code
 import * as fsextra from "fs-extra";
 import { expect } from "chai";
-import * as _ from "lodash";
 import { CodeSnippet } from "../src/code-snippet";
 import { AppLog } from "../src/app-log";
 import { AppEvents } from "../src/app-events";
@@ -15,6 +12,7 @@ import {
 import { IChildLogger } from "@vscode-logging/logger";
 import { fail } from "assert";
 import { SWA } from "../src/swa-tracker/swa-tracker-wrapper";
+import * as sinon from "sinon";
 
 describe("codeSnippet unit test", () => {
   let sandbox: any;
@@ -26,19 +24,23 @@ describe("codeSnippet unit test", () => {
   let swaTrackerWrapperMock: any;
 
   class TestEvents implements AppEvents {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- must match interface
     public async doApply(we: any): Promise<any> {
       return;
     }
     public doSnippeDone(
+      /* eslint-disable @typescript-eslint/no-unused-vars -- must match interface */
       success: boolean,
       message: string,
       targetPath?: string
+      /* eslint-enable @typescript-eslint/no-unused-vars -- must match interface */
     ): void {
       return;
     }
     public doClose(): void {
       return;
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- must match interface
     public executeCommand(command: string, ...rest: any[]): Thenable<any> {
       return;
     }
@@ -122,7 +124,7 @@ describe("codeSnippet unit test", () => {
     async getQuestions() {
       return "createCodeSnippetQuestions";
     },
-    async getWorkspaceEdit(answers: any, context: any) {
+    async getWorkspaceEdit() {
       return "getWorkspaceEdit";
     },
   };
@@ -286,11 +288,6 @@ describe("codeSnippet unit test", () => {
         },
         { name: "q3" },
       ];
-      const answers = {
-        q1: "x",
-        q2: "y",
-        q3: "z",
-      };
       for (const question of questions) {
         switch (question.name) {
           case "a":
