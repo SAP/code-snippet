@@ -1,28 +1,27 @@
 {
   "name": "@sap-devx/code-snippet-types",
-  "displayName": "code-snippet-types",
   "description": "code-snippet types",
   "version": "0.1.0",
-  "author": "SAP SE",
-  "publisher": "SAP",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/SAP/code-snippet.git"
   },
-  "main": "out/src/Snippet.js",
-  "types": "",
+  "typings": "./api.d.ts",
   "files": [
-    "out/src/*"
+    ".reuse",
+    "LICENSES",
+    "api.d.ts"
   ],
   "scripts": {
     "ci": "npm-run-all clean compile",
-    "clean": "rimraf ./dist",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./"
+    "clean": "echo \"nothing to clean\"",
+    "compile": "tsc -p ./"
   },
-  "devDependencies": {
-    "typescript": "^3.8.3",
-    "@types/vscode": "^1.36.0"
+  "dependencies": {
+    "@types/vscode": "1.55.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

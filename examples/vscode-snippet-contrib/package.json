@@ -2,8 +2,9 @@
   "name": "vscode-snippet-contrib",
   "displayName": "vscode-snippet-contrib",
   "description": "",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "publisher": "SAPOSS",
+  "private": true,
   "engines": {
     "vscode": "^1.44.2"
   },
@@ -12,6 +13,7 @@
     "url": "https://github.com/SAP/code-snippet",
     "directory": "vscode-snippet-contrib"
   },
+  "main": "./out/extension.js",
   "extensionDependencies": [
     "saposs.code-snippet"
   ],
@@ -21,7 +23,6 @@
   "activationEvents": [
     "onCommand:extension.showCodeSnippetContrib"
   ],
-  "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
@@ -43,8 +44,7 @@
     "ci": "npm-run-all clean compile package",
     "clean": "rimraf ./dist",
     "compile": "tsc -p .",
-    "watch": "tsc -watch -p ",
-    "test": "node ./out/test/runTest.js",
+    "//TODO:": "--yarn needs bundling first to work...",
     "package": "vsce package --yarn"
   },
   "dependencies": {
@@ -63,8 +63,6 @@
     "@types/vscode": "^1.40.0",
     "glob": "^7.1.5",
     "mocha": "^6.2.2",
-    "typescript": "^3.9.7",
-    "vsce": "^1.69.0",
-    "vscode-test": "^1.2.2"
+    "vsce": "^1.69.0"
   }
 }

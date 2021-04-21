@@ -106,7 +106,7 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "package": "vsce package --yarn .",
-    "coverage": "nyc mocha -p tsconfig.json --recursive tests/**/*.spec.ts",
+    "coverage": "nyc mocha -p tsconfig.json --recursive test/**/*.spec.ts",
     "coverage:copy": "shx mkdir -p ../../coverage && shx cp -u ./reports/coverage/lcov.info ../../coverage/lcov_backend.info",
     "ws:run": "node ./out/src/webSocketServer/index.js"
   },
@@ -132,7 +132,6 @@
     "@types/sinon": "^9.0.9",
     "@types/ws": "^7.4.0",
     "@types/yeoman-environment": "2.10.2",
-    "typescript": "^3.9.7",
     "chai": "^4.2.0",
     "copy-webpack-plugin": "^5.0.5",
     "mocha": "^7.0.0",

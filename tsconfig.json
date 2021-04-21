@@ -5,6 +5,9 @@
     },
     {
       "path": "./packages/types"
+    },
+    {
+      "path": "./examples/vscode-snippet-contrib"
     }
   ],
   "files": [],

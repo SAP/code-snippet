@@ -15,6 +15,7 @@ reports
 **/out
 **/*.vsix
 **/coverage
+tsconfig.tsbuildinfo
 
 /.idea
 package-lock.json
