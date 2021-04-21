@@ -13,9 +13,8 @@
     "build": "vue-cli-service build",
     "build-dev": "vue-cli-service build --mode development",
     "lint": "vue-cli-service lint",
-    "coverage": "vue-cli-service test:unit",
-    "coverage:copy": "shx mkdir -p ../../coverage && shx cp -u ./coverage/lcov.info ../../coverage/lcov_frontend.info",
-    "precommit": "lint-staged"
+    "coverage": "vue-cli-service test:unit --testRegex=\"/test/.*\\.spec\\.js$\"",
+    "coverage:copy": "shx mkdir -p ../../coverage && shx cp -u ./coverage/lcov.info ../../coverage/lcov_frontend.info"
   },
   "dependencies": {
     "@mdi/font": "^5.1.45",
@@ -40,7 +39,6 @@
     "@vue/cli-service": "4.5.4",
     "@vue/test-utils": "1.0.5",
     "babel-jest": "^24.9.0",
-    "husky": "4.2.5",
     "jest": "^24.9.0",
     "jest-serializer-vue": "^2.0.2",
     "lint-staged": "10.3.0",
@@ -62,10 +60,5 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run precommit"
-    }
-  }
+  ]
 }
