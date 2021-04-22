@@ -13,7 +13,8 @@
     "build": "vue-cli-service build",
     "build-dev": "vue-cli-service build --mode development",
     "lint": "vue-cli-service lint",
-    "coverage": "vue-cli-service test:unit --testRegex=\"/test/.*\\.spec\\.js$\"",
+    "test": "vue-cli-service test:unit --collectCoverage=false",
+    "coverage": "vue-cli-service test:unit",
     "coverage:copy": "shx mkdir -p ../../coverage && shx cp -u ./coverage/lcov.info ../../coverage/lcov_frontend.info"
   },
   "dependencies": {

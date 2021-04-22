@@ -107,6 +107,7 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "package": "vsce package --yarn .",
+    "test": "mocha -p tsconfig.json --recursive test/**/*.spec.ts",
     "coverage": "nyc mocha -p tsconfig.json --recursive test/**/*.spec.ts",
     "coverage:copy": "shx mkdir -p ../../coverage && shx cp -u ./reports/coverage/lcov.info ../../coverage/lcov_backend.info",
     "ws:run": "node ./out/src/webSocketServer/index.js"
