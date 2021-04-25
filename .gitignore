@@ -22,3 +22,6 @@ package-lock.json
 
 # added to root .gitignore to also ignore it in linting
 packages/backend/dummy/main.js
+
+# this folder should be initially empty when running the contributor snippet example.
+examples/dummy-scripts/.vscode
