@@ -22,6 +22,7 @@ jobs:
             if [ -n "$CIRCLE_PR_NUMBER" ]; then
               circleci step halt
             fi
+            # disabling coveralls.io as it is currently broken.
             cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
           environment:
             COVERALLS_SERVICE_NAME: circle-ci
