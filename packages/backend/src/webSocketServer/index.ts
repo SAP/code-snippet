@@ -33,6 +33,7 @@ class CodeSnippetWebSocketServer {
     wss.on("connection", (ws) => {
       console.log("new ws connection");
 
+      // @ts-expect-error -- legacy code
       this.rpc = new RpcExtensionWebSockets(ws, getConsoleWarnLogger());
       //TODO: Use RPC to send it to the browser log (as a collapsed pannel in Vue)
       const logger: AppLog = new ServerLog(this.rpc);
