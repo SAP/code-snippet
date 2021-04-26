@@ -1,18 +1,18 @@
-[![npm (scoped)](https://img.shields.io/npm/v/@ui5-language-assistant/semantic-model-types.svg)](https://www.npmjs.com/package/@ui5-language-assistant/semantic-model-types)
+[![npm (scoped)](https://img.shields.io/npm/v/@sap-devx/code-snippet-types.svg)](https://www.npmjs.com/package/@sap-devx/code-snippet-types)
 
 # @ui5-language-assistant/semantic-model-types
 
-Type Definitions for [@ui5-language-assistant/semantic-model-types](../semantic-model).
+Helper TypeScript type definitions for Code Snippet Framework.
 
 ## Installation
 
 With npm:
 
-- `npm install @ui5-language-assistant/semantic-model-types`
+- `npm install @sap-devx/code-snippet-types`
 
 With Yarn:
 
-- `yarn add @ui5-language-assistant/semantic-model-types`
+- `yarn add @sap-devx/code-snippet-types`
 
 ## Usage
 

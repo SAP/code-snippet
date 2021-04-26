@@ -21,7 +21,7 @@ It currently contains the following packages:
 - [code-snippet](./packages/backend) The VSCode extension part of Code Snippet framework.
 - [code-snippet-frontend](./packages/frontend) the user interface part of the Code Snippet framework.
 - [vscode-snippet-contrib](./examples/vscode-snippet-contrib) A sample VSCode extension utilizing the Code Snippet framework.
-- [![npm-yeoman-ui-types][npm-code-snippet-types-image]][npm-code-snippet-types-url] [@sap-devx/code-snippet-types](./packages/types)
+- [![npm-code-snippet-types][npm-code-snippet-types-image]][npm-code-snippet-types-url] [@sap-devx/code-snippet-types](./packages/types)
   TypeScript type definitions to assist in using the Code Snippet framework.
 
 [npm-code-snippet-types-image]: https://img.shields.io/npm/v/@sap-devx/code-snippet-types.svg
