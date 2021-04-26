@@ -61,4 +61,3 @@ With the launch configuration you have defined.
 You can now execute this launch configuration via the VSCode `Run and Debug` pane.
 
 - https://code.visualstudio.com/Docs/editor/debugging
-- TODO: **The created launch configuration seems to be missing a required property**

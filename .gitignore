@@ -18,7 +18,6 @@ reports
 tsconfig.tsbuildinfo
 
 /.idea
-package-lock.json
 
 # added to root .gitignore to also ignore it in linting
 packages/backend/dummy/main.js
