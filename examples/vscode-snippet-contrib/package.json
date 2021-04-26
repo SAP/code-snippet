@@ -1,0 +1,60 @@
+{
+  "name": "vscode-snippet-contrib",
+  "displayName": "vscode-snippet-contrib",
+  "description": "",
+  "version": "0.1.0",
+  "publisher": "SAPOSS",
+  "private": true,
+  "engines": {
+    "vscode": "^1.44.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAP/code-snippet",
+    "directory": "vscode-snippet-contrib"
+  },
+  "main": "./out/extension.js",
+  "extensionDependencies": [
+    "saposs.code-snippet"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:extension.showCodeSnippetContrib"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.showCodeSnippetContrib",
+        "title": "Create Launch Configuration"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "extension.showCodeSnippetContrib",
+          "group": "navigation@1",
+          "when": "resourceFilename == launch.json"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "ci": "npm-run-all clean compile",
+    "clean": "rimraf ./dist",
+    "compile": "tsc -p ."
+  },
+  "dependencies": {
+    "@sap-devx/code-snippet-types": "0.1.0",
+    "lodash": "4.17.21",
+    "comment-json": "2.1.0",
+    "fs-extra": "7.0.1"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.150",
+    "@types/comment-json": "1.1.1",
+    "@types/fs-extra": "7.0.0",
+    "@types/vscode": "^1.40.0"
+  }
+}

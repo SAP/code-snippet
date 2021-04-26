@@ -10,9 +10,7 @@
       "request": "launch",
       "name": "Run websocket server",
       "program": "${workspaceFolder}/backend/src/webSocketServer/index.ts",
-      "outFiles": [
-        "${workspaceFolder}/backend/out/**/*.js"
-      ],
+      "outFiles": ["${workspaceFolder}/backend/out/**/*.js"],
       "env": {
         "PORT": "8081"
       },
@@ -42,11 +40,11 @@
       "runtimeExecutable": "${execPath}",
       "args": [
         "--extensionDevelopmentPath=${workspaceFolder}/backend",
-        "--extensionDevelopmentPath=${workspaceFolder}/vscode-snippet-contrib"
-    ],
+        "--extensionDevelopmentPath=${workspaceFolder}/examples/vscode-snippet-contrib"
+      ],
       "outFiles": [
         "${workspaceFolder}/backend/dist/**/*.js",
-        "${workspaceFolder/vscode-snippet-contrib/out/**/*.js"
+        "${workspaceFolder/examples/vscode-snippet-contrib/out/**/*.js"
       ],
       "preLaunchTask": "watch backend (webpack)"
     },
@@ -59,9 +57,7 @@
         "--extensionDevelopmentPath=${workspaceFolder}/backend",
         "--extensionTestsPath=${workspaceFolder}/backend/out/tests"
       ],
-      "outFiles": [
-        "${workspaceFolder}/backend/dist/**/*.js"
-      ],
+      "outFiles": ["${workspaceFolder}/backend/dist/**/*.js"],
       "preLaunchTask": "watch backend"
     },
     {
@@ -69,14 +65,10 @@
       "request": "launch",
       "name": "Run reference generator (foodq)",
       "program": "${workspaceFolder}/generator-foodq/node_modules/yo/lib/cli.js",
-      "args": [
-        "foodq"
-      ],
+      "args": ["foodq"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "skipFiles": [
-        "<node_internals>/**"
-      ]
+      "skipFiles": ["<node_internals>/**"]
     },
     {
       "name": "frontend unit tests",
@@ -93,9 +85,7 @@
       "disableOptimisticBPs": true,
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "outFiles": [
-        "${workspaceFolder}/frontend/src/**/*.js"
-      ],
+      "outFiles": ["${workspaceFolder}/frontend/src/**/*.js"],
       "port": 9229
     }
   ]

@@ -1,0 +1,16 @@
+{
+  "references": [
+    {
+      "path": "./packages/backend"
+    },
+    {
+      "path": "./packages/types"
+    },
+    {
+      "path": "./examples/vscode-snippet-contrib"
+    }
+  ],
+  "files": [],
+  "include": [],
+  "exclude": []
+}
