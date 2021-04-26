@@ -13,7 +13,7 @@
     "url": "https://github.com/SAP/code-snippet",
     "directory": "vscode-snippet-contrib"
   },
-  "main": "./out/extension.js",
+  "main": "./out/src/extension.js",
   "extensionDependencies": [
     "saposs.code-snippet"
   ],
