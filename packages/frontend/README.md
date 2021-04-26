@@ -1,35 +1,8 @@
-# Code Snippet Frontend
+# Code Snippet (Framework) Frontend
 
-## Project setup
+## Description
 
-```
-npm install
-```
+This component is the form GUI part of the VSCode Code Snippet Framework.
 
-### Compiles and hot-reloads for development
-
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-
-```
-npm run build
-```
-
-### Run your tests
-
-```
-npm run test
-```
-
-### Lints and fixes files
-
-```
-npm run lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
+It is **bundled** as part of the [VSCode extension component](../backend)
+and is implemented using [Inquirer GUI](https://github.com/SAP/inquirer-gui) and [Vue.js](https://vuejs.org)

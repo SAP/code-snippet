@@ -8,7 +8,7 @@
 
 # Code Snippet Framework
 
-The Code Snippet framework for VSCode extensions enables VSCode extension developers
+The VSCode Code Snippet framework enables extension developers
 to display a GUI form to end users and generate or edit source code snippets based on the
 end user's answers to those questions.
 

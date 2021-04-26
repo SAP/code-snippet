@@ -1,22 +1,18 @@
-# Extension
+# Code Snippet (Framework) VSCode Extension
 
-## Project setup
+## Preview
 
-```
-npm install
-```
+![form gui screenshot](./resources/preview.png)
 
-## Running during development
+## Description
 
-Launch the WebSocket server configuration for development purposes. This will not launch vscode or a vscode extension, but still use Inquirer to run snippets and communicate with a locally served Vue application.
+This component is the VSCode extension part of the VSCode Code Snippet Framework.
+It is responsible for:
 
-Launch the _Run Dev Server_ launch configuration.
-
-Or use the command line:
-
-```sh
-# compile server code to out directory:
-npm run compile
-# run the websocket server:
-npm run ws:run
-```
+- Loading code snippets contributions (plugins) (e.g [vscode-snippet-contrib](../../examples)).
+- Rendering the code snippet form GUI to display relevant questions to the end user
+  - inside a [VSCode webview](https://code.visualstudio.com/api/extension-guides/webview).
+  - Note that the form GUI is developed, in a separate [sub-package](../frontend).
+- Bridging between the frontend GUI and the contributions/plugins, e.g:
+  - Invoking custom validation logic.
+  - Sending the "answers" of the end user back to the contribution/plugin.
