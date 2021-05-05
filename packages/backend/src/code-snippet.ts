@@ -80,8 +80,7 @@ export class CodeSnippet {
     const answers = {};
     const questions: any[] = await this.createCodeSnippetQuestions();
 
-    for (let i = 0; i < questions.length; i++) {
-      const question = questions[i];
+    for (const question of questions) {
       if (_.isFunction(question.default)) {
         answers[question.name] = await question.default(answers);
       } else {
