@@ -104,6 +104,7 @@
     "backend": "npm i && npm run compile",
     "frontend:copy": "webpack --mode none --config ./copy.frontend.webpack.config.js",
     "bundle": "webpack --mode production",
+    "bundle-dev": "webpack --mode development --watch",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "package": "vsce package --yarn .",
@@ -114,7 +115,7 @@
   },
   "dependencies": {
     "@sap-devx/webview-rpc": "0.3.1",
-    "@sap/swa-for-sapbas-vsx": "1.1.11",
+    "@sap/swa-for-sapbas-vsx": "1.2.7",
     "@vscode-logging/logger": "1.2.1",
     "code-snippet-frontend": "^1.0.0",
     "fs-extra": "9.1.0",

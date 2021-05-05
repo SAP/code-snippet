@@ -76,6 +76,31 @@ export class CodeSnippet {
     return state;
   }
 
+  private async getDefaultAnswers(): Promise<any> {
+    const answers = {};
+    const questions: any[] = await this.createCodeSnippetQuestions();
+
+    for (let i = 0; i < questions.length; i++) {
+      const question = questions[i];
+      if (_.isFunction(question.default)) {
+        answers[question.name] = await question.default(answers);
+      } else {
+        answers[question.name] = question.default;
+      }
+    }
+    return answers;
+  }
+
+  public async executeCodeSnippet(answers?: unknown): Promise<any> {
+    answers = _.isNil(answers) ? await this.getDefaultAnswers() : answers;
+
+    if (_.isEmpty(answers)) {
+      const errorMessage = this.logError(this.uiOptions.messages.noResponse);
+      return Promise.reject(errorMessage);
+    }
+    await this.applyCode(answers);
+  }
+
   public registerCustomQuestionEventHandler(
     questionType: string,
     methodName: string,
@@ -97,7 +122,7 @@ export class CodeSnippet {
     this.appEvents.executeCommand(id, ...args);
   }
 
-  private async logError(error: any, prefixMessage?: string) {
+  private logError(error: any, prefixMessage?: string) {
     let errorMessage = this.getErrorInfo(error);
     if (prefixMessage) {
       errorMessage = `${prefixMessage}\n${errorMessage}`;
@@ -175,11 +200,7 @@ export class CodeSnippet {
       const response: any = await this.rpc.invoke("showPrompt", [
         normalizedQuestions,
       ]);
-      if (_.isEmpty(response)) {
-        this.logError(this.uiOptions.messages.noResponse);
-      } else {
-        await this.applyCode(response);
-      }
+      await this.executeCodeSnippet(response);
     } catch (error) {
       this.logError(error);
     }

@@ -27,23 +27,21 @@ export abstract class AbstractWebviewPanel {
     this.disposables = [];
   }
 
-  public setWebviewPanel(
-    webviewPanel: vscode.WebviewPanel,
-    uiOptions?: { viewColumn?: vscode.ViewColumn }
-  ): void {
-    this.webViewPanel = webviewPanel;
+  public async setWebviewPanel(
+    webViewPanel: vscode.WebviewPanel,
+    uiOptions?: unknown
+  ): Promise<void> {
+    this.webViewPanel = webViewPanel;
     this.uiOptions = uiOptions;
-    this.viewColumn = this.uiOptions?.viewColumn || vscode.ViewColumn.One;
+    this.viewColumn = _.get(uiOptions, "viewColumn", vscode.ViewColumn.One);
   }
 
-  public loadWebviewPanel(uiOptions?: {
-    viewColumn?: vscode.ViewColumn;
-  }): void {
+  public async loadWebviewPanel(uiOptions?: unknown): Promise<void> {
     if (this.webViewPanel && _.isEmpty(uiOptions)) {
       this.webViewPanel.reveal();
     } else {
       this.disposeWebviewPanel();
-      this.viewColumn = uiOptions?.viewColumn || vscode.ViewColumn.One;
+      this.viewColumn = _.get(uiOptions, "viewColumn", vscode.ViewColumn.One);
       const webViewPanel = this.createWebviewPanel();
       this.setWebviewPanel(webViewPanel, uiOptions);
     }
