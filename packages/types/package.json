@@ -1,7 +1,7 @@
 {
   "name": "@sap-devx/code-snippet-types",
   "description": "code-snippet types",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

@@ -676,4 +676,60 @@ describe("codeSnippet unit test", () => {
       ).to.be.equal(1);
     });
   });
+
+  describe("executeCodeSnippet", () => {
+    let codeSnippetInstanceMock: any;
+    let codeSnippetInstance: CodeSnippet;
+
+    beforeEach(() => {
+      codeSnippetInstance = new CodeSnippet(
+        rpc,
+        appEvents,
+        outputChannel,
+        testLogger,
+        { messages: { title: snippetTitle }, snippet: snippet }
+      );
+      codeSnippetInstanceMock = sandbox.mock(codeSnippetInstance);
+    });
+
+    afterEach(() => {
+      codeSnippetInstanceMock.verify();
+    });
+
+    it("interactive mode - answers param exists", async () => {
+      codeSnippetInstanceMock
+        .expects("createCodeSnippetWorkspaceEdit")
+        .resolves({ name: "test" });
+      swaTrackerWrapperMock
+        .expects("updateSnippetEnded")
+        .withArgs(snippetTitle, true);
+      await codeSnippetInstance["executeCodeSnippet"]({ name: "test" });
+    });
+
+    it("interactive mode - answers param is empty", async () => {
+      codeSnippetInstanceMock.expects("createCodeSnippetWorkspaceEdit").never();
+      swaTrackerWrapperMock.expects("updateSnippetEnded").never();
+      try {
+        await codeSnippetInstance["executeCodeSnippet"]({});
+      } catch (e) {
+        return expect(e).to.be.equal("");
+      }
+    });
+
+    it("nonInteractive mode - answers param doesn't exist", async () => {
+      snippet["getQuestions"] = () => {
+        return [
+          { name: "q1", default: "a" },
+          { name: "q2", default: () => "b" },
+        ];
+      };
+      codeSnippetInstanceMock
+        .expects("createCodeSnippetWorkspaceEdit")
+        .resolves({ q1: "a", q2: "b" });
+      swaTrackerWrapperMock
+        .expects("updateSnippetEnded")
+        .withArgs(snippetTitle, true);
+      await codeSnippetInstance["executeCodeSnippet"]();
+    });
+  });
 });
