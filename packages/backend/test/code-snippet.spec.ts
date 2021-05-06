@@ -214,8 +214,6 @@ describe("codeSnippet unit test", () => {
       swaTrackerWrapperMock
         .expects("updateSnippetStarted")
         .withArgs(snippetTitle);
-      // loggerMock.expects("error");
-      // appEventsMock.expects("doApply").never();
       await codeSnippet["receiveIsWebviewReady"]();
     });
 
