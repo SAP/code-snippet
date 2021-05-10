@@ -43,6 +43,7 @@
   "scripts": {
     "ci": "npm-run-all clean compile",
     "clean": "rimraf ./dist",
+    "package": "vsce package --yarn .",
     "compile": "tsc -p ."
   },
   "dependencies": {
