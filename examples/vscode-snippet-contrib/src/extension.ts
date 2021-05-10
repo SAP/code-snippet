@@ -16,6 +16,10 @@ export function activate(context: vscode.ExtensionContext) {
           snippetName: "snippet_1",
           context: { uri: uri },
           isNonInteractive: true,
+          snippetArgs: {
+            configType: "extensionHost",
+            configName: "defaultName2",
+          },
         });
       } catch (error) {
         vscode.window.showInformationMessage(error);

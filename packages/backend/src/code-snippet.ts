@@ -87,7 +87,10 @@ export class CodeSnippet {
         answers[question.name] = question.default;
       }
     }
-    return answers;
+
+    const res = _.defaults(this.uiOptions.contributorInfo.snippetArgs, answers);
+
+    return res;
   }
 
   public async executeCodeSnippet(answers?: unknown): Promise<any> {
