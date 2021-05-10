@@ -700,6 +700,7 @@ describe("codeSnippet unit test", () => {
             noResponse: "No response received.",
           },
           snippet: snippet,
+          contributorInfo: { snippetArgs: {} },
         }
       );
       codeSnippetInstanceMock = sandbox.mock(codeSnippetInstance);
