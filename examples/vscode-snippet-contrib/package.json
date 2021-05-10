@@ -43,6 +43,7 @@
   "scripts": {
     "ci": "npm-run-all clean compile",
     "clean": "rimraf ./dist",
+    "package": "vsce package --yarn .",
     "compile": "tsc -p ."
   },
   "dependencies": {
@@ -55,6 +56,6 @@
     "@types/comment-json": "1.1.1",
     "@types/fs-extra": "7.0.0",
     "@types/lodash": "^4.14.150",
-    "@types/vscode": "^1.40.0"
+    "@types/vscode": "1.55.0"
   }
 }

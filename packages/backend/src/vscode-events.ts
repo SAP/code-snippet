@@ -1,11 +1,10 @@
 import * as vscode from "vscode";
 import { AppEvents } from "./app-events";
-import { RpcCommon } from "@sap-devx/webview-rpc/out.ext/rpc-common";
 
 export class VSCodeEvents implements AppEvents {
   private webviewPanel: vscode.WebviewPanel;
 
-  constructor(rpc: RpcCommon, webviewPanel: vscode.WebviewPanel) {
+  constructor(webviewPanel: vscode.WebviewPanel) {
     this.webviewPanel = webviewPanel;
   }
 

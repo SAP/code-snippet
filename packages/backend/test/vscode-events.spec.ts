@@ -40,7 +40,7 @@ describe("vscode-events unit test", () => {
   });
 
   beforeEach(() => {
-    events = new VSCodeEvents(undefined, undefined);
+    events = new VSCodeEvents(undefined);
     windowMock = sandbox.mock(vscode.window);
     commandsMock = sandbox.mock(vscode.commands);
     workspaceMock = sandbox.mock(vscode.workspace);
@@ -90,7 +90,7 @@ describe("vscode-events unit test", () => {
 
     it("webviewPanel exists ---> webviewPanel is disposed", () => {
       const webViewPanel: any = { dispose: () => true };
-      events = new VSCodeEvents(undefined, webViewPanel);
+      events = new VSCodeEvents(webViewPanel);
       const webViewPanelSpy = sandbox.spy(webViewPanel, "dispose");
       events.doSnippeDone(true, "success message", "testTargetFolderPath");
       expect(webViewPanelSpy.called).to.be.true;

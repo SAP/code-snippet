@@ -1,5 +1,4 @@
 const datauri = require("datauri"); // eslint-disable-line @typescript-eslint/no-var-requires -- legacy code
-import * as fsextra from "fs-extra";
 import { expect } from "chai";
 import { CodeSnippet } from "../src/code-snippet";
 import { AppLog } from "../src/app-log";
@@ -13,10 +12,10 @@ import { IChildLogger } from "@vscode-logging/logger";
 import { fail } from "assert";
 import { SWA } from "../src/swa-tracker/swa-tracker-wrapper";
 import * as sinon from "sinon";
+import { SinonMock } from "sinon";
 
 describe("codeSnippet unit test", () => {
   let sandbox: any;
-  let fsExtraMock: any;
   let datauriMock: any;
   let loggerMock: any;
   let rpcMock: any;
@@ -151,7 +150,6 @@ describe("codeSnippet unit test", () => {
   });
 
   beforeEach(() => {
-    fsExtraMock = sandbox.mock(fsextra);
     datauriMock = sandbox.mock(datauri);
     rpcMock = sandbox.mock(rpc);
     loggerMock = sandbox.mock(testLogger);
@@ -160,7 +158,6 @@ describe("codeSnippet unit test", () => {
   });
 
   afterEach(() => {
-    fsExtraMock.verify();
     datauriMock.verify();
     rpcMock.verify();
     loggerMock.verify();
@@ -214,8 +211,6 @@ describe("codeSnippet unit test", () => {
       swaTrackerWrapperMock
         .expects("updateSnippetStarted")
         .withArgs(snippetTitle);
-      loggerMock.expects("error");
-      appEventsMock.expects("doApply").never();
       await codeSnippet["receiveIsWebviewReady"]();
     });
 
@@ -263,7 +258,7 @@ describe("codeSnippet unit test", () => {
     expect(res).to.be.false;
   });
 
-  it("getErrorInfo", () => {
+  it("getErrorInfo with error message", () => {
     const codeSnippetInstance: CodeSnippet = new CodeSnippet(
       rpc,
       appEvents,
@@ -274,6 +269,18 @@ describe("codeSnippet unit test", () => {
     const errorInfo = "Error Info";
     const res = codeSnippetInstance["getErrorInfo"](errorInfo);
     expect(res).to.be.equal(errorInfo);
+  });
+
+  it("getErrorInfo without error message", () => {
+    const codeSnippetInstance: CodeSnippet = new CodeSnippet(
+      rpc,
+      appEvents,
+      outputChannel,
+      testLogger,
+      {}
+    );
+    const res = codeSnippetInstance["getErrorInfo"]();
+    expect(res).to.be.equal("");
   });
 
   describe("answersUtils", () => {
@@ -674,6 +681,64 @@ describe("codeSnippet unit test", () => {
       expect(
         codeSnippetInstance["customQuestionEventHandlers"].size
       ).to.be.equal(1);
+    });
+  });
+
+  describe("executeCodeSnippet", () => {
+    let codeSnippetInstanceMock: SinonMock;
+    let codeSnippetInstance: CodeSnippet;
+
+    beforeEach(() => {
+      codeSnippetInstance = new CodeSnippet(
+        rpc,
+        appEvents,
+        outputChannel,
+        testLogger,
+        {
+          messages: {
+            title: snippetTitle.length,
+            noResponse: "No response received.",
+          },
+          snippet: snippet,
+          contributorInfo: { snippetArgs: {} },
+        }
+      );
+      codeSnippetInstanceMock = sandbox.mock(codeSnippetInstance);
+    });
+
+    afterEach(() => {
+      codeSnippetInstanceMock.verify();
+    });
+
+    it("interactive mode - answers param exists", async () => {
+      codeSnippetInstanceMock
+        .expects("createCodeSnippetWorkspaceEdit")
+        .resolves({ name: "test" });
+      await codeSnippetInstance["executeCodeSnippet"]({ name: "test" });
+    });
+
+    it("interactive mode - answers param is empty", async () => {
+      codeSnippetInstanceMock.expects("createCodeSnippetWorkspaceEdit").never();
+      swaTrackerWrapperMock.expects("updateSnippetEnded").never();
+      try {
+        await codeSnippetInstance["executeCodeSnippet"]({});
+        fail("test should fail");
+      } catch (error) {
+        expect(error).to.be.equal("No response received.");
+      }
+    });
+
+    it("nonInteractive mode - answers param doesn't exist", async () => {
+      snippet["getQuestions"] = () => {
+        return [
+          { name: "q1", default: "a" },
+          { name: "q2", default: () => "b" },
+        ];
+      };
+      codeSnippetInstanceMock
+        .expects("createCodeSnippetWorkspaceEdit")
+        .resolves({ q1: "a", q2: "b" });
+      await codeSnippetInstance["executeCodeSnippet"]();
     });
   });
 });

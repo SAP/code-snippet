@@ -15,6 +15,11 @@ export function activate(context: vscode.ExtensionContext) {
           contributorId: "SAPOSS.vscode-snippet-contrib",
           snippetName: "snippet_1",
           context: { uri: uri },
+          isNonInteractive: true,
+          snippetArgs: {
+            configType: "extensionHost",
+            configName: "defaultName2",
+          },
         });
       } catch (error) {
         vscode.window.showInformationMessage(error);
@@ -104,6 +109,7 @@ function createCodeSnippetQuestions(): any[] {
       name: "configType",
       message: "Type",
       choices: ["node", "extensionHost"],
+      default: "node",
     },
     {
       guiOptions: {
@@ -113,6 +119,7 @@ function createCodeSnippetQuestions(): any[] {
       type: "input",
       name: "configName",
       message: "Name",
+      default: () => "defaultName",
       // eslint-disable-next-line @typescript-eslint/no-unused-vars -- should match interface
       validate: (value: any, answers: any) => {
         return value.length > 1 ? true : "Enter at least 2 characters";
@@ -132,6 +139,7 @@ function createCodeSnippetQuestions(): any[] {
       },
       type: "input",
       name: "configProgram",
+      default: "",
       message: "Program",
     }
   );
