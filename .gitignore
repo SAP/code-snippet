@@ -16,6 +16,7 @@ reports
 **/*.vsix
 **/coverage
 tsconfig.tsbuildinfo
+lerna-debug.log
 
 /.idea
 
