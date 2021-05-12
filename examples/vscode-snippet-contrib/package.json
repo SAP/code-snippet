@@ -2,7 +2,7 @@
   "name": "vscode-snippet-contrib",
   "displayName": "vscode-snippet-contrib",
   "description": "",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publisher": "SAPOSS",
   "private": true,
   "engines": {
@@ -47,7 +47,7 @@
     "compile": "tsc -p ."
   },
   "dependencies": {
-    "@sap-devx/code-snippet-types": "^1.0.0",
+    "@sap-devx/code-snippet-types": "^1.1.0",
     "comment-json": "2.1.0",
     "fs-extra": "7.0.1",
     "lodash": "4.17.21"
