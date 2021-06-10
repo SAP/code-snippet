@@ -16,7 +16,7 @@
       "options": {
         "cwd": "${workspaceFolder}/packages/backend"
       },
-      "script": "webpack-dev",
+      "script": "bundle-dev",
       "problemMatcher": {
         "pattern": {
           "regexp": ""

@@ -208,20 +208,29 @@ describe("codeSnippet unit test", () => {
     });
 
     it("no prompt ---> an error is thrown", async () => {
-      swaTrackerWrapperMock
-        .expects("updateSnippetStarted")
-        .withArgs(snippetTitle);
-      await codeSnippet["receiveIsWebviewReady"]();
+      try {
+        swaTrackerWrapperMock
+          .expects("updateSnippetStarted")
+          .withArgs(snippetTitle);
+        await codeSnippet["receiveIsWebviewReady"]();
+        fail("receiveIsWebviewReady should throw error");
+      } catch (error) {
+        expect(error).to.be.not.undefined;
+      }
     });
 
     it("prompt throws exception ---> an error is thrown", async () => {
-      swaTrackerWrapperMock
-        .expects("updateSnippetStarted")
-        .withArgs(snippetTitle);
-      rpcMock.expects("invoke").withArgs("showPrompt").rejects(new Error());
-      loggerMock.expects("error");
-      appEventsMock.expects("doApply").never();
-      await codeSnippet["receiveIsWebviewReady"]();
+      try {
+        swaTrackerWrapperMock
+          .expects("updateSnippetStarted")
+          .withArgs(snippetTitle);
+        rpcMock.expects("invoke").withArgs("showPrompt").rejects(new Error());
+        appEventsMock.expects("doApply").never();
+        await codeSnippet["receiveIsWebviewReady"]();
+        fail("receiveIsWebviewReady should throw error");
+      } catch (error) {
+        expect(error).to.be.not.undefined;
+      }
     });
   });
 
@@ -532,7 +541,7 @@ describe("codeSnippet unit test", () => {
           "method1"
         );
       } catch (e) {
-        expect(e.toString()).to.contain("method1");
+        expect(e.stack).to.contain("method1");
       }
     });
   });
@@ -586,15 +595,21 @@ describe("codeSnippet unit test", () => {
 
     it("createCodeSnippetWorkspaceEdit fails ---> onFailure is called", async () => {
       const onFailureSpy = sandbox.spy(codeSnippetInstance, "onFailure");
-      const error = new Error("error");
-      codeSnippetInstanceMock
-        .expects("createCodeSnippetWorkspaceEdit")
-        .rejects(error);
-      swaTrackerWrapperMock
-        .expects("updateSnippetEnded")
-        .withArgs(snippetTitle, false);
-      await codeSnippetInstance["applyCode"]({});
-      expect(onFailureSpy.calledWith(true, snippetTitle, error)).to.be.true;
+
+      try {
+        const error = new Error("error");
+        codeSnippetInstanceMock
+          .expects("createCodeSnippetWorkspaceEdit")
+          .rejects(error);
+        swaTrackerWrapperMock
+          .expects("updateSnippetEnded")
+          .withArgs(snippetTitle, false);
+        await codeSnippetInstance["applyCode"]({});
+      } catch (error) {
+        expect(onFailureSpy.calledWith(true, snippetTitle, error)).to.be.true;
+        expect(error).to.be.not.undefined;
+      }
+
       onFailureSpy.restore();
     });
   });

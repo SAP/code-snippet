@@ -149,6 +149,7 @@ export class CodeSnippet {
       this.onSuccess(showDoneMessage, this.snippetName);
     } catch (error) {
       this.onFailure(showDoneMessage, this.snippetName, error);
+      return Promise.reject(error);
     }
   }
 
@@ -187,9 +188,13 @@ export class CodeSnippet {
         }
       }
     } catch (error) {
-      const questionInfo = `Could not update method '${methodName}' in '${questionName}' question in generator '${this.gen.options.namespace}'`;
-      const errorMessage = await this.logError(error, questionInfo);
+      const questionInfo = `Could not update method '${methodName}' in '${questionName}' question in generator '${_.get(
+        this.gen,
+        "options.namespace"
+      )}'`;
+      const errorMessage = this.logError(error, questionInfo);
       this.onFailure(true, this.snippetName, errorMessage);
+      return Promise.reject(error);
     }
   }
 
@@ -204,7 +209,12 @@ export class CodeSnippet {
       ]);
       await this.executeCodeSnippet(response);
     } catch (error) {
-      this.logError(error);
+      const errorMessage = this.logError(
+        error,
+        "Could not initialize code-snippet webview"
+      );
+      this.onFailure(true, this.snippetName, errorMessage);
+      throw error;
     }
   }
 
@@ -258,7 +268,7 @@ export class CodeSnippet {
     error: any
   ) {
     const messagePrefix = `${snippetrName} snippet failed.`;
-    const errorMessage: string = await this.logError(error, messagePrefix);
+    const errorMessage: string = this.logError(error, messagePrefix);
     SWA.updateSnippetEnded(snippetrName, false, this.logger, errorMessage);
     if (showDoneMessage) {
       this.appEvents.doSnippeDone(false, errorMessage);
@@ -279,9 +289,6 @@ export class CodeSnippet {
 
   private async createCodeSnippetQuestions(): Promise<any[]> {
     const snippet = this.uiOptions.snippet;
-    // if (_.isNil(snippet)) {
-    //   throw new Error(this.uiOptions.snippetMustExist);
-    // }
 
     let questions: any[] = [];
 
@@ -294,9 +301,6 @@ export class CodeSnippet {
 
   private async createCodeSnippetWorkspaceEdit(answers: any): Promise<any[]> {
     const snippet = this.uiOptions.snippet;
-    // if (_.isNil(snippet)) {
-    //   throw new Error(this.uiOptions.snippetMustExist);
-    // }
 
     let we: any = undefined;
 
