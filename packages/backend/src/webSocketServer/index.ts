@@ -8,6 +8,7 @@ import backendMessages from "../messages";
 import { IChildLogger } from "@vscode-logging/logger";
 import { AppEvents } from "../app-events";
 import { getConsoleWarnLogger } from "../logger/logger-wrapper";
+import { PromiseFunctions } from "src/utils";
 
 class CodeSnippetWebSocketServer {
   private rpc: RpcExtensionWebSockets | undefined;
@@ -54,11 +55,22 @@ class CodeSnippetWebSocketServer {
           return createCodeSnippetQuestions();
         },
       };
+      let panelPromiseFuncs: PromiseFunctions;
+      const panelPromise = new Promise(
+        (
+          resolve: (value: void | PromiseLike<void>) => void,
+          reject: (reason?: any) => void
+        ) => {
+          panelPromiseFuncs = { resolve, reject };
+        }
+      );
+      panelPromise;
       this.codeSnippet = new CodeSnippet(
         this.rpc,
         appEvents,
         logger,
         childLogger as IChildLogger,
+        panelPromiseFuncs,
         { messages: backendMessages, snippet: snippet }
       );
       this.codeSnippet.registerCustomQuestionEventHandler(

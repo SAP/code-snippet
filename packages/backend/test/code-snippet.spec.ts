@@ -13,6 +13,7 @@ import { fail } from "assert";
 import { SWA } from "../src/swa-tracker/swa-tracker-wrapper";
 import * as sinon from "sinon";
 import { SinonMock } from "sinon";
+import { PromiseFunctions } from "src/utils";
 
 describe("codeSnippet unit test", () => {
   let sandbox: any;
@@ -133,15 +134,26 @@ describe("codeSnippet unit test", () => {
   const appEvents = new TestEvents();
   const snippetTitle = "snippet title";
   const uiOptions = { messages: { title: snippetTitle }, snippet: snippet };
+  let panelPromiseFuncs: PromiseFunctions;
+  const panelPromise = new Promise(
+    (
+      resolve: (value: void | PromiseLike<void>) => void,
+      reject: (reason?: any) => void
+    ) => {
+      panelPromiseFuncs = { resolve, reject };
+    }
+  );
   const codeSnippet: CodeSnippet = new CodeSnippet(
     rpc,
     appEvents,
     outputChannel,
     testLogger,
+    panelPromiseFuncs,
     uiOptions
   );
 
   before(() => {
+    panelPromise;
     sandbox = sinon.createSandbox();
   });
 
@@ -167,7 +179,14 @@ describe("codeSnippet unit test", () => {
 
   it("constructor", () => {
     try {
-      new CodeSnippet(undefined, undefined, undefined, undefined, undefined);
+      new CodeSnippet(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined
+      );
       fail("contructor should throw an exception");
     } catch (error) {
       expect(error.message).to.be.equal("rpc must be set");
@@ -207,7 +226,7 @@ describe("codeSnippet unit test", () => {
       await codeSnippet["receiveIsWebviewReady"]();
     });
 
-    it.skip("no prompt ---> an error is thrown", async () => {
+    it("no prompt ---> an error is thrown", async () => {
       try {
         swaTrackerWrapperMock
           .expects("updateSnippetStarted")
@@ -219,7 +238,7 @@ describe("codeSnippet unit test", () => {
       }
     });
 
-    it.skip("prompt throws exception ---> an error is thrown", async () => {
+    it("prompt throws exception ---> an error is thrown", async () => {
       try {
         swaTrackerWrapperMock
           .expects("updateSnippetStarted")
@@ -261,6 +280,7 @@ describe("codeSnippet unit test", () => {
       appEvents,
       outputChannel,
       testLogger,
+      panelPromiseFuncs,
       {}
     );
     const res = codeSnippetInstance["toggleOutput"]();
@@ -273,6 +293,7 @@ describe("codeSnippet unit test", () => {
       appEvents,
       outputChannel,
       testLogger,
+      panelPromiseFuncs,
       {}
     );
     const errorInfo = "Error Info";
@@ -286,6 +307,7 @@ describe("codeSnippet unit test", () => {
       appEvents,
       outputChannel,
       testLogger,
+      panelPromiseFuncs,
       {}
     );
     const res = codeSnippetInstance["getErrorInfo"]();
@@ -334,6 +356,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
+        panelPromiseFuncs,
         {}
       );
       const questions = [{ name: "q1" }];
@@ -407,6 +430,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
+        panelPromiseFuncs,
         {}
       );
 
@@ -434,6 +458,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
+        panelPromiseFuncs,
         {}
       );
       codeSnippetInstance.registerCustomQuestionEventHandler(
@@ -458,6 +483,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
+        panelPromiseFuncs,
         {}
       );
       codeSnippetInstance["currentQuestions"] = [
@@ -482,6 +508,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
+        panelPromiseFuncs,
         {}
       );
       codeSnippetInstance["currentQuestions"] = [
@@ -506,6 +533,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
+        panelPromiseFuncs,
         {}
       );
       const response = await codeSnippetInstance["evaluateMethod"](
@@ -516,12 +544,13 @@ describe("codeSnippet unit test", () => {
       expect(response).to.be.undefined;
     });
 
-    it.skip("method throws exception", async () => {
+    it("method throws exception", async () => {
       const codeSnippetInstance: CodeSnippet = new CodeSnippet(
         rpc,
         appEvents,
         outputChannel,
         testLogger,
+        panelPromiseFuncs,
         {}
       );
       codeSnippetInstance["gen"] = Object.create({});
@@ -556,6 +585,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
+        panelPromiseFuncs,
         { messages: { title: snippetTitle } }
       );
       codeSnippetInstanceMock = sandbox.mock(codeSnippetInstance);
@@ -593,24 +623,17 @@ describe("codeSnippet unit test", () => {
       onSuccessSpy.restore();
     });
 
-    it.skip("createCodeSnippetWorkspaceEdit fails ---> onFailure is called", async () => {
+    it("createCodeSnippetWorkspaceEdit fails ---> onFailure is called", async () => {
       const onFailureSpy = sandbox.spy(codeSnippetInstance, "onFailure");
-
-      try {
-        const error = new Error("error");
-        codeSnippetInstanceMock
-          .expects("createCodeSnippetWorkspaceEdit")
-          .rejects(error);
-        swaTrackerWrapperMock
-          .expects("updateSnippetEnded")
-          .withArgs(snippetTitle, false);
-        await codeSnippetInstance["applyCode"]({});
-        fail("applyCode should throw error");
-      } catch (error) {
-        expect(onFailureSpy.calledWith(true, snippetTitle, error)).to.be.true;
-        expect(error).to.be.not.undefined;
-      }
-
+      const error = new Error("error");
+      codeSnippetInstanceMock
+        .expects("createCodeSnippetWorkspaceEdit")
+        .rejects(error);
+      swaTrackerWrapperMock
+        .expects("updateSnippetEnded")
+        .withArgs(snippetTitle, false);
+      await codeSnippetInstance["applyCode"]({});
+      expect(onFailureSpy.calledWith(true, snippetTitle, error)).to.be.true;
       onFailureSpy.restore();
     });
   });
@@ -622,6 +645,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
+        panelPromiseFuncs,
         { snippet: snippet }
       );
       const we = await myCodeSnippet["createCodeSnippetWorkspaceEdit"]({});
@@ -633,6 +657,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
+        panelPromiseFuncs,
         {}
       );
       loggerMock.expects("debug");
@@ -648,6 +673,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
+        panelPromiseFuncs,
         { snippet: snippet }
       );
       const we = await myCodeSnippet["createCodeSnippetQuestions"]();
@@ -660,6 +686,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
+        panelPromiseFuncs,
         { snippet: null }
       );
       const we = await myCodeSnippet["createCodeSnippetQuestions"]();
@@ -677,6 +704,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
+        panelPromiseFuncs,
         {}
       );
 
@@ -710,6 +738,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
+        panelPromiseFuncs,
         {
           messages: {
             title: snippetTitle.length,
