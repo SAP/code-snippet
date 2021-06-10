@@ -1,7 +1,6 @@
 "use strict";
 
 const path = require("path");
-const CopyPlugin = require("copy-webpack-plugin");
 
 const config = {
   target: "node", // vscode extensions run in a Node.js-context 📖 -> https://webpack.js.org/configuration/node/
@@ -34,32 +33,7 @@ const config = {
           },
         ],
       },
-      {
-        test: /yeoman-environment[/|\\]lib[/|\\]environment.js/,
-        loader: "string-replace-loader",
-        options: {
-          search: "require.resolve[(]([^'\"])",
-          replace: "__non_webpack_require__.resolve($1",
-          flags: "g",
-        },
-      },
-      {
-        test: /yeoman-environment[/|\\]lib[/|\\]store.js/,
-        loader: "string-replace-loader",
-        options: {
-          search: "require[(]([^'\"])",
-          replace: "__non_webpack_require__($1",
-          flags: "g",
-        },
-      },
     ],
   },
-  plugins: [
-    new CopyPlugin([
-      { from: "../frontend/dist/", to: "media/", force: true },
-      { from: "../LICENSES", to: "LICENSES/", force: true },
-      { from: "../README.md", to: "README.md", toType: "file", force: true },
-    ]),
-  ],
 };
 module.exports = config;

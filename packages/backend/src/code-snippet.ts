@@ -7,6 +7,8 @@ import Generator = require("yeoman-generator");
 import { IChildLogger } from "@vscode-logging/logger";
 import TerminalAdapter = require("yeoman-environment/lib/adapter");
 import { SWA } from "./swa-tracker/swa-tracker-wrapper";
+import messages from "./messages";
+import { PromiseFunctions } from "./utils";
 
 export class CodeSnippet {
   private static funcReplacer(key: any, value: any) {
@@ -27,17 +29,20 @@ export class CodeSnippet {
     // eslint-disable-next-line @typescript-eslint/ban-types -- legacy code
     Map<string, Function>
   >;
+  private readonly panelPromiseFuncs: PromiseFunctions;
 
   constructor(
     rpc: IRpc,
     appEvents: AppEvents,
     outputChannel: AppLog,
     logger: IChildLogger,
+    panelPromiseFuncs: PromiseFunctions,
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types -- legacy code
     uiOptions: any
   ) {
     this.rpc = rpc;
     if (!this.rpc) {
+      this.panelPromiseFuncs;
       throw new Error("rpc must be set");
     }
     this.snippetName = "";
@@ -60,6 +65,8 @@ export class CodeSnippet {
     this.currentQuestions = {};
     this.uiOptions = uiOptions;
     this.customQuestionEventHandlers = new Map();
+
+    this.panelPromiseFuncs = panelPromiseFuncs;
   }
 
   private async getState() {
@@ -88,9 +95,7 @@ export class CodeSnippet {
       }
     }
 
-    const res = _.defaults(this.uiOptions.contributorInfo.snippetArgs, answers);
-
-    return res;
+    return _.defaults(this.uiOptions.contributorInfo.snippetArgs, answers);
   }
 
   public async executeCodeSnippet(answers?: unknown): Promise<any> {
@@ -187,8 +192,12 @@ export class CodeSnippet {
         }
       }
     } catch (error) {
-      const questionInfo = `Could not update method '${methodName}' in '${questionName}' question in generator '${this.gen.options.namespace}'`;
-      const errorMessage = await this.logError(error, questionInfo);
+      const questionInfo = messages.couldNotUpdate(
+        methodName,
+        questionName,
+        _.get(this.gen, "options.namespace")
+      );
+      const errorMessage = this.logError(error, questionInfo);
       this.onFailure(true, this.snippetName, errorMessage);
     }
   }
@@ -204,7 +213,8 @@ export class CodeSnippet {
       ]);
       await this.executeCodeSnippet(response);
     } catch (error) {
-      this.logError(error);
+      const errorMessage = this.logError(error, messages.couldNotInitialize);
+      this.onFailure(true, this.snippetName, errorMessage);
     }
   }
 
@@ -250,6 +260,7 @@ export class CodeSnippet {
     if (showDoneMessage) {
       this.appEvents.doSnippeDone(true, message);
     }
+    this.panelPromiseFuncs.resolve();
   }
 
   private async onFailure(
@@ -258,11 +269,12 @@ export class CodeSnippet {
     error: any
   ) {
     const messagePrefix = `${snippetrName} snippet failed.`;
-    const errorMessage: string = await this.logError(error, messagePrefix);
+    const errorMessage: string = this.logError(error, messagePrefix);
     SWA.updateSnippetEnded(snippetrName, false, this.logger, errorMessage);
     if (showDoneMessage) {
       this.appEvents.doSnippeDone(false, errorMessage);
     }
+    this.panelPromiseFuncs.reject(error);
   }
 
   private getErrorInfo(error: any = "") {
@@ -279,9 +291,6 @@ export class CodeSnippet {
 
   private async createCodeSnippetQuestions(): Promise<any[]> {
     const snippet = this.uiOptions.snippet;
-    // if (_.isNil(snippet)) {
-    //   throw new Error(this.uiOptions.snippetMustExist);
-    // }
 
     let questions: any[] = [];
 
@@ -294,9 +303,6 @@ export class CodeSnippet {
 
   private async createCodeSnippetWorkspaceEdit(answers: any): Promise<any[]> {
     const snippet = this.uiOptions.snippet;
-    // if (_.isNil(snippet)) {
-    //   throw new Error(this.uiOptions.snippetMustExist);
-    // }
 
     let we: any = undefined;
 
