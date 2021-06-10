@@ -605,6 +605,7 @@ describe("codeSnippet unit test", () => {
           .expects("updateSnippetEnded")
           .withArgs(snippetTitle, false);
         await codeSnippetInstance["applyCode"]({});
+        fail("applyCode should throw error");
       } catch (error) {
         expect(onFailureSpy.calledWith(true, snippetTitle, error)).to.be.true;
         expect(error).to.be.not.undefined;

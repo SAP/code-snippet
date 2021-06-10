@@ -1,41 +1,18 @@
 {
-  "name": "code-snippet",
-  "displayName": "Code Snippet",
-  "version": "1.1.0",
-  "description": "A VSCode extension that provides a simple way to add code snippets.",
-  "publisher": "SAPOSS",
-  "private": true,
-  "author": {
-    "name": "SAP SE"
-  },
-  "license": "Apache 2.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/SAP/code-snippet.git"
-  },
-  "bugs": {
-    "url": "https://github.com/SAP/code-snippet/issues"
-  },
-  "icon": "logo.png",
-  "engines": {
-    "vscode": "^1.44.2"
-  },
-  "categories": [
-    "Other"
-  ],
-  "keywords": [
-    "code",
-    "snippet",
-    "snipping ",
-    "tool",
-    "sap"
-  ],
   "activationEvents": [
     "*",
     "onCommand:loadCodeSnippet",
     "onWebviewPanel:codeSnippet"
   ],
-  "main": "./dist/extension",
+  "author": {
+    "name": "SAP SE"
+  },
+  "bugs": {
+    "url": "https://github.com/SAP/code-snippet/issues"
+  },
+  "categories": [
+    "Other"
+  ],
   "contributes": {
     "commands": [
       {
@@ -44,13 +21,40 @@
       },
       {
         "command": "codeSnippet.toggleOutput",
-        "title": "Show Output",
         "icon": {
-          "light": "./resources/images/icons/console_light.svg",
-          "dark": "./resources/images/icons/console_dark.svg"
-        }
+          "dark": "./resources/images/icons/console_dark.svg",
+          "light": "./resources/images/icons/console_light.svg"
+        },
+        "title": "Show Output"
       }
     ],
+    "configuration": {
+      "properties": {
+        "Code Snippet.loggingLevel": {
+          "default": "error",
+          "description": "The verbosity of logging according to the following order: trace > debug > info > warn > error > fatal > off.",
+          "enum": [
+            "off",
+            "fatal",
+            "error",
+            "warn",
+            "info",
+            "debug",
+            "trace"
+          ],
+          "scope": "resource",
+          "type": "string"
+        },
+        "Code Snippet.sourceLocationTracking": {
+          "default": false,
+          "description": "If chosen, the location of the source code is added to log entries. Warning – this action may slow your extension. We recommend you use it only for debugging.",
+          "scope": "resource",
+          "type": "boolean"
+        }
+      },
+      "title": "Code Snippet",
+      "type": "object"
+    },
     "menus": {
       "commandPalette": [
         {
@@ -69,50 +73,7 @@
           "when": "codeSnippet.Focused"
         }
       ]
-    },
-    "configuration": {
-      "type": "object",
-      "title": "Code Snippet",
-      "properties": {
-        "Code Snippet.loggingLevel": {
-          "type": "string",
-          "enum": [
-            "off",
-            "fatal",
-            "error",
-            "warn",
-            "info",
-            "debug",
-            "trace"
-          ],
-          "default": "error",
-          "description": "The verbosity of logging according to the following order: trace > debug > info > warn > error > fatal > off.",
-          "scope": "resource"
-        },
-        "Code Snippet.sourceLocationTracking": {
-          "type": "boolean",
-          "default": false,
-          "description": "If chosen, the location of the source code is added to log entries. Warning – this action may slow your extension. We recommend you use it only for debugging.",
-          "scope": "resource"
-        }
-      }
     }
-  },
-  "scripts": {
-    "ci": "npm-run-all clean compile coverage bundle frontend:copy package coverage coverage:copy",
-    "clean:frontend": "cd ./dist && shx rm -rf ./media",
-    "clean": "rimraf ./dist ./coverage *.vsix",
-    "backend": "npm i && npm run compile",
-    "frontend:copy": "npm-run-all clean:frontend && shx cp -r ../frontend/dist/. ./dist/media/",
-    "bundle": "webpack --mode production",
-    "bundle-dev": "webpack --mode development --watch",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "package": "vsce package --yarn",
-    "test": "mocha -p tsconfig.json --recursive test/**/*.spec.ts",
-    "coverage": "nyc mocha -p tsconfig.json --recursive test/**/*.spec.ts",
-    "coverage:copy": "shx mkdir -p ../../coverage && shx cp -u ./reports/coverage/lcov.info ../../coverage/lcov_backend.info",
-    "ws:run": "node ./out/src/webSocketServer/index.js"
   },
   "dependencies": {
     "@sap-devx/webview-rpc": "0.3.1",
@@ -125,6 +86,7 @@
     "ws": "7.4.6",
     "yeoman-environment": "3.4.1"
   },
+  "description": "A VSCode extension that provides a simple way to add code snippets.",
   "devDependencies": {
     "@types/fs-extra": "^9.0.11",
     "@types/lodash": "^4.14.170",
@@ -139,5 +101,43 @@
     "vsce": "1.83.0",
     "webpack": "^5.38.1",
     "webpack-cli": "^4.7.2"
-  }
+  },
+  "displayName": "Code Snippet",
+  "engines": {
+    "vscode": "^1.44.2"
+  },
+  "icon": "logo.png",
+  "keywords": [
+    "code",
+    "snippet",
+    "snipping ",
+    "tool",
+    "sap"
+  ],
+  "license": "Apache 2.0",
+  "main": "./dist/extension",
+  "name": "code-snippet",
+  "private": true,
+  "publisher": "SAPOSS",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAP/code-snippet.git"
+  },
+  "scripts": {
+    "backend": "npm i && npm run compile",
+    "bundle": "webpack --mode production",
+    "bundle-dev": "webpack --mode development --watch",
+    "ci": "npm-run-all clean compile coverage bundle frontend:copy package coverage coverage:copy",
+    "clean": "rimraf ./dist ./coverage *.vsix",
+    "clean:frontend": "cd ./dist && shx rm -rf ./media",
+    "compile": "tsc -p ./",
+    "coverage": "nyc mocha -p tsconfig.json --recursive test/**/*.spec.ts",
+    "coverage:copy": "shx mkdir -p ../../coverage && shx cp -u ./reports/coverage/lcov.info ../../coverage/lcov_backend.info",
+    "frontend:copy": "npm-run-all clean:frontend && shx cp -r ../frontend/dist/. ./dist/media/",
+    "package": "vsce package --yarn",
+    "test": "mocha -p tsconfig.json --recursive test/**/*.spec.ts",
+    "watch": "tsc -watch -p ./",
+    "ws:run": "node ./out/src/webSocketServer/index.js"
+  },
+  "version": "1.1.0"
 }

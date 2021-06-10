@@ -1,22 +1,8 @@
 {
-  "name": "code-snippet-frontend",
-  "displayName": "Code Snippet Frontend",
-  "version": "1.1.0",
-  "publisher": "SAP",
-  "license": "Apache 2.0",
-  "description": "Frontend for the Code Snippet framework",
-  "private": true,
-  "scripts": {
-    "ci": "npm-run-all clean build coverage coverage:copy",
-    "clean": "rimraf ./dist ./coverage",
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "build-dev": "vue-cli-service build --mode development",
-    "lint": "vue-cli-service lint",
-    "test": "vue-cli-service test:unit --collectCoverage=false",
-    "coverage": "vue-cli-service test:unit",
-    "coverage:copy": "shx mkdir -p ../../coverage && shx cp -u ./coverage/lcov.info ../../coverage/lcov_frontend.info"
-  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ],
   "dependencies": {
     "@mdi/font": "^5.9.45",
     "@sap-devx/inquirer-gui": "0.2.0",
@@ -33,6 +19,7 @@
     "vue-loading-overlay": "3.3.0",
     "vuetify": "2.3.10"
   },
+  "description": "Frontend for the Code Snippet framework",
   "devDependencies": {
     "@babel/preset-env": "7.11.5",
     "@vue/cli-plugin-babel": "4.5.4",
@@ -51,13 +38,26 @@
     "vue-template-compiler": "2.6.12",
     "vuetify-loader": "1.6.0"
   },
+  "displayName": "Code Snippet Frontend",
+  "license": "Apache 2.0",
+  "name": "code-snippet-frontend",
   "postcss": {
     "plugins": {
       "autoprefixer": {}
     }
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions"
-  ]
+  "private": true,
+  "publisher": "SAP",
+  "scripts": {
+    "build": "vue-cli-service build",
+    "build-dev": "vue-cli-service build --mode development",
+    "ci": "npm-run-all clean build coverage coverage:copy",
+    "clean": "rimraf ./dist ./coverage",
+    "coverage": "vue-cli-service test:unit",
+    "coverage:copy": "shx mkdir -p ../../coverage && shx cp -u ./coverage/lcov.info ../../coverage/lcov_frontend.info",
+    "lint": "vue-cli-service lint",
+    "serve": "vue-cli-service serve",
+    "test": "vue-cli-service test:unit --collectCoverage=false"
+  },
+  "version": "1.1.0"
 }

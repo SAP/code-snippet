@@ -7,6 +7,7 @@ import Generator = require("yeoman-generator");
 import { IChildLogger } from "@vscode-logging/logger";
 import TerminalAdapter = require("yeoman-environment/lib/adapter");
 import { SWA } from "./swa-tracker/swa-tracker-wrapper";
+import messages from "./messages";
 
 export class CodeSnippet {
   private static funcReplacer(key: any, value: any) {
@@ -188,10 +189,11 @@ export class CodeSnippet {
         }
       }
     } catch (error) {
-      const questionInfo = `Could not update method '${methodName}' in '${questionName}' question in generator '${_.get(
-        this.gen,
-        "options.namespace"
-      )}'`;
+      const questionInfo = messages.could_not_update(
+        methodName,
+        questionName,
+        _.get(this.gen, "options.namespace")
+      );
       const errorMessage = this.logError(error, questionInfo);
       this.onFailure(true, this.snippetName, errorMessage);
       return Promise.reject(error);
@@ -209,10 +211,7 @@ export class CodeSnippet {
       ]);
       await this.executeCodeSnippet(response);
     } catch (error) {
-      const errorMessage = this.logError(
-        error,
-        "Could not initialize code-snippet webview"
-      );
+      const errorMessage = this.logError(error, messages.could_not_initialize);
       this.onFailure(true, this.snippetName, errorMessage);
       throw error;
     }
