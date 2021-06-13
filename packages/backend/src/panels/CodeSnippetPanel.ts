@@ -13,10 +13,13 @@ import { AbstractWebviewPanel } from "./AbstractWebviewPanel";
 import { Contributors } from "../contributors";
 import { getWebviewRpcLibraryLogger } from "../logger/logger-wrapper";
 import { IChildLogger } from "@vscode-logging/logger";
+import { PromiseFunctions, RejectType, ResolveType } from "src/utils";
 
 export class CodeSnippetPanel extends AbstractWebviewPanel {
   public static CODE_SNIPPET = "Code Snippet";
   private static channel: vscode.OutputChannel;
+  private readonly panelPromise: Promise<void>;
+  private panelPromiseFuncs: PromiseFunctions;
 
   public toggleOutput(): void {
     this.outputChannel.showOutput();
@@ -32,12 +35,15 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
         snippet,
         uiOptions
       );
-      return codeSnippet.executeCodeSnippet();
+      await codeSnippet.executeCodeSnippet();
+    } else {
+      await super.loadWebviewPanel(uiOptions);
     }
-    super.loadWebviewPanel(uiOptions);
+
+    return this.panelPromise;
   }
 
-  public createCodeSnippet(
+  private createCodeSnippet(
     messages: unknown,
     logger: IChildLogger,
     snippet: unknown,
@@ -62,11 +68,18 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
     );
     const vscodeEvents: AppEvents = new VSCodeEvents(webViewPanel);
 
-    return new CodeSnippet(rpc, vscodeEvents, outputChannel, logger, {
-      messages,
-      snippet,
-      contributorInfo,
-    });
+    return new CodeSnippet(
+      rpc,
+      vscodeEvents,
+      outputChannel,
+      logger,
+      this.panelPromiseFuncs,
+      {
+        messages,
+        snippet,
+        contributorInfo,
+      }
+    );
   }
 
   private async prepareSnippet(uiOptions?: unknown): Promise<any> {
@@ -131,12 +144,18 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
   private outputChannel: AppLog;
   private readonly contributors: Contributors;
 
-  public constructor(context: vscode.ExtensionContext) {
+  constructor(context: vscode.ExtensionContext) {
     super(context);
     this.viewType = "codeSnippet";
     this.viewTitle = CodeSnippetPanel.CODE_SNIPPET;
     this.focusedKey = "codeSnippet.Focused";
     this.contributors = new Contributors();
+
+    this.panelPromise = new Promise(
+      (resolve: ResolveType, reject: RejectType) => {
+        this.panelPromiseFuncs = { resolve, reject };
+      }
+    );
   }
 
   private async showOpenFileDialog(currentPath: string): Promise<string> {

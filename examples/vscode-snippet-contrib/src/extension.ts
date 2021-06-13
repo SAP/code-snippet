@@ -9,9 +9,9 @@ export function activate(context: vscode.ExtensionContext) {
 
   const disposable = vscode.commands.registerCommand(
     "extension.showCodeSnippetContrib",
-    (uri: vscode.Uri) => {
+    async (uri: vscode.Uri) => {
       try {
-        vscode.commands.executeCommand("loadCodeSnippet", {
+        await vscode.commands.executeCommand("loadCodeSnippet", {
           contributorId: "SAPOSS.vscode-snippet-contrib",
           snippetName: "snippet_1",
           context: { uri: uri },
