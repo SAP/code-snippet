@@ -2,7 +2,7 @@
   "name": "vscode-snippet-contrib",
   "displayName": "vscode-snippet-contrib",
   "description": "",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "publisher": "SAPOSS",
   "private": true,
   "engines": {
