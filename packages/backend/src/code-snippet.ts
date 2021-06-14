@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import _ from "lodash";
 import * as inquirer from "inquirer";
 import { AppLog } from "./app-log";
 import { AppEvents } from "./app-events";
@@ -21,7 +21,6 @@ export class CodeSnippet {
   private readonly outputChannel: AppLog;
   private readonly logger: IChildLogger;
   private gen: Generator | undefined;
-  private promptCount: number;
   private currentQuestions: TerminalAdapter.Questions<any>;
   private snippetName: string;
   private readonly customQuestionEventHandlers: Map<
@@ -61,7 +60,6 @@ export class CodeSnippet {
     this.rpc.registerMethod({ func: this.getState, thisArg: this });
     this.rpc.registerMethod({ func: this.executeCommand, thisArg: this });
 
-    this.promptCount = 0;
     this.currentQuestions = {};
     this.uiOptions = uiOptions;
     this.customQuestionEventHandlers = new Map();
@@ -226,8 +224,6 @@ export class CodeSnippet {
   public async showPrompt(
     questions: TerminalAdapter.Questions<any>
   ): Promise<inquirer.Answers> {
-    this.promptCount++;
-
     this.currentQuestions = questions;
     const mappedQuestions: TerminalAdapter.Questions<any> = this.normalizeFunctions(
       questions

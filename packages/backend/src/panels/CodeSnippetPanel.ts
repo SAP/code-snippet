@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import _ from "lodash";
 import * as path from "path";
 import * as os from "os";
 import * as vscode from "vscode";
@@ -18,15 +18,27 @@ import { SnippetFlowPromise, RejectType, ResolveType } from "src/utils";
 export class CodeSnippetPanel extends AbstractWebviewPanel {
   public static CODE_SNIPPET = "Code Snippet";
   private static channel: vscode.OutputChannel;
-  private readonly panelPromise: Promise<void>;
+  private codeSnippetFlowPromise: Promise<void>;
   private snippetFlowPromise: SnippetFlowPromise;
+
+  // uiOptions comming from webview panel serializer looks like: {contributorInfo: {...}, ...}
+  private getContribInfoFrom(uiOptions?: unknown) {
+    return _.get(uiOptions, "contributorInfo", uiOptions);
+  }
 
   public toggleOutput(): void {
     this.outputChannel.showOutput();
   }
 
   public async loadWebviewPanel(uiOptions?: unknown): Promise<void> {
-    const snippet = await this.prepareSnippet(uiOptions);
+    this.codeSnippetFlowPromise = new Promise(
+      (resolve: ResolveType, reject: RejectType) => {
+        this.snippetFlowPromise = { resolve, reject };
+      }
+    );
+
+    const contributorInfo = this.getContribInfoFrom(uiOptions);
+    const snippet = await this.prepareSnippet(contributorInfo);
 
     if (_.get(uiOptions, "isNonInteractive", false)) {
       const codeSnippet = this.createCodeSnippet(
@@ -40,7 +52,7 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
       await super.loadWebviewPanel(uiOptions);
     }
 
-    return this.panelPromise;
+    return this.codeSnippetFlowPromise;
   }
 
   private createCodeSnippet(
@@ -63,15 +75,13 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
         getWebviewRpcLibraryLogger()
       );
     }
-    const outputChannel: AppLog = new OutputChannelLog(
-      _.get(messages, "channelName")
-    );
+    this.outputChannel = new OutputChannelLog(_.get(messages, "channelName"));
     const vscodeEvents: AppEvents = new VSCodeEvents(webViewPanel);
 
     return new CodeSnippet(
       rpc,
       vscodeEvents,
-      outputChannel,
+      this.outputChannel,
       logger,
       this.snippetFlowPromise,
       {
@@ -82,16 +92,20 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
     );
   }
 
-  private async prepareSnippet(uiOptions?: unknown): Promise<any> {
-    const snippet = await this.contributors.getSnippet(uiOptions);
+  private validateSnippet(snippet: unknown, contributorInfo: unknown) {
     if (_.isNil(snippet)) {
       const errorMessage = `'${_.get(
-        uiOptions,
+        contributorInfo,
         "contributorId"
       )}' snippet could not be found.`;
       this.logger.error(errorMessage);
-      return Promise.reject(errorMessage);
+      throw new Error(errorMessage);
     }
+  }
+
+  private async prepareSnippet(contributorInfo: unknown): Promise<any> {
+    const snippet = await this.contributors.getSnippet(contributorInfo);
+    this.validateSnippet(snippet, contributorInfo);
     this.messages = _.assign({}, backendMessages, snippet.getMessages());
     return snippet;
   }
@@ -102,7 +116,8 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
   ): Promise<void> {
     let snippet;
     try {
-      snippet = await this.prepareSnippet(uiOptions);
+      const contributorInfo = this.getContribInfoFrom(uiOptions);
+      snippet = await this.prepareSnippet(contributorInfo);
     } catch {
       return this.webViewPanel.dispose();
     }
@@ -150,12 +165,6 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
     this.viewTitle = CodeSnippetPanel.CODE_SNIPPET;
     this.focusedKey = "codeSnippet.Focused";
     this.contributors = new Contributors();
-
-    this.panelPromise = new Promise(
-      (resolve: ResolveType, reject: RejectType) => {
-        this.snippetFlowPromise = { resolve, reject };
-      }
-    );
   }
 
   private async showOpenFileDialog(currentPath: string): Promise<string> {

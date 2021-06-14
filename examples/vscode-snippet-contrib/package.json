@@ -44,7 +44,8 @@
     "ci": "npm-run-all clean compile",
     "clean": "rimraf ./dist",
     "package": "vsce package --yarn .",
-    "compile": "tsc -p ."
+    "compile": "tsc -p .",
+    "watch": "tsc -p . --watch"
   },
   "dependencies": {
     "@sap-devx/code-snippet-types": "^1.1.0",
