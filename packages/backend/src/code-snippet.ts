@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import _ from "lodash";
 import * as inquirer from "inquirer";
 import { AppLog } from "./app-log";
 import { AppEvents } from "./app-events";
@@ -8,7 +8,7 @@ import { IChildLogger } from "@vscode-logging/logger";
 import TerminalAdapter = require("yeoman-environment/lib/adapter");
 import { SWA } from "./swa-tracker/swa-tracker-wrapper";
 import messages from "./messages";
-import { SnippetFlowPromise } from "./utils";
+import { State } from "./utils";
 
 export class CodeSnippet {
   private static funcReplacer(key: any, value: any) {
@@ -21,7 +21,6 @@ export class CodeSnippet {
   private readonly outputChannel: AppLog;
   private readonly logger: IChildLogger;
   private gen: Generator | undefined;
-  private promptCount: number;
   private currentQuestions: TerminalAdapter.Questions<any>;
   private snippetName: string;
   private readonly customQuestionEventHandlers: Map<
@@ -29,7 +28,7 @@ export class CodeSnippet {
     // eslint-disable-next-line @typescript-eslint/ban-types -- legacy code
     Map<string, Function>
   >;
-  private readonly snippetFlowPromise: SnippetFlowPromise;
+  private readonly flowState: State<void>;
   // TODO: the constructor invocation is getting too large and not readable
   // looks like we need an options object / config object
   constructor(
@@ -37,7 +36,7 @@ export class CodeSnippet {
     appEvents: AppEvents,
     outputChannel: AppLog,
     logger: IChildLogger,
-    snippetFlowPromise: SnippetFlowPromise,
+    flowState: State<void>,
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types -- legacy code
     uiOptions: any
   ) {
@@ -61,13 +60,12 @@ export class CodeSnippet {
     this.rpc.registerMethod({ func: this.getState, thisArg: this });
     this.rpc.registerMethod({ func: this.executeCommand, thisArg: this });
 
-    this.promptCount = 0;
     this.currentQuestions = {};
     this.uiOptions = uiOptions;
     this.customQuestionEventHandlers = new Map();
     // this promise will be resolved when code-snippet flow ends successfully
     // this promise will be rejected when code-snippet flow fails
-    this.snippetFlowPromise = snippetFlowPromise;
+    this.flowState = flowState;
   }
 
   private async getState() {
@@ -226,8 +224,6 @@ export class CodeSnippet {
   public async showPrompt(
     questions: TerminalAdapter.Questions<any>
   ): Promise<inquirer.Answers> {
-    this.promptCount++;
-
     this.currentQuestions = questions;
     const mappedQuestions: TerminalAdapter.Questions<any> = this.normalizeFunctions(
       questions
@@ -261,7 +257,7 @@ export class CodeSnippet {
     if (showDoneMessage) {
       this.appEvents.doSnippeDone(true, message);
     }
-    this.snippetFlowPromise.resolve();
+    this.flowState.resolve();
   }
 
   private async onFailure(
@@ -275,7 +271,7 @@ export class CodeSnippet {
     if (showDoneMessage) {
       this.appEvents.doSnippeDone(false, errorMessage);
     }
-    this.snippetFlowPromise.reject(error);
+    this.flowState.reject(error);
   }
 
   private getErrorInfo(error: any = "") {

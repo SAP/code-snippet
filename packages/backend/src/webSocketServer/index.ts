@@ -8,7 +8,7 @@ import backendMessages from "../messages";
 import { IChildLogger } from "@vscode-logging/logger";
 import { AppEvents } from "../app-events";
 import { getConsoleWarnLogger } from "../logger/logger-wrapper";
-import { SnippetFlowPromise, RejectType, ResolveType } from "src/utils";
+import { createFlowPromise } from "../utils";
 
 class CodeSnippetWebSocketServer {
   private rpc: RpcExtensionWebSockets | undefined;
@@ -55,17 +55,15 @@ class CodeSnippetWebSocketServer {
           return createCodeSnippetQuestions();
         },
       };
-      let snippetFlowPromise: SnippetFlowPromise;
-      new Promise((resolve: ResolveType, reject: RejectType) => {
-        snippetFlowPromise = { resolve, reject };
-      });
+
+      const flowPromise = createFlowPromise<void>();
 
       this.codeSnippet = new CodeSnippet(
         this.rpc,
         appEvents,
         logger,
         childLogger as IChildLogger,
-        snippetFlowPromise,
+        flowPromise.state,
         { messages: backendMessages, snippet: snippet }
       );
       this.codeSnippet.registerCustomQuestionEventHandler(

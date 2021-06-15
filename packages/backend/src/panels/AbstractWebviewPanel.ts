@@ -4,6 +4,7 @@ import * as _ from "lodash";
 import * as fsextra from "fs-extra";
 import { IChildLogger } from "@vscode-logging/logger";
 import { getClassLogger } from "../logger/logger-wrapper";
+import { createFlowPromise, FlowPromise } from "../utils";
 
 export abstract class AbstractWebviewPanel {
   public viewType: string;
@@ -14,7 +15,8 @@ export abstract class AbstractWebviewPanel {
   protected viewColumn: vscode.ViewColumn;
   protected focusedKey: string;
   protected htmlFileName: string;
-  protected uiOptions: any;
+  protected uiOptions: unknown;
+  protected flowPromise: FlowPromise<void>;
 
   protected logger: IChildLogger;
   protected disposables: vscode.Disposable[];
@@ -27,13 +29,22 @@ export abstract class AbstractWebviewPanel {
     this.disposables = [];
   }
 
+  private setViewColumn(uiOptions?: unknown) {
+    this.viewColumn = _.get(uiOptions, "viewColumn", vscode.ViewColumn.One);
+  }
+
+  protected setFlowPromise(): void {
+    this.flowPromise = createFlowPromise<void>();
+  }
+
   public async setWebviewPanel(
     webViewPanel: vscode.WebviewPanel,
     uiOptions?: unknown
   ): Promise<void> {
+    this.setFlowPromise();
     this.webViewPanel = webViewPanel;
     this.uiOptions = uiOptions;
-    this.viewColumn = _.get(uiOptions, "viewColumn", vscode.ViewColumn.One);
+    this.setViewColumn(uiOptions);
   }
 
   public async loadWebviewPanel(uiOptions?: unknown): Promise<void> {
@@ -41,9 +52,9 @@ export abstract class AbstractWebviewPanel {
       this.webViewPanel.reveal();
     } else {
       this.disposeWebviewPanel();
-      this.viewColumn = _.get(uiOptions, "viewColumn", vscode.ViewColumn.One);
+      this.setViewColumn(uiOptions);
       const webViewPanel = this.createWebviewPanel();
-      this.setWebviewPanel(webViewPanel, uiOptions);
+      await this.setWebviewPanel(webViewPanel, uiOptions);
     }
   }
 
@@ -96,7 +107,16 @@ export abstract class AbstractWebviewPanel {
     vscode.commands.executeCommand("setContext", this.focusedKey, focusedValue);
   }
 
-  private dispose() {
+  private cleanFlowPromise() {
+    if (this.flowPromise) {
+      // resolves promise in case panel is closed manually by an user
+      // it is safe to call resolve several times on same promise
+      this.flowPromise.state.resolve();
+    }
+    this.flowPromise = null;
+  }
+
+  protected dispose(): void {
     this.setFocused(false);
 
     // Clean up our resources
@@ -109,6 +129,8 @@ export abstract class AbstractWebviewPanel {
         x.dispose();
       }
     }
+
+    this.cleanFlowPromise();
   }
 
   protected async initHtmlContent(): Promise<void> {

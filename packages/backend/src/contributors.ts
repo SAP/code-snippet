@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import * as _ from "lodash";
+import _ from "lodash";
 import { IChildLogger } from "@vscode-logging/logger";
 import { getClassLogger } from "./logger/logger-wrapper";
 
