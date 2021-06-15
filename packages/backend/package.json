@@ -1,7 +1,7 @@
 {
   "name": "code-snippet",
   "displayName": "Code Snippet",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A VSCode extension that provides a simple way to add code snippets.",
   "publisher": "SAPOSS",
   "private": true,

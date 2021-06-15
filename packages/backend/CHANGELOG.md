@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/SAP/code-snippet/compare/v1.1.1...v1.1.2) (2021-06-15)
+
+### Bug Fixes
+
+- show output does not work, panel serializer does not work ([#140](https://github.com/SAP/code-snippet/issues/140)) ([fe6b8b0](https://github.com/SAP/code-snippet/commit/fe6b8b04d7e80ad3473c00ec6e45efb9ab5fa54e))
+
 ## [1.1.1](https://github.com/SAP/code-snippet/compare/v1.1.0...v1.1.1) (2021-06-13)
 
 ### Bug Fixes
