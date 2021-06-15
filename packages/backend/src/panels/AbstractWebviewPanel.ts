@@ -4,6 +4,7 @@ import * as _ from "lodash";
 import * as fsextra from "fs-extra";
 import { IChildLogger } from "@vscode-logging/logger";
 import { getClassLogger } from "../logger/logger-wrapper";
+import { createFlowPromise, FlowPromise } from "../utils";
 
 export abstract class AbstractWebviewPanel {
   public viewType: string;
@@ -15,6 +16,7 @@ export abstract class AbstractWebviewPanel {
   protected focusedKey: string;
   protected htmlFileName: string;
   protected uiOptions: unknown;
+  protected flowPromise: FlowPromise<void>;
 
   protected logger: IChildLogger;
   protected disposables: vscode.Disposable[];
@@ -31,10 +33,15 @@ export abstract class AbstractWebviewPanel {
     this.viewColumn = _.get(uiOptions, "viewColumn", vscode.ViewColumn.One);
   }
 
+  protected setFlowPromise(): void {
+    this.flowPromise = createFlowPromise<void>();
+  }
+
   public async setWebviewPanel(
     webViewPanel: vscode.WebviewPanel,
     uiOptions?: unknown
   ): Promise<void> {
+    this.setFlowPromise();
     this.webViewPanel = webViewPanel;
     this.uiOptions = uiOptions;
     this.setViewColumn(uiOptions);
@@ -100,6 +107,15 @@ export abstract class AbstractWebviewPanel {
     vscode.commands.executeCommand("setContext", this.focusedKey, focusedValue);
   }
 
+  private cleanFlowPromise() {
+    if (this.flowPromise) {
+      // resolves promise in case panel is closed manually by an user
+      // it is safe to call resolve several times on same promise
+      this.flowPromise.state.resolve();
+    }
+    this.flowPromise = null;
+  }
+
   protected dispose(): void {
     this.setFocused(false);
 
@@ -113,6 +129,8 @@ export abstract class AbstractWebviewPanel {
         x.dispose();
       }
     }
+
+    this.cleanFlowPromise();
   }
 
   protected async initHtmlContent(): Promise<void> {
