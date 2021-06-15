@@ -13,16 +13,15 @@ import { AbstractWebviewPanel } from "./AbstractWebviewPanel";
 import { Contributors } from "../contributors";
 import { getWebviewRpcLibraryLogger } from "../logger/logger-wrapper";
 import { IChildLogger } from "@vscode-logging/logger";
-import { SnippetFlowPromise, RejectType, ResolveType } from "src/utils";
+import { createFlowPromiseAndState, PromiseAndState } from "../utils";
 
 export class CodeSnippetPanel extends AbstractWebviewPanel {
   public static CODE_SNIPPET = "Code Snippet";
   private static channel: vscode.OutputChannel;
-  private codeSnippetFlowPromise: Promise<void>;
-  private snippetFlowPromise: SnippetFlowPromise;
+  private flowPromiseAndState: PromiseAndState<void>;
 
   // uiOptions comming from webview panel serializer looks like: {contributorInfo: {...}, ...}
-  private getContribInfoFrom(uiOptions?: unknown) {
+  private getContribInfoFrom(uiOptions?: unknown): unknown {
     return _.get(uiOptions, "contributorInfo", uiOptions);
   }
 
@@ -30,17 +29,26 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
     this.outputChannel.showOutput();
   }
 
-  public async loadWebviewPanel(uiOptions?: unknown): Promise<void> {
-    this.codeSnippetFlowPromise = new Promise(
-      (resolve: ResolveType, reject: RejectType) => {
-        this.snippetFlowPromise = { resolve, reject };
-      }
-    );
+  private setCommandPromiseAndFlowState() {
+    this.flowPromiseAndState = createFlowPromiseAndState();
+  }
 
+  private cleanCommandPromiseAndFlowState() {
+    if (this.flowPromiseAndState) {
+      // resolves command promise in case panel is closed manually by an user
+      // it is save to call resolve several times on same promise
+      this.flowPromiseAndState.state.resolve();
+    }
+    this.flowPromiseAndState = null;
+  }
+
+  public async loadWebviewPanel(uiOptions?: unknown): Promise<void> {
     const contributorInfo = this.getContribInfoFrom(uiOptions);
     const snippet = await this.prepareSnippet(contributorInfo);
 
     if (_.get(uiOptions, "isNonInteractive", false)) {
+      this.setCommandPromiseAndFlowState();
+
       const codeSnippet = this.createCodeSnippet(
         this.messages,
         this.logger,
@@ -52,7 +60,12 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
       await super.loadWebviewPanel(uiOptions);
     }
 
-    return this.codeSnippetFlowPromise;
+    return this.flowPromiseAndState.promise;
+  }
+
+  public dispose(): void {
+    super.dispose();
+    this.cleanCommandPromiseAndFlowState();
   }
 
   private createCodeSnippet(
@@ -83,7 +96,7 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
       vscodeEvents,
       this.outputChannel,
       logger,
-      this.snippetFlowPromise,
+      this.flowPromiseAndState.state,
       {
         messages,
         snippet,
@@ -114,13 +127,10 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
     webViewPanel: vscode.WebviewPanel,
     uiOptions?: unknown
   ): Promise<void> {
-    let snippet;
-    try {
-      const contributorInfo = this.getContribInfoFrom(uiOptions);
-      snippet = await this.prepareSnippet(contributorInfo);
-    } catch {
-      return this.webViewPanel.dispose();
-    }
+    this.setCommandPromiseAndFlowState();
+
+    const contributorInfo = this.getContribInfoFrom(uiOptions);
+    const snippet = await this.prepareSnippet(contributorInfo);
 
     this.codeSnippet = this.createCodeSnippet(
       this.messages,

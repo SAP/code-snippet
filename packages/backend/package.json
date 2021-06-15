@@ -31,8 +31,7 @@
     "sap"
   ],
   "activationEvents": [
-    "*",
-    "onWebviewPanel:codeSnippet"
+    "*"
   ],
   "main": "./dist/extension",
   "contributes": {

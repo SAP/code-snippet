@@ -44,9 +44,9 @@ function registerWebviewPanelSerializer(abstractPanel: AbstractWebviewPanel) {
   vscode.window.registerWebviewPanelSerializer(abstractPanel.viewType, {
     async deserializeWebviewPanel(
       webViewPanel: vscode.WebviewPanel,
-      state?: any
+      state?: unknown
     ) {
-      abstractPanel.setWebviewPanel(webViewPanel, state);
+      await abstractPanel.setWebviewPanel(webViewPanel, state);
     },
   });
 }

@@ -14,7 +14,7 @@ export abstract class AbstractWebviewPanel {
   protected viewColumn: vscode.ViewColumn;
   protected focusedKey: string;
   protected htmlFileName: string;
-  protected uiOptions: any;
+  protected uiOptions: unknown;
 
   protected logger: IChildLogger;
   protected disposables: vscode.Disposable[];
@@ -27,13 +27,17 @@ export abstract class AbstractWebviewPanel {
     this.disposables = [];
   }
 
+  private setViewColumn(uiOptions?: unknown) {
+    this.viewColumn = _.get(uiOptions, "viewColumn", vscode.ViewColumn.One);
+  }
+
   public async setWebviewPanel(
     webViewPanel: vscode.WebviewPanel,
     uiOptions?: unknown
   ): Promise<void> {
     this.webViewPanel = webViewPanel;
     this.uiOptions = uiOptions;
-    this.viewColumn = _.get(uiOptions, "viewColumn", vscode.ViewColumn.One);
+    this.setViewColumn(uiOptions);
   }
 
   public async loadWebviewPanel(uiOptions?: unknown): Promise<void> {
@@ -41,9 +45,9 @@ export abstract class AbstractWebviewPanel {
       this.webViewPanel.reveal();
     } else {
       this.disposeWebviewPanel();
-      this.viewColumn = _.get(uiOptions, "viewColumn", vscode.ViewColumn.One);
+      this.setViewColumn(uiOptions);
       const webViewPanel = this.createWebviewPanel();
-      this.setWebviewPanel(webViewPanel, uiOptions);
+      await this.setWebviewPanel(webViewPanel, uiOptions);
     }
   }
 
@@ -96,7 +100,7 @@ export abstract class AbstractWebviewPanel {
     vscode.commands.executeCommand("setContext", this.focusedKey, focusedValue);
   }
 
-  private dispose() {
+  protected dispose(): void {
     this.setFocused(false);
 
     // Clean up our resources

@@ -13,7 +13,7 @@ import { fail } from "assert";
 import { SWA } from "../src/swa-tracker/swa-tracker-wrapper";
 import * as sinon from "sinon";
 import { SinonMock } from "sinon";
-import { SnippetFlowPromise, RejectType, ResolveType } from "src/utils";
+import { createFlowPromiseAndState, PromiseAndState } from "../src/utils";
 
 describe("codeSnippet unit test", () => {
   let sandbox: sinon.SinonSandbox;
@@ -135,16 +135,14 @@ describe("codeSnippet unit test", () => {
   const appEvents = new TestEvents();
   const snippetTitle = "snippet title";
   const uiOptions = { messages: { title: snippetTitle }, snippet: snippet };
-  let snippetFlowPromise: SnippetFlowPromise;
-  new Promise((resolve: ResolveType, reject: RejectType) => {
-    snippetFlowPromise = { resolve, reject };
-  });
+  const flowPromiseAndState: PromiseAndState<void> = createFlowPromiseAndState<void>();
+
   const codeSnippet: CodeSnippet = new CodeSnippet(
     rpc,
     appEvents,
     outputChannel,
     testLogger,
-    snippetFlowPromise,
+    flowPromiseAndState.state,
     uiOptions
   );
 
@@ -162,7 +160,7 @@ describe("codeSnippet unit test", () => {
     loggerMock = sandbox.mock(testLogger);
     appEventsMock = sandbox.mock(appEvents);
     swaTrackerWrapperMock = sandbox.mock(SWA);
-    panelPromiseFuncsMock = sandbox.mock(snippetFlowPromise);
+    panelPromiseFuncsMock = sandbox.mock(flowPromiseAndState.state);
   });
 
   afterEach(() => {
@@ -270,7 +268,7 @@ describe("codeSnippet unit test", () => {
       appEvents,
       outputChannel,
       testLogger,
-      snippetFlowPromise,
+      flowPromiseAndState.state,
       {}
     );
     const res = codeSnippetInstance["toggleOutput"]();
@@ -283,7 +281,7 @@ describe("codeSnippet unit test", () => {
       appEvents,
       outputChannel,
       testLogger,
-      snippetFlowPromise,
+      flowPromiseAndState.state,
       {}
     );
     const errorInfo = "Error Info";
@@ -297,7 +295,7 @@ describe("codeSnippet unit test", () => {
       appEvents,
       outputChannel,
       testLogger,
-      snippetFlowPromise,
+      flowPromiseAndState.state,
       {}
     );
     const res = codeSnippetInstance["getErrorInfo"]();
@@ -346,7 +344,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
-        snippetFlowPromise,
+        flowPromiseAndState.state,
         {}
       );
       const questions = [{ name: "q1" }];
@@ -420,7 +418,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
-        snippetFlowPromise,
+        flowPromiseAndState.state,
         {}
       );
 
@@ -448,7 +446,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
-        snippetFlowPromise,
+        flowPromiseAndState.state,
         {}
       );
       codeSnippetInstance.registerCustomQuestionEventHandler(
@@ -473,7 +471,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
-        snippetFlowPromise,
+        flowPromiseAndState.state,
         {}
       );
       codeSnippetInstance["currentQuestions"] = [
@@ -498,7 +496,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
-        snippetFlowPromise,
+        flowPromiseAndState.state,
         {}
       );
       codeSnippetInstance["currentQuestions"] = [
@@ -523,7 +521,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
-        snippetFlowPromise,
+        flowPromiseAndState.state,
         {}
       );
       const response = await codeSnippetInstance["evaluateMethod"](
@@ -540,7 +538,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
-        snippetFlowPromise,
+        flowPromiseAndState.state,
         {}
       );
       codeSnippetInstance["gen"] = Object.create({});
@@ -575,7 +573,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
-        snippetFlowPromise,
+        flowPromiseAndState.state,
         { messages: { title: snippetTitle } }
       );
       codeSnippetInstanceMock = sandbox.mock(codeSnippetInstance);
@@ -629,7 +627,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
-        snippetFlowPromise,
+        flowPromiseAndState.state,
         { snippet: snippet }
       );
       const we = await myCodeSnippet["createCodeSnippetWorkspaceEdit"]({});
@@ -641,7 +639,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
-        snippetFlowPromise,
+        flowPromiseAndState.state,
         {}
       );
       loggerMock.expects("debug");
@@ -657,7 +655,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
-        snippetFlowPromise,
+        flowPromiseAndState.state,
         { snippet: snippet }
       );
       const we = await myCodeSnippet["createCodeSnippetQuestions"]();
@@ -670,7 +668,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
-        snippetFlowPromise,
+        flowPromiseAndState.state,
         { snippet: null }
       );
       const we = await myCodeSnippet["createCodeSnippetQuestions"]();
@@ -688,7 +686,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
-        snippetFlowPromise,
+        flowPromiseAndState.state,
         {}
       );
 
@@ -722,7 +720,7 @@ describe("codeSnippet unit test", () => {
         appEvents,
         outputChannel,
         testLogger,
-        snippetFlowPromise,
+        flowPromiseAndState.state,
         {
           messages: {
             title: snippetTitle.length,
