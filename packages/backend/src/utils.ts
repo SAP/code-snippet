@@ -1,20 +1,20 @@
-type Resolve<T> = (value: T | PromiseLike<T>) => void;
-type Reject = (reason?: any) => void;
+type ResolveFunc<T> = (value: T | PromiseLike<T>) => void;
+type RejectFunc = (reason?: any) => void;
 
 export type State<T> = {
-  resolve: Resolve<T>;
-  reject: Reject;
+  resolve: ResolveFunc<T>;
+  reject: RejectFunc;
 };
 
-export type PromiseAndState<T> = {
+export type FlowPromise<T> = {
   promise: Promise<T>;
   state: State<T>;
 };
 
-export function createPromiseAndState<T>(): PromiseAndState<T> {
+export function createFlowPromise<T>(): FlowPromise<T> {
   let state: State<T>;
   const promise: Promise<T> = new Promise<T>(
-    (resolve: Resolve<T>, reject: Reject) => {
+    (resolve: ResolveFunc<T>, reject: RejectFunc) => {
       state = { resolve, reject };
     }
   );

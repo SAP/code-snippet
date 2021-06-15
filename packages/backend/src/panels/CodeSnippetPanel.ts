@@ -13,12 +13,12 @@ import { AbstractWebviewPanel } from "./AbstractWebviewPanel";
 import { Contributors } from "../contributors";
 import { getWebviewRpcLibraryLogger } from "../logger/logger-wrapper";
 import { IChildLogger } from "@vscode-logging/logger";
-import { createPromiseAndState, PromiseAndState } from "../utils";
+import { createFlowPromise, FlowPromise } from "../utils";
 
 export class CodeSnippetPanel extends AbstractWebviewPanel {
   public static CODE_SNIPPET = "Code Snippet";
   private static channel: vscode.OutputChannel;
-  private flowPromiseAndState: PromiseAndState<void>;
+  private flowPromise: FlowPromise<void>;
 
   // uiOptions comming from webview panel serializer looks like: {contributorInfo: {...}, ...}
   private getContribInfoFrom(uiOptions?: unknown): unknown {
@@ -30,16 +30,16 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
   }
 
   private setCommandPromiseAndFlowState() {
-    this.flowPromiseAndState = createPromiseAndState();
+    this.flowPromise = createFlowPromise();
   }
 
   private cleanCommandPromiseAndFlowState() {
-    if (this.flowPromiseAndState) {
+    if (this.flowPromise) {
       // resolves command promise in case panel is closed manually by an user
       // it is save to call resolve several times on same promise
-      this.flowPromiseAndState.state.resolve();
+      this.flowPromise.state.resolve();
     }
-    this.flowPromiseAndState = null;
+    this.flowPromise = null;
   }
 
   public async loadWebviewPanel(uiOptions?: unknown): Promise<void> {
@@ -60,7 +60,7 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
       await super.loadWebviewPanel(uiOptions);
     }
 
-    return this.flowPromiseAndState.promise;
+    return this.flowPromise.promise;
   }
 
   public dispose(): void {
@@ -96,7 +96,7 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
       vscodeEvents,
       this.outputChannel,
       logger,
-      this.flowPromiseAndState.state,
+      this.flowPromise.state,
       {
         messages,
         snippet,
