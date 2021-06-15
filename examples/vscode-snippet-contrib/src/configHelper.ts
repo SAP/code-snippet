@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import * as fsextra from "fs-extra";
+import { promises } from "fs";
 import * as _ from "lodash";
 import { parse, stringify } from "comment-json";
 
@@ -7,7 +7,7 @@ export class ConfigHelper {
   public static async readFile(targetFilePath: string): Promise<any> {
     let content = "{}";
     try {
-      content = await fsextra.readFile(targetFilePath, ConfigHelper.UTF8);
+      content = await promises.readFile(targetFilePath, "utf8");
     } catch (e) {
       // ignore, probably file or folder is missing
     }
@@ -40,7 +40,6 @@ export class ConfigHelper {
     return textRange;
   }
 
-  private static readonly UTF8: string = "utf8";
   private static readonly DEFAULT_LAUNCH: any = {
     version: "0.2.0",
     configurations: [],

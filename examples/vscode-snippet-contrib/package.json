@@ -43,20 +43,19 @@
   "scripts": {
     "ci": "npm-run-all clean compile",
     "clean": "rimraf ./dist",
-    "package": "vsce package --yarn .",
+    "package": "vsce package --yarn",
     "compile": "tsc -p .",
     "watch": "tsc -p . --watch"
   },
   "dependencies": {
     "@sap-devx/code-snippet-types": "^1.1.0",
     "comment-json": "2.1.0",
-    "fs-extra": "7.0.1",
     "lodash": "4.17.21"
   },
   "devDependencies": {
     "@types/comment-json": "1.1.1",
-    "@types/fs-extra": "7.0.0",
-    "@types/lodash": "^4.14.150",
-    "@types/vscode": "1.55.0"
+    "@types/lodash": "^4.14.170",
+    "@types/vscode": "^1.55.0",
+    "vsce": "^1.93.0"
   }
 }

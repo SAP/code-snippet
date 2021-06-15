@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import * as _ from "lodash";
-import * as fsextra from "fs-extra";
+import { promises } from "fs";
 import { IChildLogger } from "@vscode-logging/logger";
 import { getClassLogger } from "../logger/logger-wrapper";
 import { createFlowPromise, FlowPromise } from "../utils";
@@ -134,7 +134,7 @@ export abstract class AbstractWebviewPanel {
   }
 
   protected async initHtmlContent(): Promise<void> {
-    let indexHtml = await fsextra.readFile(
+    let indexHtml = await promises.readFile(
       path.join(this.mediaPath, this.htmlFileName),
       "utf8"
     );

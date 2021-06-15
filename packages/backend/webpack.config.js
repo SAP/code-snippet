@@ -33,6 +33,15 @@ const config = {
           },
         ],
       },
+      {
+        test: /node_modules[/|\\]debug[/|\\]src[/|\\]node.js/,
+        loader: "string-replace-loader",
+        options: {
+          search: "require[(]'supports-color",
+          replace: "__non_webpack_require__('supports-color",
+          flags: "g",
+        },
+      },
     ],
   },
 };
