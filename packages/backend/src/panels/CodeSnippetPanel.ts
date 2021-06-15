@@ -13,7 +13,7 @@ import { AbstractWebviewPanel } from "./AbstractWebviewPanel";
 import { Contributors } from "../contributors";
 import { getWebviewRpcLibraryLogger } from "../logger/logger-wrapper";
 import { IChildLogger } from "@vscode-logging/logger";
-import { createFlowPromiseAndState, PromiseAndState } from "../utils";
+import { createPromiseAndState, PromiseAndState } from "../utils";
 
 export class CodeSnippetPanel extends AbstractWebviewPanel {
   public static CODE_SNIPPET = "Code Snippet";
@@ -30,7 +30,7 @@ export class CodeSnippetPanel extends AbstractWebviewPanel {
   }
 
   private setCommandPromiseAndFlowState() {
-    this.flowPromiseAndState = createFlowPromiseAndState();
+    this.flowPromiseAndState = createPromiseAndState();
   }
 
   private cleanCommandPromiseAndFlowState() {

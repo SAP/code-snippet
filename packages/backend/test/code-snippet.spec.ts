@@ -13,7 +13,7 @@ import { fail } from "assert";
 import { SWA } from "../src/swa-tracker/swa-tracker-wrapper";
 import * as sinon from "sinon";
 import { SinonMock } from "sinon";
-import { createFlowPromiseAndState, PromiseAndState } from "../src/utils";
+import { createPromiseAndState, PromiseAndState } from "../src/utils";
 
 describe("codeSnippet unit test", () => {
   let sandbox: sinon.SinonSandbox;
@@ -135,7 +135,7 @@ describe("codeSnippet unit test", () => {
   const appEvents = new TestEvents();
   const snippetTitle = "snippet title";
   const uiOptions = { messages: { title: snippetTitle }, snippet: snippet };
-  const flowPromiseAndState: PromiseAndState<void> = createFlowPromiseAndState<void>();
+  const flowPromiseAndState: PromiseAndState<void> = createPromiseAndState<void>();
 
   const codeSnippet: CodeSnippet = new CodeSnippet(
     rpc,
