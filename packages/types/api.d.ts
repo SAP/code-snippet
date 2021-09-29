@@ -1,7 +1,7 @@
-import * as vscode from "vscode";
+import { WorkspaceEdit } from "vscode";
 
 export interface ISnippet {
   getMessages(): any;
   getQuestions(): Promise<any[]>;
-  getWorkspaceEdit(answers: any): Promise<vscode.WorkspaceEdit | undefined>;
+  getWorkspaceEdit(answers: any): Promise<WorkspaceEdit | undefined>;
 }
