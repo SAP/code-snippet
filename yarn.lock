@@ -2302,7 +2302,7 @@
 
 "@sap-devx/inquirer-gui@0.2.1":
   version "0.2.1"
-  resolved "http://nexus.wdf.sap.corp:8081/nexus/repository/build.releases.npm/@sap-devx/inquirer-gui/-/inquirer-gui-0.2.1.tgz#d96ed170f386a59c9b0f6f98d40bd7ed0ce3c626"
+  resolved "https://registry.yarnpkg.com/@sap-devx/inquirer-gui/-/inquirer-gui-0.2.1.tgz#d96ed170f386a59c9b0f6f98d40bd7ed0ce3c626"
   integrity sha512-4Xvxq/G/up2pjyYQcqwgbmf3qDbHoGKEcTf9z5LMSxNtExSc1yvhN6VzLqpFqpRr6BDF1qmRRKswMmS2cLNa1A==
   dependencies:
     strip-ansi "^6.0.0"
