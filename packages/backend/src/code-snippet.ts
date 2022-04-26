@@ -114,8 +114,9 @@ export class CodeSnippet {
     handler: Function
   ): void {
     // eslint-disable-next-line @typescript-eslint/ban-types -- legacy code
-    let entry: Map<string, Function> =
-      this.customQuestionEventHandlers.get(questionType);
+    let entry: Map<string, Function> = this.customQuestionEventHandlers.get(
+      questionType
+    );
     if (entry === undefined) {
       this.customQuestionEventHandlers.set(questionType, new Map());
       entry = this.customQuestionEventHandlers.get(questionType);
@@ -180,8 +181,10 @@ export class CodeSnippet {
             relevantQuestion.guiType
           );
           // eslint-disable-next-line @typescript-eslint/ban-types -- legacy code
-          const customQuestionEventHandler: Function =
-            this.getCustomQuestionEventHandler(guiType, methodName);
+          const customQuestionEventHandler: Function = this.getCustomQuestionEventHandler(
+            guiType,
+            methodName
+          );
           return _.isUndefined(customQuestionEventHandler)
             ? await relevantQuestion[methodName].apply(this.gen, params)
             : await customQuestionEventHandler.apply(this.gen, params);
@@ -222,8 +225,9 @@ export class CodeSnippet {
     questions: TerminalAdapter.Questions<any>
   ): Promise<inquirer.Answers> {
     this.currentQuestions = questions;
-    const mappedQuestions: TerminalAdapter.Questions<any> =
-      this.normalizeFunctions(questions);
+    const mappedQuestions: TerminalAdapter.Questions<any> = this.normalizeFunctions(
+      questions
+    );
     if (_.isEmpty(mappedQuestions)) {
       return {};
     }
@@ -238,8 +242,9 @@ export class CodeSnippet {
     // eslint-disable-next-line @typescript-eslint/ban-types -- legacy code
   ): Function {
     // eslint-disable-next-line @typescript-eslint/ban-types -- legacy code
-    const entry: Map<string, Function> =
-      this.customQuestionEventHandlers.get(questionType);
+    const entry: Map<string, Function> = this.customQuestionEventHandlers.get(
+      questionType
+    );
     if (entry !== undefined) {
       return entry.get(methodName);
     }
