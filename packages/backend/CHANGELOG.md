@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5](https://github.com/SAP/code-snippet/compare/v1.1.4...v1.1.5) (2022-04-26)
+
+### Bug Fixes
+
+- formatting ([584f0b4](https://github.com/SAP/code-snippet/commit/584f0b42a70b236082e51c71bb064093c310fc7c))
+
 ## [1.1.4](https://github.com/SAP/code-snippet/compare/v1.1.3...v1.1.4) (2021-10-03)
 
 **Note:** Version bump only for package code-snippet
