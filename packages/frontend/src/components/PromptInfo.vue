@@ -20,7 +20,7 @@ export default {
   color: var(--vscode-foreground, #cccccc);
 }
 .v-card__subtitle {
-  color: var(--vscode-editorCodeLens-foreground, #999999);
+  color: var(--vscode-foreground, #cccccc);
   white-space: pre-wrap;
 }
 </style>

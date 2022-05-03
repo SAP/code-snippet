@@ -15,14 +15,14 @@ export function activate(context: vscode.ExtensionContext) {
           contributorId: "SAPOSS.vscode-snippet-contrib",
           snippetName: "snippet_1",
           context: { uri: uri },
-          isNonInteractive: true,
+          isNonInteractive: false,
           snippetArgs: {
             configType: "extensionHost",
             configName: "defaultName2",
           },
         });
       } catch (error) {
-        vscode.window.showInformationMessage(error);
+        vscode.window.showInformationMessage(error as string);
       }
     }
   );
