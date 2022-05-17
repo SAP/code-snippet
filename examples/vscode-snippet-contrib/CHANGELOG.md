@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.1.6](https://github.com/SAP/code-snippet/compare/v1.1.5...v1.1.6) (2022-05-15)
 
-
 ### Bug Fixes
 
-* subtitle backgound css ([#200](https://github.com/SAP/code-snippet/issues/200)) ([2f79231](https://github.com/SAP/code-snippet/commit/2f79231bdd7a66cc7e18cf77103fc37d22909b5a))
-
-
-
-
+- subtitle backgound css ([#200](https://github.com/SAP/code-snippet/issues/200)) ([2f79231](https://github.com/SAP/code-snippet/commit/2f79231bdd7a66cc7e18cf77103fc37d22909b5a))
 
 ## [1.1.3](https://github.com/SAP/code-snippet/compare/v1.1.2...v1.1.3) (2021-09-29)
 

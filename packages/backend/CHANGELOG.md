@@ -7,10 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package code-snippet
 
-
-
-
-
 ## [1.1.5](https://github.com/SAP/code-snippet/compare/v1.1.4...v1.1.5) (2022-04-26)
 
 ### Bug Fixes
