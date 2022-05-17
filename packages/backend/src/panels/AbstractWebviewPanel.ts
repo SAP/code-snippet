@@ -143,8 +143,9 @@ export abstract class AbstractWebviewPanel {
       const scriptPathOnDisk = vscode.Uri.file(
         path.join(this.mediaPath, path.sep)
       );
-      const scriptUri =
-        this.webViewPanel.webview.asWebviewUri(scriptPathOnDisk);
+      const scriptUri = this.webViewPanel.webview.asWebviewUri(
+        scriptPathOnDisk
+      );
 
       // TODO: very fragile: assuming double quotes and src is first attribute
       // specifically, doesn't work when building vue for development (vue-cli-service build --mode development)
