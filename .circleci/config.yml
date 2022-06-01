@@ -39,7 +39,7 @@ jobs:
 
   compliance:
     docker:
-      - image: cimg/python:3.6.4
+      - image: cimg/python:3.6
     working_directory: ~/workdir
     steps:
       - checkout
