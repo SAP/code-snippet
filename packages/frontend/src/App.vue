@@ -345,7 +345,7 @@ export default {
     },
     async setState() {
       const uiOptions = await this.rpc.invoke("getState");
-      this.messages = uiOptions.messages;
+      this.messages = uiOptions?.messages;
       if (this.isInVsCode()) {
         window.vscode.setState(uiOptions);
       }
