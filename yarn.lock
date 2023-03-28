@@ -2293,6 +2293,13 @@
   dependencies:
     vue "^2.6.10"
 
+"@sap-devx/inquirer-gui-radio-plugin@0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@sap-devx/inquirer-gui-radio-plugin/-/inquirer-gui-radio-plugin-0.0.1.tgz#7c75b32448a1a2506277adea4cce8048221130ca"
+  integrity sha512-Fz9C4dDH5ZYaIF5gXIfNqYfwx3d1J267x/LJ2rhhyRsb8RsjMVCp5uH5YNbAGaiiQ7SGHDW5ZQAVcux3A57E3A==
+  dependencies:
+    vue "^2.6.10"
+
 "@sap-devx/inquirer-gui-tiles-plugin@0.0.8":
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/@sap-devx/inquirer-gui-tiles-plugin/-/inquirer-gui-tiles-plugin-0.0.8.tgz#0925ca35638f892e1b9d23fe0c123b40e4a68394"
@@ -2300,10 +2307,10 @@
   dependencies:
     vue "^2.6.10"
 
-"@sap-devx/inquirer-gui@0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@sap-devx/inquirer-gui/-/inquirer-gui-0.2.1.tgz#d96ed170f386a59c9b0f6f98d40bd7ed0ce3c626"
-  integrity sha512-4Xvxq/G/up2pjyYQcqwgbmf3qDbHoGKEcTf9z5LMSxNtExSc1yvhN6VzLqpFqpRr6BDF1qmRRKswMmS2cLNa1A==
+"@sap-devx/inquirer-gui@0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@sap-devx/inquirer-gui/-/inquirer-gui-0.4.0.tgz#4a2eb5b238b02700608ca46481e9eeee7fe9bdda"
+  integrity sha512-/ro2ymr68u49EG/NBJxMHdJDMcTTiaiHzNnXbWtcCFUUDHMmBRCDasDqC9P8vwb8cq50PsiIfKlTox2RBFswqw==
   dependencies:
     strip-ansi "^6.0.0"
     vue "2.6.12"
