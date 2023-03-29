@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/SAP/code-snippet/compare/v1.1.5...v1.2.0) (2023-03-29)
+
+
+### Bug Fixes
+
+* formatting ([#203](https://github.com/SAP/code-snippet/issues/203)) ([3c17c9c](https://github.com/SAP/code-snippet/commit/3c17c9c3b472edc2b2e3d14dbc847723786cd07c))
+* subtitle backgound css ([#200](https://github.com/SAP/code-snippet/issues/200)) ([2f79231](https://github.com/SAP/code-snippet/commit/2f79231bdd7a66cc7e18cf77103fc37d22909b5a))
+
+
+### Features
+
+* support radio button plugin ([#244](https://github.com/SAP/code-snippet/issues/244)) ([0dfc3e0](https://github.com/SAP/code-snippet/commit/0dfc3e05af0f5d0b6c6ca157593a5976a3f257ad))
+
+
+
+
+
 ## [1.1.6](https://github.com/SAP/code-snippet/compare/v1.1.5...v1.1.6) (2022-05-15)
 
 ### Bug Fixes
