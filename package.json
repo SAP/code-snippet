@@ -19,8 +19,8 @@
     "ci:subpackages": "lerna run ci",
     "compile": "lerna run clean && tsc --build",
     "compile:watch": "lerna run clean && tsc --build --watch",
-    "format:fix": "prettier --write \"**/*.@(js|ts|json|md|vue)\" --ignore-path=.gitignore",
-    "format:validate": "prettier --check \"**/*.@(js|ts|json|md|vue)\" --ignore-path=.gitignore",
+    "format:fix": "prettier --write \"**/*.@(js|ts|vue)\" --ignore-path=.gitignore",
+    "format:validate": "prettier --check \"**/*.@(js|ts|vue)\" --ignore-path=.gitignore",
     "lint:fix": "eslint . --ext=js,ts,vue --fix --max-warnings=0 --ignore-path=.gitignore",
     "lint:validate": "eslint . --ext=js,ts,vue --max-warnings=0 --ignore-path=.gitignore",
     "coverage:clean": "rimraf ./coverage",
@@ -65,7 +65,7 @@
     "*.{ts,js,vue}": [
       "eslint --fix --max-warnings=0 --ignore-pattern=!.*"
     ],
-    "*.{js,ts,json,md,vue}": [
+    "*.{js,ts,vue}": [
       "prettier --write"
     ]
   },
