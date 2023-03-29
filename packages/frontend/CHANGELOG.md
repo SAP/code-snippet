@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.5](https://github.com/SAP/code-snippet/compare/v1.2.4...v1.2.5) (2023-03-29)
+
+
+### Bug Fixes
+
+* formatting ([#250](https://github.com/SAP/code-snippet/issues/250)) ([cd8d22c](https://github.com/SAP/code-snippet/commit/cd8d22c21ec3b6611e0f56e0a41c3e5244956063))
+
+
+
+
+
 ## [1.2.4](https://github.com/SAP/code-snippet/compare/v1.2.3...v1.2.4) (2023-03-29)
 
 **Note:** Version bump only for package code-snippet-frontend
