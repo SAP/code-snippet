@@ -10,7 +10,6 @@ import Form from "@sap-devx/inquirer-gui";
 
 const options = { vuetify };
 Vue.use(Form, options);
-
 Vue.config.productionTip = false;
 
 new Vue({
