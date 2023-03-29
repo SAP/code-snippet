@@ -78,6 +78,7 @@ import { RpcBrowserWebSockets } from "@sap-devx/webview-rpc/out.browser/rpc-brow
 import * as _ from "lodash";
 import FileBrowserPlugin from "@sap-devx/inquirer-gui-file-browser-plugin";
 import FolderBrowserPlugin from "@sap-devx/inquirer-gui-folder-browser-plugin";
+import RadioPlugin from "@sap-devx/inquirer-gui-radio-plugin";
 import LoginPlugin from "@sap-devx/inquirer-gui-login-plugin";
 import TilesPlugin from "@sap-devx/inquirer-gui-tiles-plugin";
 import LabelPlugin from "@sap-devx/inquirer-gui-label-plugin";
@@ -330,6 +331,8 @@ export default {
       this.registerPlugin(LoginPlugin);
       this.registerPlugin(TilesPlugin);
       this.registerPlugin(LabelPlugin);
+      this.registerPlugin(LabelPlugin);
+      this.registerPlugin(RadioPlugin);
 
       this.isInVsCode()
         ? (this.consoleClass = "consoleClassHidden")

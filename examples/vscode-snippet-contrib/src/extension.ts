@@ -141,6 +141,17 @@ function createCodeSnippetQuestions(): any[] {
       name: "configProgram",
       default: "",
       message: "Program",
+    },
+    {
+      type: "input",
+      guiOptions: {
+        type: "radio",
+        hint: "Please select radio",
+      },
+      name: "agree",
+      message: "hi radio",
+      choices: ["new", "existing1"],
+      default: "existing",
     }
   );
 
