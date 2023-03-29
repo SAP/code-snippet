@@ -118,7 +118,7 @@ div.prompt-title {
   text-wrap: initial;
 }
 
-form.inquirer-gui > *:not(.tiles,.radio) {
+form.inquirer-gui > *:not(.tiles) {
   max-width: 35%;
   min-width: 300px;
 }
