@@ -2708,9 +2708,9 @@
     "@types/node" "*"
 
 "@types/vscode@^1.48.0":
-  version "1.60.0"
-  resolved "https://registry.yarnpkg.com/@types/vscode/-/vscode-1.60.0.tgz#9330c317691b4f53441a18b598768faeeb71618a"
-  integrity sha512-wZt3VTmzYrgZ0l/3QmEbCq4KAJ71K3/hmMQ/nfpv84oH8e81KKwPEoQ5v8dNCxfHFVJ1JabHKmCvqdYOoVm1Ow==
+  version "1.83.1"
+  resolved "https://registry.yarnpkg.com/@types/vscode/-/vscode-1.83.1.tgz#fe51b3d913a5c5b265a622179ae4ab6c0af7d54e"
+  integrity sha512-BHu51NaNKOtDf3BOonY3sKFFmZKEpRkzqkZVpSYxowLbs5JqjOQemYFob7Gs5rpxE5tiGhfpnMpcdF/oKrLg4w==
 
 "@types/webpack-dev-server@^3.11.0":
   version "3.11.4"
