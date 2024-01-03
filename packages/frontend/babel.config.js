@@ -1,8 +1,7 @@
 module.exports = {
-  presets: ["@vue/app", ["@babel/preset-env", { modules: false }]],
-  env: {
-    test: {
-      presets: [["@babel/preset-env", { targets: { node: "current" } }]],
-    },
-  },
+  presets: ["@babel/preset-env", "@babel/preset-typescript"],
+  plugins: [
+    "@babel/plugin-transform-modules-commonjs",
+    "@babel/plugin-transform-runtime",
+  ],
 };

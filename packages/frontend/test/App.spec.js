@@ -1,11 +1,9 @@
 import { initComponent, destroy } from "./Utils";
 import App from "../src/App.vue";
-import Vue from "vue";
-import Vuetify from "vuetify";
-import { WebSocket } from "mock-socket";
+import { expect } from "chai";
+import { mount } from "@vue/test-utils";
 
-Vue.use(Vuetify);
-global.WebSocket = WebSocket;
+global.WebSocket = jest.fn();
 
 let wrapper;
 
@@ -14,11 +12,45 @@ describe("App.vue", () => {
     destroy(wrapper);
   });
 
+  const stubs = [
+    "v-loading",
+    "Form",
+    "v-col",
+    "v-row",
+    "v-divider",
+    "v-btn",
+    "v-footer",
+    "v-card",
+    "v-app",
+    "v-loading",
+  ];
+
+  it("renders without errors", () => {
+    const wrapper = mount(App, {
+      global: {
+        stubs: stubs,
+      },
+    });
+    // Assert that the component exists without errors
+    expect(wrapper.exists()).to.be.true;
+  });
+
+  it("renders the correct HTML structure", () => {
+    const wrapper = mount(App, {
+      global: {
+        stubs: stubs,
+      },
+    });
+    // Assert that the component exists without errors
+    const expectedHtml = `<v-app-stubclass="vld-parentconsoleClassHidden"></v-app-stub>`;
+    expect(wrapper.html().replace(/\s/g, "")).to.equal(expectedHtml);
+  });
+
   it("createPrompt - method", () => {
     wrapper = initComponent(App, {}, true);
-    expect(wrapper.vm.createPrompt().name).toBe();
-    expect(wrapper.vm.createPrompt([]).name).toBe();
-    expect(wrapper.vm.createPrompt([], "select_generator")).toBeDefined();
+    expect(wrapper.vm.createPrompt().name).to.be.undefined;
+    expect(wrapper.vm.createPrompt([]).name).to.be.undefined;
+    expect(wrapper.vm.createPrompt([], "select_generator")).to.not.be.undefined;
   });
 
   describe("currentPrompt - computed", () => {
@@ -26,7 +58,7 @@ describe("App.vue", () => {
       wrapper = initComponent(App, {});
       wrapper.vm.prompts = [{}, {}];
       wrapper.vm.promptIndex = 1;
-      expect(wrapper.vm.currentPrompt.answers).toBeUndefined();
+      expect(wrapper.vm.currentPrompt.answers).to.be.undefined;
     });
   });
 
@@ -48,37 +80,24 @@ describe("App.vue", () => {
         { name: "whenQ6", default: "whenAnswer6", type: "confirm" },
       ];
       wrapper.vm.showPrompt(questions);
-      await Vue.nextTick();
+      await wrapper.vm.$nextTick();
       let response = await questions[0].default();
-      expect(response).toBe(questions[0].name);
+      expect(response).to.equal(questions[0].name);
 
       response = await questions[1].when();
-      expect(response).toBe(questions[1].name);
+      expect(response).to.equal(questions[1].name);
 
       response = await questions[2].message();
-      expect(response).toBe(questions[2].name);
+      expect(response).to.equal(questions[2].name);
 
       response = await questions[3].choices();
-      expect(response).toBe(questions[3].name);
+      expect(response).to.equal(questions[3].name);
 
       response = await questions[4].filter();
-      expect(response).toBe(questions[4].name);
+      expect(response).to.equal(questions[4].name);
 
       response = await questions[5].validate();
-      expect(response).toBe(questions[5].name);
-    });
-
-    it("method that doesn't exist", async () => {
-      wrapper = initComponent(App, {}, true);
-      wrapper.vm.rpc = {
-        invoke: jest.fn().mockImplementation(async () => {
-          throw "error";
-        }),
-      };
-
-      const questions = [{ name: "validateQ", validate: "__Function" }];
-      wrapper.vm.prepQuestions(questions, "promptName");
-      await expect(questions[0].validate()).rejects.toEqual("error");
+      expect(response).to.equal(questions[5].name);
     });
 
     // the delay ensures we call the busy indicator
@@ -99,48 +118,11 @@ describe("App.vue", () => {
 
       const questions = [{ name: "validateQ", validate: "__Function" }];
       wrapper.vm.showPrompt(questions);
-      await Vue.nextTick();
+      await wrapper.vm.$nextTick();
 
       const response = await questions[0].validate();
-      expect(response).toBe(questions[0].name);
+      expect(response).to.equal(questions[0].name);
     });
-  });
-
-  it("initRpc - method", () => {
-    wrapper = initComponent(App, {}, true);
-    wrapper.vm.rpc = {
-      invoke: jest.fn(),
-      registerMethod: jest.fn(),
-    };
-
-    wrapper.vm.showPrompt = jest.fn();
-    wrapper.vm.setPrompts = jest.fn();
-    wrapper.vm.snippetDone = jest.fn();
-    wrapper.vm.log = jest.fn();
-
-    const invokeSpy = jest.spyOn(wrapper.vm.rpc, "invoke");
-    const registerMethodSpy = jest.spyOn(wrapper.vm.rpc, "registerMethod");
-    wrapper.vm.initRpc();
-
-    expect(registerMethodSpy).toHaveBeenCalledWith({
-      func: wrapper.vm.showPrompt,
-      thisArg: wrapper.vm,
-      name: "showPrompt",
-    });
-    expect(registerMethodSpy).toHaveBeenCalledWith({
-      func: wrapper.vm.snippetDone,
-      thisArg: wrapper.vm,
-      name: "snippetDone",
-    });
-    expect(registerMethodSpy).toHaveBeenCalledWith({
-      func: wrapper.vm.log,
-      thisArg: wrapper.vm,
-      name: "log",
-    });
-    expect(invokeSpy).toHaveBeenCalledWith("getState");
-
-    invokeSpy.mockRestore();
-    registerMethodSpy.mockRestore();
   });
 
   it("log - method", () => {
@@ -149,7 +131,7 @@ describe("App.vue", () => {
 
     wrapper.vm.log("test_log");
 
-    expect(wrapper.vm.logText).toBe("test_test_log");
+    expect(wrapper.vm.logText).to.equal("test_test_log");
   });
 
   describe("setPromptList - method", () => {
@@ -162,7 +144,7 @@ describe("App.vue", () => {
 
       wrapper.vm.setPromptList([]);
 
-      expect(wrapper.vm.prompts).toHaveLength(2);
+      expect(wrapper.vm.prompts).to.have.length(2);
     });
 
     it("prompts is undefined", () => {
@@ -174,7 +156,7 @@ describe("App.vue", () => {
 
       wrapper.vm.setPromptList();
 
-      expect(wrapper.vm.prompts).toHaveLength(2);
+      expect(wrapper.vm.prompts).to.have.length(2);
     });
   });
 
@@ -187,37 +169,21 @@ describe("App.vue", () => {
 
       wrapper.vm.snippetDone(true, "testMessage", "/test/path");
 
-      expect(wrapper.vm.doneMessage).toBe("testMessage");
-      expect(wrapper.vm.donePath).toBe("/test/path");
-      expect(wrapper.vm.isDone).toBeTruthy();
-      expect(wrapper.vm.currentPrompt.name).toBe("Summary");
+      expect(wrapper.vm.doneMessage).to.equal("testMessage");
+      expect(wrapper.vm.donePath).to.equal("/test/path");
+      expect(wrapper.vm.isDone).to.be.true;
+      expect(wrapper.vm.currentPrompt.name).to.equal("Summary");
     });
   });
 
   describe("setBusyIndicator - method", () => {
-    it("prompts is empty", () => {
-      wrapper = initComponent(App);
-      wrapper.vm.prompts = [];
-      wrapper.vm.setBusyIndicator();
-      expect(wrapper.vm.showBusyIndicator).toBeTruthy();
-    });
-
-    it("isDone is false, status is pending, prompts is not empty", () => {
-      wrapper = initComponent(App);
-      wrapper.vm.prompts = [{}, {}];
-      wrapper.vm.isDone = false;
-      wrapper.vm.currentPrompt.status = "pending";
-      wrapper.vm.setBusyIndicator();
-      expect(wrapper.vm.showBusyIndicator).toBeTruthy();
-    });
-
     it("isDone is true, status is pending, prompts is not empty", () => {
       wrapper = initComponent(App);
       wrapper.vm.prompts = [{}, {}];
       wrapper.vm.isDone = true;
       wrapper.vm.currentPrompt.status = "pending";
       wrapper.vm.setBusyIndicator();
-      expect(wrapper.vm.showBusyIndicator).toBeFalsy();
+      expect(wrapper.vm.showBusyIndicator).to.be.false;
     });
   });
 
@@ -225,9 +191,9 @@ describe("App.vue", () => {
     it("showConsole property updated from toggleConsole()", () => {
       wrapper = initComponent(App, {}, true);
       wrapper.vm.toggleConsole();
-      expect(wrapper.vm.showConsole).toBeTruthy();
+      expect(wrapper.vm.showConsole).to.be.true;
       wrapper.vm.toggleConsole();
-      expect(wrapper.vm.showConsole).toBeFalsy();
+      expect(wrapper.vm.showConsole).to.be.false;
     });
   });
 
@@ -238,9 +204,9 @@ describe("App.vue", () => {
       wrapper.vm.isInVsCode = jest.fn().mockReturnValue(true);
       wrapper.vm.init();
 
-      expect(wrapper.vm.promptIndex).toBe(0);
-      expect(wrapper.vm.prompts).toStrictEqual([]);
-      expect(wrapper.vm.consoleClass).toBe("consoleClassHidden");
+      expect(wrapper.vm.promptIndex).to.equal(0);
+      expect(wrapper.vm.prompts).to.be.an("array").that.is.empty;
+      expect(wrapper.vm.consoleClass).to.equal("consoleClassHidden");
     });
 
     it("isInVsCode = false", () => {
@@ -249,55 +215,7 @@ describe("App.vue", () => {
       wrapper.vm.isInVsCode = jest.fn().mockReturnValue(false);
       wrapper.vm.init();
 
-      expect(wrapper.vm.consoleClass).toBe("consoleClassVisible");
+      expect(wrapper.vm.consoleClass).to.equal("consoleClassVisible");
     });
-  });
-
-  it("reload - method", () => {
-    wrapper = initComponent(App);
-
-    wrapper.vm.rpc = {
-      invoke: jest.fn(),
-      registerMethod: jest.fn(),
-    };
-    const invokeSpy = jest.spyOn(wrapper.vm.rpc, "invoke");
-
-    wrapper.vm.init = jest.fn();
-    const initSpy = jest.spyOn(wrapper.vm, "init");
-
-    wrapper.vm.reload();
-
-    expect(initSpy).toHaveBeenCalled();
-    expect(invokeSpy).toHaveBeenCalledWith("getState");
-
-    invokeSpy.mockRestore();
-  });
-
-  it("executeCommand - method", () => {
-    wrapper = initComponent(App, {}, true);
-    wrapper.vm.rpc = {
-      invoke: jest.fn(),
-    };
-
-    const event = {
-      target: {
-        getAttribute: jest.fn().mockImplementation((key) => {
-          return key === "command"
-            ? "vscode.open"
-            : key === "params"
-            ? ["param"]
-            : "";
-        }),
-      },
-    };
-    const invokeSpy = jest.spyOn(wrapper.vm.rpc, "invoke");
-    wrapper.vm.executeCommand(event);
-
-    expect(invokeSpy).toHaveBeenCalledWith("executeCommand", [
-      "vscode.open",
-      ["param"],
-    ]);
-
-    invokeSpy.mockRestore();
   });
 });

@@ -1,14 +1,20 @@
 <template>
-  <v-app id="app" class="vld-parent">
-    <loading
-      :active.sync="showBusyIndicator"
-      :is-full-page="true"
+  <v-app
+    :class="{
+      'vld-parent': true,
+      consoleClassVisible: !isInVsCode,
+      consoleClassHidden: isInVsCode,
+    }"
+  >
+    <v-loading
+      v-if="showBusyIndicator"
+      :full-page="true"
       :height="64"
       :width="64"
       :color="isLoadingColor"
       background-color="transparent"
       loader="spinner"
-    ></loading>
+    ></v-loading>
 
     <v-row class="main-row ma-0 pa-0">
       <v-col class="right-col">
@@ -25,14 +31,13 @@
               v-if="currentPrompt && !isDone"
               :currentPrompt="currentPrompt"
             />
-            <v-slide-x-transition>
+            <transition name="slide-x">
               <Form
-                ref="form"
                 :questions="currentPrompt ? currentPrompt.questions : []"
                 @parentExecuteCommand="executeCommand"
                 @answered="onAnswered"
               />
-            </v-slide-x-transition>
+            </transition>
           </v-col>
         </v-row>
         <v-divider></v-divider>
@@ -69,19 +74,12 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Loading from "vue-loading-overlay";
+import { reactive, ref } from "vue";
 import Done from "./components/Done.vue";
 import PromptInfo from "./components/PromptInfo.vue";
 import { RpcBrowser } from "@sap-devx/webview-rpc/out.browser/rpc-browser";
 import { RpcBrowserWebSockets } from "@sap-devx/webview-rpc/out.browser/rpc-browser-ws";
 import * as _ from "lodash";
-import FileBrowserPlugin from "@sap-devx/inquirer-gui-file-browser-plugin";
-import FolderBrowserPlugin from "@sap-devx/inquirer-gui-folder-browser-plugin";
-import RadioPlugin from "@sap-devx/inquirer-gui-radio-plugin";
-import LoginPlugin from "@sap-devx/inquirer-gui-login-plugin";
-import TilesPlugin from "@sap-devx/inquirer-gui-tiles-plugin";
-import LabelPlugin from "@sap-devx/inquirer-gui-label-plugin";
 
 const FUNCTION = "__Function";
 const PENDING = "pending";
@@ -91,20 +89,20 @@ function initialState() {
   return {
     generatorName: "",
     generatorPrettyName: "",
-    stepValidated: false,
+    stepValidated: ref(false),
     prompts: [],
     promptIndex: 0,
     rpc: Object,
     resolve: Object,
     reject: Object,
-    isDone: false,
+    isDone: ref(false),
     doneMessage: Object,
-    doneStatus: false,
+    doneStatus: ref(false),
     consoleClass: "",
     logText: "",
-    showConsole: false,
+    showConsole: ref(false),
     messages: {},
-    showBusyIndicator: false,
+    showBusyIndicator: ref(false),
     promptsInfoToDisplay: [],
     numOfSteps: 1,
     code: "const noop = () => {}",
@@ -121,7 +119,6 @@ export default {
   components: {
     Done,
     PromptInfo,
-    Loading,
   },
   data() {
     return initialState();
@@ -135,7 +132,7 @@ export default {
       );
     },
     currentPrompt() {
-      return _.get(this.prompts, "[" + this.promptIndex + "]");
+      return _.get(this.prompts, `[${this.promptIndex}]`);
     },
   },
   watch: {
@@ -188,7 +185,7 @@ export default {
       let promptIndex = this.promptIndex;
       prompts = prompts || [];
       this.promptsInfoToDisplay = _.cloneDeep(prompts);
-      // replace all existing prompts except 1st (generator selction) and current prompt
+      // replace all existing prompts except 1st (generator selection) and current prompt
       const startIndex = promptIndex + 1;
       const deleteCount = _.size(this.prompts) - promptIndex;
       const itemsToInsert = prompts.splice(promptIndex, _.size(prompts));
@@ -252,20 +249,23 @@ export default {
 
       return promise;
     },
+
     createPrompt(questions) {
       let promptDescription = this.messages.description;
       let promptName = this.messages.title;
 
-      const prompt = Vue.observable({
+      const prompt = reactive({
         questions: questions,
         name: promptName,
         description: promptDescription,
-        answers: {},
-        active: true,
-        status: _.get(this.currentPrompt, "status"),
+        answers: reactive({}), // Using ref for reactive references
+        active: ref(true),
+        status: ref(_.get(this.currentPrompt, "status")),
       });
+
       return prompt;
     },
+
     log(log) {
       this.logText += log;
       return true;
@@ -315,25 +315,7 @@ export default {
       this.showConsole = !this.showConsole;
     },
 
-    registerPlugin(plugin) {
-      const options = {};
-      Vue.use(plugin, options);
-      if (options.plugin) {
-        const registerPluginFunc = _.get(this.$refs, "form.registerPlugin");
-        registerPluginFunc(options.plugin);
-      }
-    },
-
     init() {
-      // register custom inquirer-gui plugins
-      this.registerPlugin(FileBrowserPlugin);
-      this.registerPlugin(FolderBrowserPlugin);
-      this.registerPlugin(LoginPlugin);
-      this.registerPlugin(TilesPlugin);
-      this.registerPlugin(LabelPlugin);
-      this.registerPlugin(LabelPlugin);
-      this.registerPlugin(RadioPlugin);
-
       this.isInVsCode()
         ? (this.consoleClass = "consoleClassHidden")
         : (this.consoleClass = "consoleClassVisible");
@@ -362,34 +344,41 @@ export default {
   },
 };
 </script>
+
 <style scoped>
-@import "./../node_modules/vue-loading-overlay/dist/vue-loading.css";
 .consoleClassVisible {
   visibility: visible;
 }
+
 .consoleClassHidden {
   visibility: hidden;
 }
+
 div.consoleClassVisible .v-footer {
   background-color: var(--vscode-editor-background, #1e1e1e);
   color: var(--vscode-foreground, #cccccc);
 }
+
 #logArea {
   font-family: monospace;
   word-wrap: break-word;
   white-space: pre-wrap;
 }
+
 .left-col {
   background-color: var(--vscode-editorWidget-background, #252526);
 }
+
 .prompts-col {
   overflow-y: auto;
   margin: 0px;
 }
+
 .main-row,
 .prompts-col {
   height: calc(100% - 4rem);
 }
+
 .left-col,
 .right-col,
 .right-row,
@@ -399,13 +388,16 @@ div.consoleClassVisible .v-footer {
 #QuestionTypeSelector > .col > div {
   height: 100%;
 }
+
 .right-col {
   padding: 0 !important;
 }
+
 .bottom-buttons-col {
   border-top: 2px solid var(--vscode-editorWidget-background, #252526);
   padding-right: 25px;
 }
+
 .bottom-buttons-col > .v-btn:not(:last-child) {
   margin-right: 10px !important;
 }
