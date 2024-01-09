@@ -5,6 +5,7 @@ import * as fsextra from "fs-extra";
 import { IChildLogger } from "@vscode-logging/logger";
 import { getClassLogger } from "../logger/logger-wrapper";
 import { createFlowPromise, FlowPromise } from "../utils";
+import { JSDOM } from "jsdom";
 
 export abstract class AbstractWebviewPanel {
   public viewType: string;
@@ -147,20 +148,26 @@ export abstract class AbstractWebviewPanel {
         scriptPathOnDisk
       );
 
-      // TODO: very fragile: assuming double quotes and src is first attribute
-      // specifically, doesn't work when building vue for development (vue-cli-service build --mode development)
-      indexHtml = indexHtml.replace(
-        /<link href=/g,
-        `<link href=${scriptUri.toString()}`
-      );
-      indexHtml = indexHtml.replace(
-        /<script src=/g,
-        `<script src=${scriptUri.toString()}`
-      );
-      indexHtml = indexHtml.replace(
-        /<img src=/g,
-        `<img src=${scriptUri.toString()}`
-      );
+      const baseUrl = scriptUri.toString();
+      const dom = new JSDOM(indexHtml);
+      const { document } = dom.window;
+
+      function replaceAttributePaths(elements: any, attributeName: string) {
+        elements.forEach((element: any) => {
+          const currentAttr = element.getAttribute(attributeName);
+          if (currentAttr) {
+            element.setAttribute(attributeName, `${baseUrl}/${currentAttr}`);
+          }
+        });
+      }
+
+      const srcElements = document.querySelectorAll("[src]");
+      const hrefElements = document.querySelectorAll("[href]");
+
+      replaceAttributePaths(srcElements, "src");
+      replaceAttributePaths(hrefElements, "href");
+
+      indexHtml = dom.serialize();
     }
     this.webViewPanel.webview.html = indexHtml;
   }
