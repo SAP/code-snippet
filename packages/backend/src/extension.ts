@@ -16,7 +16,7 @@ export function activate(context: vscode.ExtensionContext): void {
   try {
     createExtensionLoggerAndSubscribeToLogSettingsChanges(context);
     SWA.createSWATracker(getLogger());
-  } catch (error) {
+  } catch (error: any) {
     console.error(
       "Extension activation failed due to Logger configuration failure:",
       error.message
