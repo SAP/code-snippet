@@ -130,8 +130,6 @@ form.inquirer-gui .v-field {
 form.inquirer-gui .v-text-field input {
   margin-bottom: 0px;
   margin-top: 0px;
-  /* like the previous padding - fix cursor aligned to the left*/
-  padding: 0 12px;
   border-color: var(--vscode-panel-border, #cecece);
 }
 
