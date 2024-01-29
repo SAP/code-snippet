@@ -143,6 +143,23 @@ function createCodeSnippetQuestions(): any[] {
       message: "Program",
     },
     {
+      guiOptions: {
+        hint: "Select the folder you want to run.",
+        type: "folder-browser",
+        link: {
+          text: "Open Settings",
+          command: {
+            id: "workbench.action.openSettings",
+            params: ["Typescript.Format"],
+          },
+        },
+      },
+      type: "input",
+      name: "folder",
+      default: "",
+      message: "Select folder",
+    },
+    {
       type: "input",
       guiOptions: {
         type: "radio",
