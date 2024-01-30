@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/SAP/code-snippet/compare/v1.2.5...v1.3.0) (2024-01-30)
+
+
+### Features
+
+* migrating to Vue3 ([#280](https://github.com/SAP/code-snippet/issues/280)) ([67670a6](https://github.com/SAP/code-snippet/commit/67670a623895be6d963316f02f9876d1ee66ac15))
+
+
+
+
+
 ## [1.2.5](https://github.com/SAP/code-snippet/compare/v1.2.4...v1.2.5) (2023-03-29)
 
 **Note:** Version bump only for package code-snippet
