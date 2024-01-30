@@ -557,7 +557,7 @@ describe("codeSnippet unit test", () => {
           "question1",
           "method1"
         );
-      } catch (e) {
+      } catch (e: any) {
         expect(e.stack).to.contain("method1");
       }
     });

@@ -79,7 +79,7 @@ export class SWA {
           `SAP Web Analytics tracker was created for ${SWA.CODE_SNIPPET}`
         );
       }
-    } catch (error) {
+    } catch (error: any) {
       logger.error(error);
     }
   }
@@ -106,7 +106,7 @@ export class SWA {
           );
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       logger.error(error);
     }
   }
@@ -144,7 +144,7 @@ export class SWA {
           });
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       logger.error(error);
     }
   }

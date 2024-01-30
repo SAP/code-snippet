@@ -13,7 +13,7 @@ export class ConfigHelper {
     }
     try {
       return _.merge(parse(content), ConfigHelper.getDefaultContent());
-    } catch (e) {
+    } catch (e: any) {
       vscode.window.showErrorMessage(e.message);
       return Promise.reject();
     }

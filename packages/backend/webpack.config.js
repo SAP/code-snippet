@@ -18,9 +18,8 @@ const config = {
     vscode: "commonjs vscode", // the vscode-module is created on-the-fly and must be excluded. Add other modules that cannot be webpack'ed, 📖 -> https://webpack.js.org/configuration/externals/
   },
   resolve: {
-    modules: ["node_modules"],
-    // support reading TypeScript and JavaScript files, 📖 -> https://github.com/TypeStrong/ts-loader
     extensions: [".ts", ".js"],
+    alias: {},
   },
   module: {
     rules: [
@@ -30,10 +29,14 @@ const config = {
         use: [
           {
             loader: "ts-loader",
+            options: {},
           },
         ],
       },
     ],
   },
+  optimization: {},
+  plugins: [],
 };
+
 module.exports = config;

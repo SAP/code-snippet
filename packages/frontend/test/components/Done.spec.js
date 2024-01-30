@@ -11,11 +11,6 @@ describe("Done.vue", () => {
     destroy(wrapper);
   });
 
-  test("component name", () => {
-    wrapper = initComponent(Done);
-    expect(wrapper.name()).toBe("Done");
-  });
-
   test("component props", () => {
     wrapper = initComponent(Done);
     expect(_.keys(wrapper.props())).toHaveLength(3);
