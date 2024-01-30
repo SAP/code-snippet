@@ -159,7 +159,7 @@ export default {
     },
     apply() {
       if (this.resolve) {
-        this.resolve(this.currentPrompt.answers);
+        this.resolve(JSON.parse(JSON.stringify(this.currentPrompt.answers)));
       }
     },
     executeCommand(event) {
