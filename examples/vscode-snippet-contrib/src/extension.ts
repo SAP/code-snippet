@@ -169,6 +169,38 @@ function createCodeSnippetQuestions(): any[] {
       message: "hi radio",
       choices: ["new", "existing1"],
       default: "existing",
+    },
+    {
+      guiOptions: {
+        hint: "Select the type of configuration you want to create.",
+      },
+      type: "confirm",
+      name: "isSampleService",
+      message: "Do you want to add a sample service?",
+      default: false,
+    },
+    {
+      // Entities checklist
+      type: "checkbox",
+      name: "entities",
+      message: "Select entities to add:",
+      choices: ["Products", "Suppliers", "Customers", "Employees"],
+      validate: (value: string[], answers: any) => {
+        return answers.entities.length !== 0
+          ? true
+          : `Select at least one entity to add.`;
+      },
+    },
+    {
+      guiOptions: {
+        mandatory: true,
+      },
+      type: "password",
+      name: "password",
+      message: "Password",
+      validate: (value: string | undefined) => {
+        return !value ? true : "";
+      },
     }
   );
 
