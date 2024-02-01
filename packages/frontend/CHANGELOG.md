@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1](https://github.com/SAP/code-snippet/compare/v1.3.0...v1.3.1) (2024-02-01)
+
+
+### Bug Fixes
+
+* evaluateMethod fix + css fixes after vue3 ([#282](https://github.com/SAP/code-snippet/issues/282)) ([fa470e7](https://github.com/SAP/code-snippet/commit/fa470e77b29e9de44b9ead0d4c189b2d5178d38f))
+
+
+
+
+
 # [1.3.0](https://github.com/SAP/code-snippet/compare/v1.2.5...v1.3.0) (2024-01-30)
 
 
