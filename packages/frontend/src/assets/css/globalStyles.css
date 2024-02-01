@@ -36,11 +36,12 @@ div.v-application .v-theme--light.v-btn.v-btn--disabled .v-icon {
 
 /* Do not accept uppercase from vuetify */
 .v-btn {
-  text-transform: none;
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
 
 .v-btn--disabled {
-  opacity: 0.55;
+  opacity: 0.55 !important;
 }
 
 p.question-label{
@@ -158,7 +159,7 @@ form.inquirer-gui .v-theme--light:not(.v-item--active) .v-icon {
   color: var(--vscode-input-foreground, white);
 }
 
-form.inquirer-gui div.v-theme--light.v-card.v-card--variant--outlined {
+form.inquirer-gui div.v-theme--light.v-card.v-card--variant-outlined {
   border-width: thin;
   border-style: solid;
   border-color: var(--vscode-panel-border, #cecece);

@@ -165,7 +165,10 @@ export default {
     executeCommand(event) {
       const command = event.target.getAttribute("command");
       const params = event.target.getAttribute("params");
-      this.rpc.invoke("executeCommand", [command, params]);
+      this.rpc.invoke("executeCommand", [
+        command,
+        JSON.parse(JSON.stringify(params)),
+      ]);
     },
     onAnswered(answers, issues) {
       this.stepValidated = issues === undefined;
@@ -214,7 +217,7 @@ export default {
 
               try {
                 return await that.rpc.invoke("evaluateMethod", [
-                  args,
+                  JSON.parse(JSON.stringify(args)),
                   question.name,
                   prop,
                 ]);

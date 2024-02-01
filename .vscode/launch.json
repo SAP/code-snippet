@@ -10,7 +10,9 @@
       "request": "launch",
       "name": "Run websocket server",
       "program": "${workspaceFolder}/packages/backend/src/webSocketServer/index.ts",
-      "outFiles": ["${workspaceFolder}/packages/backend/out/**/*.js"],
+      "outFiles": [
+        "${workspaceFolder}/packages/backend/out/**/*.js"
+      ],
       "env": {
         "PORT": "8081"
       },
@@ -45,8 +47,7 @@
       "outFiles": [
         "${workspaceFolder}/packages/backend/dist/**/*.js",
         "${workspaceFolder/examples/vscode-snippet-contrib/out/**/*.js"
-      ],
-      "preLaunchTask": "watch backend (webpack)"
+      ]
     },
     {
       "name": "Test extension",
@@ -57,7 +58,9 @@
         "--extensionDevelopmentPath=${workspaceFolder}/packages/backend",
         "--extensionTestsPath=${workspaceFolder}/packages/backend/out/tests"
       ],
-      "outFiles": ["${workspaceFolder}/packages/backend/dist/**/*.js"],
+      "outFiles": [
+        "${workspaceFolder}/packages/backend/dist/**/*.js"
+      ],
       "preLaunchTask": "watch backend"
     },
     {
@@ -65,10 +68,14 @@
       "request": "launch",
       "name": "Run reference generator (foodq)",
       "program": "${workspaceFolder}/generator-foodq/node_modules/yo/lib/cli.js",
-      "args": ["foodq"],
+      "args": [
+        "foodq"
+      ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
     },
     {
       "name": "frontend unit tests",
@@ -85,7 +92,9 @@
       "disableOptimisticBPs": true,
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "outFiles": ["${workspaceFolder}/packages/frontend/src/**/*.js"],
+      "outFiles": [
+        "${workspaceFolder}/packages/frontend/src/**/*.js"
+      ],
       "port": 9229
     }
   ]
