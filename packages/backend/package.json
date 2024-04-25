@@ -1,7 +1,7 @@
 {
   "name": "code-snippet",
   "displayName": "Code Snippet",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "A VSCode extension that provides a simple way to add code snippets.",
   "publisher": "SAPOSS",
   "private": true,
@@ -116,7 +116,7 @@
     "@sap-devx/webview-rpc": "0.3.1",
     "@sap/swa-for-sapbas-vsx": "1.2.15",
     "@vscode-logging/logger": "1.2.3",
-    "code-snippet-frontend": "^1.3.1",
+    "code-snippet-frontend": "^1.3.2",
     "fs-extra": "9.1.0",
     "jsdom": "23.2.0",
     "lodash": "4.17.21",
