@@ -10,7 +10,7 @@ import {
 } from "@sap-devx/webview-rpc/out.ext/rpc-common";
 import { IChildLogger } from "@vscode-logging/logger";
 import { fail } from "assert";
-import { SWA } from "../src/swa-tracker/swa-tracker-wrapper";
+import { AnalyticsWrapper } from "../src/usage-report/usage-analytics-wrapper";
 import * as sinon from "sinon";
 import { SinonMock } from "sinon";
 import { createFlowPromise, FlowPromise } from "../src/utils";
@@ -21,7 +21,7 @@ describe("codeSnippet unit test", () => {
   let loggerMock: SinonMock;
   let rpcMock: SinonMock;
   let appEventsMock: SinonMock;
-  let swaTrackerWrapperMock: SinonMock;
+  let trackerWrapperMock: SinonMock;
   let panelPromiseFuncsMock: SinonMock;
 
   class TestEvents implements AppEvents {
@@ -159,7 +159,7 @@ describe("codeSnippet unit test", () => {
     rpcMock = sandbox.mock(rpc);
     loggerMock = sandbox.mock(testLogger);
     appEventsMock = sandbox.mock(appEvents);
-    swaTrackerWrapperMock = sandbox.mock(SWA);
+    trackerWrapperMock = sandbox.mock(AnalyticsWrapper);
     panelPromiseFuncsMock = sandbox.mock(flowPromise.state);
   });
 
@@ -168,7 +168,7 @@ describe("codeSnippet unit test", () => {
     rpcMock.verify();
     loggerMock.verify();
     appEventsMock.verify();
-    swaTrackerWrapperMock.verify();
+    trackerWrapperMock.verify();
     panelPromiseFuncsMock.verify();
   });
 
@@ -201,9 +201,7 @@ describe("codeSnippet unit test", () => {
 
   describe("receiveIsWebviewReady", () => {
     it("flow is successfull", async () => {
-      swaTrackerWrapperMock
-        .expects("updateSnippetStarted")
-        .withArgs(snippetTitle);
+      trackerWrapperMock.expects("updateSnippetStarted").withArgs(snippetTitle);
       rpcMock
         .expects("invoke")
         .withArgs("showPrompt")
@@ -213,24 +211,20 @@ describe("codeSnippet unit test", () => {
           { actionType: "Create entity" },
         ]);
       appEventsMock.expects("doApply");
-      swaTrackerWrapperMock
+      trackerWrapperMock
         .expects("updateSnippetEnded")
         .withArgs(snippetTitle, true);
       await codeSnippet["receiveIsWebviewReady"]();
     });
 
     it("no prompt ---> an error is thrown", async () => {
-      swaTrackerWrapperMock
-        .expects("updateSnippetStarted")
-        .withArgs(snippetTitle);
+      trackerWrapperMock.expects("updateSnippetStarted").withArgs(snippetTitle);
       panelPromiseFuncsMock.expects("reject");
       await codeSnippet["receiveIsWebviewReady"]();
     });
 
     it("prompt throws exception ---> an error is thrown", async () => {
-      swaTrackerWrapperMock
-        .expects("updateSnippetStarted")
-        .withArgs(snippetTitle);
+      trackerWrapperMock.expects("updateSnippetStarted").withArgs(snippetTitle);
       rpcMock
         .expects("invoke")
         .withArgs("showPrompt")
@@ -365,7 +359,7 @@ describe("codeSnippet unit test", () => {
     });
 
     it("onSuccess", () => {
-      swaTrackerWrapperMock
+      trackerWrapperMock
         .expects("updateSnippetEnded")
         .withArgs("testSnippetName", true);
       codeSnippet["onSuccess"](true, "testSnippetName");
@@ -378,7 +372,7 @@ describe("codeSnippet unit test", () => {
     });
 
     it("onFailure", async () => {
-      swaTrackerWrapperMock
+      trackerWrapperMock
         .expects("updateSnippetEnded")
         .withArgs("testSnippetName", false);
       await codeSnippet["onFailure"](true, "testSnippetName", "testError");
@@ -588,7 +582,7 @@ describe("codeSnippet unit test", () => {
       codeSnippetInstanceMock
         .expects("createCodeSnippetWorkspaceEdit")
         .resolves({});
-      swaTrackerWrapperMock
+      trackerWrapperMock
         .expects("updateSnippetEnded")
         .withArgs(snippetTitle, true);
       await codeSnippetInstance["applyCode"]({});
@@ -599,7 +593,7 @@ describe("codeSnippet unit test", () => {
       codeSnippetInstanceMock
         .expects("createCodeSnippetWorkspaceEdit")
         .resolves(undefined);
-      swaTrackerWrapperMock
+      trackerWrapperMock
         .expects("updateSnippetEnded")
         .withArgs(snippetTitle, true);
       appEventsMock.expects("doApply").never();
@@ -613,7 +607,7 @@ describe("codeSnippet unit test", () => {
       codeSnippetInstanceMock
         .expects("createCodeSnippetWorkspaceEdit")
         .rejects(error);
-      swaTrackerWrapperMock
+      trackerWrapperMock
         .expects("updateSnippetEnded")
         .withArgs(snippetTitle, false);
       await codeSnippetInstance["applyCode"]({});
@@ -746,7 +740,7 @@ describe("codeSnippet unit test", () => {
 
     it("interactive mode - answers param is empty", async () => {
       codeSnippetInstanceMock.expects("createCodeSnippetWorkspaceEdit").never();
-      swaTrackerWrapperMock.expects("updateSnippetEnded").never();
+      trackerWrapperMock.expects("updateSnippetEnded").never();
       try {
         await codeSnippetInstance["executeCodeSnippet"]({});
         fail("test should fail");
