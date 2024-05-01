@@ -15,8 +15,6 @@ export class AnalyticsWrapper {
   // Event types used by Application Wizard
   private static readonly EVENT_TYPES = {
     SNIPPET_CREATION_STARTED: "Snippet creation started",
-    SNIPPET_TYPE_SELECTED: "Snippet type selected",
-    // SNIPPET_NEXT_STEP: "Snippet continue to the next step",
     SNIPPET_CREATION_SUCCESSFULLY: "Snippet creation successfully",
     SNIPPET_CREATION_FAILED: "Snippet creation failed",
   };
@@ -82,31 +80,6 @@ export class AnalyticsWrapper {
       logger?.error(error);
     }
   }
-
-  public static updateSnippetTypeSelected(
-    snippetType: string,
-    logger?: IChildLogger
-  ): void {
-    try {
-      const eventName = AnalyticsWrapper.EVENT_TYPES.SNIPPET_TYPE_SELECTED;
-      AnalyticsWrapper.startTime = Date.now();
-      const properties = { snippetType };
-      AnalyticsWrapper.report({ eventName, properties, logger });
-    } catch (error: any) {
-      logger?.error(error);
-    }
-  }
-
-  //   public static updateSnippetNextStep(snippetType: string, logger?: IChildLogger): void {
-  //     try {
-  //       const eventName = AnalyticsWrapper.EVENT_TYPES.SNIPPET_NEXT_STEP;
-  //       AnalyticsWrapper.startTime = Date.now();
-  //       const properties = { snippetType };
-  //       AnalyticsWrapper.report({ eventName, properties, logger });
-  //     } catch (error: any) {
-  //       logger?.error(error);
-  //     }
-  //   }
 
   public static updateSnippetEnded(
     snippetName: string,
