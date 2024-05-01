@@ -6,7 +6,7 @@ import { IRpc } from "@sap-devx/webview-rpc/out.ext/rpc-common";
 import Generator = require("yeoman-generator");
 import { IChildLogger } from "@vscode-logging/logger";
 import TerminalAdapter = require("yeoman-environment/lib/adapter");
-import { SWA } from "./swa-tracker/swa-tracker-wrapper";
+import { AnalyticsWrapper } from "./usage-report/usage-analytics-wrapper";
 import messages from "./messages";
 import { State } from "./utils";
 
@@ -206,7 +206,10 @@ export class CodeSnippet {
       const questions: any[] = await this.createCodeSnippetQuestions();
       this.currentQuestions = questions;
       const normalizedQuestions = this.normalizeFunctions(questions);
-      SWA.updateSnippetStarted(this.uiOptions.messages.title, this.logger);
+      AnalyticsWrapper.updateSnippetStarted(
+        this.uiOptions.messages.title,
+        this.logger
+      );
       const response: any = await this.rpc.invoke("showPrompt", [
         normalizedQuestions,
       ]);
@@ -253,7 +256,7 @@ export class CodeSnippet {
   private onSuccess(showDoneMessage: boolean, snippetName: string) {
     const message = `'${snippetName}' snippet has been created.`;
     this.logger.debug("done running code-snippet! " + message);
-    SWA.updateSnippetEnded(snippetName, true, this.logger);
+    AnalyticsWrapper.updateSnippetEnded(snippetName, true, this.logger);
     if (showDoneMessage) {
       this.appEvents.doSnippeDone(true, message);
     }
@@ -267,7 +270,12 @@ export class CodeSnippet {
   ) {
     const messagePrefix = `${snippetrName} snippet failed.`;
     const errorMessage: string = this.logError(error, messagePrefix);
-    SWA.updateSnippetEnded(snippetrName, false, this.logger, errorMessage);
+    AnalyticsWrapper.updateSnippetEnded(
+      snippetrName,
+      false,
+      this.logger,
+      errorMessage
+    );
     if (showDoneMessage) {
       this.appEvents.doSnippeDone(false, errorMessage);
     }
