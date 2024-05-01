@@ -4,7 +4,7 @@
   "exclude": [
     "src/logger/*.ts",
     "src/panels/*.ts",
-    "src/swa-tracker/*.ts",
+    "src/usage-report/*.ts",
     "src/webSocketServer/*.ts",
     "src/output-channel-log.ts",
     "src/youi-adapter.ts"

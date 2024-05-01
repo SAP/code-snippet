@@ -33,6 +33,15 @@ const config = {
           },
         ],
       },
+      {
+        test: /usage-report[/|\\]usage-analytics-wrapper.ts/,
+        loader: "string-replace-loader",
+        options: {
+          search: "require[(]",
+          replace: "__non_webpack_require__(",
+          flags: "g",
+        },
+      },
     ],
   },
   optimization: {},

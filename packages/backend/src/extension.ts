@@ -5,7 +5,7 @@ import {
 } from "./logger/logger-wrapper";
 import { CodeSnippetPanel } from "./panels/CodeSnippetPanel";
 import { AbstractWebviewPanel } from "./panels/AbstractWebviewPanel";
-import { SWA } from "./swa-tracker/swa-tracker-wrapper";
+import { AnalyticsWrapper } from "./usage-report/usage-analytics-wrapper";
 
 let extContext: vscode.ExtensionContext;
 let codeSnippetPanel: CodeSnippetPanel;
@@ -15,7 +15,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
   try {
     createExtensionLoggerAndSubscribeToLogSettingsChanges(context);
-    SWA.createSWATracker(getLogger());
+    AnalyticsWrapper.createTracker(getLogger());
   } catch (error: any) {
     console.error(
       "Extension activation failed due to Logger configuration failure:",
