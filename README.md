@@ -14,7 +14,7 @@ end user's answers to those questions.
 
 ## Description
 
-This is the npm mono-repo for the VSCode Code Snippet framework
+This is the npm mono-repo for the VSCode Code Snippet framework.
 
 It currently contains the following packages:
 
