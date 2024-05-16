@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/SAP/code-snippet/compare/v1.4.0...v1.5.0) (2024-05-16)
+
+
+### Bug Fixes
+
+* readme update ([#287](https://github.com/SAP/code-snippet/issues/287)) ([4e55350](https://github.com/SAP/code-snippet/commit/4e5535080355e95a6949118cb8fceeef73587a60))
+
+
+### Features
+
+* lerna release force update ([#288](https://github.com/SAP/code-snippet/issues/288)) ([21a5fb0](https://github.com/SAP/code-snippet/commit/21a5fb068b4f2e80fe99dd3499ce067620c67840))
+
+
+
+
+
 # [1.4.0](https://github.com/SAP/code-snippet/compare/v1.3.2...v1.4.0) (2024-05-16)
 
 
