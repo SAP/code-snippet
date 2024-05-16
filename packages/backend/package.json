@@ -31,7 +31,6 @@
     "sap"
   ],
   "activationEvents": [
-    "*"
   ],
   "main": "./dist/extension",
   "contributes": {

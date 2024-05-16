@@ -41,14 +41,16 @@ function registerAndSubscribeCommand(cId: string, cAction: any) {
 }
 
 function registerWebviewPanelSerializer(abstractPanel: AbstractWebviewPanel) {
-  vscode.window.registerWebviewPanelSerializer(abstractPanel.viewType, {
-    async deserializeWebviewPanel(
-      webViewPanel: vscode.WebviewPanel,
-      state?: unknown
-    ) {
-      await abstractPanel.setWebviewPanel(webViewPanel, state);
-    },
-  });
+  extContext.subscriptions.push(
+    vscode.window.registerWebviewPanelSerializer(abstractPanel.viewType, {
+      async deserializeWebviewPanel(
+        webViewPanel: vscode.WebviewPanel,
+        state?: unknown
+      ) {
+        await abstractPanel.setWebviewPanel(webViewPanel, state);
+      },
+    })
+  );
 }
 
 export function deactivate(): void {
