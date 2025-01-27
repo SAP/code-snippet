@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/SAP/code-snippet/compare/v1.5.0...v1.5.1) (2025-01-27)
+
+
+### Bug Fixes
+
+* padding missing from inputs ([#289](https://github.com/SAP/code-snippet/issues/289)) ([7480615](https://github.com/SAP/code-snippet/commit/7480615e952107ffa7dbc63ecebc1d38873fe503))
+
+
+
+
+
 # [1.5.0](https://github.com/SAP/code-snippet/compare/v1.4.0...v1.5.0) (2024-05-16)
 
 
