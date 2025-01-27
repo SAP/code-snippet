@@ -130,6 +130,7 @@ form.inquirer-gui .v-field {
 
 form.inquirer-gui .v-text-field input {
   margin-bottom: 0px;
+  padding: 0 12px;
   margin-top: 0px;
   border-color: var(--vscode-panel-border, #cecece);
 }
