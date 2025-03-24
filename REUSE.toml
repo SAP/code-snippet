@@ -1,0 +1,10 @@
+version = 1
+SPDX-PackageName = "code-snippet"
+SPDX-PackageSupplier = "Tomer Epstein <tomer.epstein@sap.com>"
+SPDX-PackageDownloadLocation = "https://github.com/SAP/code-snippet"
+
+[[annotations]]
+path = "**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 SAP SE or an SAP affiliate company and code-snippet contributors"
+SPDX-License-Identifier = "Apache-2.0"

@@ -1,8 +1,0 @@
-Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: code-snippet
-Upstream-Contact: Tomer Epstein <tomer.epstein@sap.com>
-Source: https://github.com/SAP/code-snippet
-
-Files: *
-Copyright: 2021 SAP SE or an SAP affiliate company and code-snippet contributors
-License: Apache-2.0 
