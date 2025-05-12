@@ -2811,6 +2811,15 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
+"@sap-devx/inquirer-gui-auto-complete-plugin@3.0.6":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@sap-devx/inquirer-gui-auto-complete-plugin/-/inquirer-gui-auto-complete-plugin-3.0.6.tgz#601f547a84026fa8c7f7c0a1ec62808292fda0e1"
+  integrity sha512-KP2KHRDsM3cP0dNbdmzyOY3ZlT3TDOQBZR85rsb2oyGq9Y95LZkrro84mnHcxdFLZggUb2nRx6FLsR96wIWmPQ==
+  dependencies:
+    strip-ansi "^6.0.0"
+    vite-plugin-css-injected-by-js "^3.2.0"
+    vue "^3.3.4"
+
 "@sap-devx/inquirer-gui-file-browser-plugin@3.0.3":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@sap-devx/inquirer-gui-file-browser-plugin/-/inquirer-gui-file-browser-plugin-3.0.3.tgz#651c934c1602d093b55bfa305a62b9857635c7b6"
@@ -14124,6 +14133,11 @@ vinyl@^2.0.0, vinyl@^2.0.1, vinyl@^2.1.0, vinyl@^2.2.0, vinyl@^2.2.1:
     cloneable-readable "^1.0.0"
     remove-trailing-separator "^1.0.1"
     replace-ext "^1.0.0"
+
+vite-plugin-css-injected-by-js@^3.2.0:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/vite-plugin-css-injected-by-js/-/vite-plugin-css-injected-by-js-3.5.2.tgz#1f75d16ad5c05b6b49bf18018099a189ec2e46ad"
+  integrity sha512-2MpU/Y+SCZyWUB6ua3HbJCrgnF0KACAsmzOQt1UvRVJCGF6S8xdA3ZUhWcWdM9ivG4I5az8PnQmwwrkC2CAQrQ==
 
 vite-plugin-vuetify@^1.0.2:
   version "1.0.2"

@@ -12,11 +12,13 @@ import "@sap-devx/inquirer-gui/dist/form.css";
 import "@sap-devx/inquirer-gui-label-plugin/dist/labelPlugin.css";
 import "@sap-devx/inquirer-gui-radio-plugin/dist/radioPlugin.css";
 import "@sap-devx/inquirer-gui-tiles-plugin/dist/tilesPlugin.css";
+import "@sap-devx/inquirer-gui-auto-complete-plugin/dist/autoCompletePlugin.css";
 
 // Other Modules
 import vuetify from "./plugins/vuetify";
 import Form from "@sap-devx/inquirer-gui";
 import FileBrowserPlugin from "@sap-devx/inquirer-gui-file-browser-plugin";
+import AutoCompletePlugin from "@sap-devx/inquirer-gui-auto-complete-plugin";
 import FolderBrowserPlugin from "@sap-devx/inquirer-gui-folder-browser-plugin";
 import RadioPlugin from "@sap-devx/inquirer-gui-radio-plugin";
 import LoginPlugin from "@sap-devx/inquirer-gui-login-plugin";
@@ -69,6 +71,10 @@ plugins.push(options.plugin);
 
 options = {};
 app.use(TilesPlugin, options);
+plugins.push(options.plugin);
+
+options = {};
+app.use(AutoCompletePlugin, options);
 plugins.push(options.plugin);
 
 options = {};
