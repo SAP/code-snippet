@@ -1,7 +1,7 @@
 {
   "name": "code-snippet-frontend",
   "displayName": "Code Snippet Frontend",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "publisher": "SAP",
   "license": "Apache 2.0",
   "description": "Frontend for the Code Snippet framework",
