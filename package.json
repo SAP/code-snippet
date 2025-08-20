@@ -3,8 +3,8 @@
   "private": true,
   "workspaces": {
     "packages": [
-      "packages/*",
-      "examples/*"
+      "examples/*",
+      "packages/*"
     ],
     "nohoist": [
       "**/@types/jest",
@@ -13,20 +13,44 @@
     ]
   },
   "scripts": {
-    "release:version": "lerna version",
-    "release:publish": "lerna publish from-git --yes --no-verify-access",
     "ci": "npm-run-all coverage:clean legal:* format:validate lint:validate ci:subpackages coverage:merge",
     "ci:subpackages": "lerna run ci",
     "compile": "lerna run clean && tsc --build",
     "compile:watch": "lerna run clean && tsc --build --watch",
-    "format:fix": "prettier --write \"**/*.@(js|ts|vue)\" --ignore-path=.gitignore",
-    "format:validate": "prettier --check \"**/*.@(js|ts|vue)\" --ignore-path=.gitignore",
-    "lint:fix": "eslint . --ext=js,ts,vue --fix --max-warnings=0 --ignore-path=.gitignore",
-    "lint:validate": "eslint . --ext=js,ts,vue --max-warnings=0 --ignore-path=.gitignore",
     "coverage:clean": "rimraf ./coverage",
     "coverage:merge": "lcov-result-merger \"./coverage/lcov*.info\" \"./coverage/lcov.info\"",
+    "format:fix": "prettier --write \"**/*.@(js|ts|vue)\" --ignore-path=.gitignore",
+    "format:validate": "prettier --check \"**/*.@(js|ts|vue)\" --ignore-path=.gitignore",
+    "legal:copy": "lerna exec \"shx cp -r ../../.reuse .reuse && shx cp -r ../../LICENSES LICENSES\"",
     "legal:delete": "lerna exec \"shx rm -rf .reuse LICENSES\" || true",
-    "legal:copy": "lerna exec \"shx cp -r ../../.reuse .reuse && shx cp -r ../../LICENSES LICENSES\""
+    "lint:fix": "eslint . --ext=js,ts,vue --fix --max-warnings=0 --ignore-path=.gitignore",
+    "lint:validate": "eslint . --ext=js,ts,vue --max-warnings=0 --ignore-path=.gitignore",
+    "release:publish": "lerna publish from-git --yes --no-verify-access",
+    "release:version": "lerna version"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*.{ts,js,vue}": [
+      "eslint --fix --max-warnings=0 --ignore-pattern=!.*"
+    ],
+    "*.{js,ts,vue}": [
+      "prettier --write"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   },
   "dependencies": {},
   "devDependencies": {
@@ -54,29 +78,5 @@
     "rimraf": "3.0.2",
     "shx": "0.3.3",
     "typescript": "~4.5.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
-  "lint-staged": {
-    "*.{ts,js,vue}": [
-      "eslint --fix --max-warnings=0 --ignore-pattern=!.*"
-    ],
-    "*.{js,ts,vue}": [
-      "prettier --write"
-    ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
   }
 }

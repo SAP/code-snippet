@@ -2,20 +2,20 @@
   "name": "code-snippet-frontend",
   "displayName": "Code Snippet Frontend",
   "version": "1.6.0",
-  "publisher": "SAP",
-  "license": "Apache 2.0",
-  "description": "Frontend for the Code Snippet framework",
   "private": true,
+  "description": "Frontend for the Code Snippet framework",
+  "license": "Apache 2.0",
+  "publisher": "SAP",
   "main": "index.js",
   "scripts": {
-    "ci": "npm-run-all clean build test coverage:copy",
-    "clean": "rimraf ./dist ./coverage",
     "build": "vite build",
     "build-dev": "vite build --mode development",
+    "ci": "npm-run-all clean build test coverage:copy",
+    "clean": "rimraf ./dist ./coverage",
+    "coverage:copy": "shx mkdir -p ../../coverage && shx cp -u ./coverage/lcov.info ../../coverage/lcov_frontend.info",
     "lint": "vue-cli-service lint",
-    "test": "jest -w 1 --colors",
     "serve": "vite",
-    "coverage:copy": "shx mkdir -p ../../coverage && shx cp -u ./coverage/lcov.info ../../coverage/lcov_frontend.info"
+    "test": "jest -w 1 --colors"
   },
   "dependencies": {
     "@mdi/font": "5.1.45",
