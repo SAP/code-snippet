@@ -1,7 +1,7 @@
 {
   "name": "vscode-snippet-contrib",
   "displayName": "vscode-snippet-contrib",
-  "version": "1.3.1",
+  "version": "2.0.0",
   "private": true,
   "description": "",
   "categories": [
@@ -42,7 +42,7 @@
     "onCommand:extension.showCodeSnippetContrib"
   ],
   "dependencies": {
-    "@sap-devx/code-snippet-types": "^1.1.3",
+    "@sap-devx/code-snippet-types": "^2.0.0",
     "comment-json": "2.1.0",
     "fs-extra": "7.0.1",
     "lodash": "4.17.21"
