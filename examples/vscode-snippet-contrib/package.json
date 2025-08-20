@@ -1,28 +1,26 @@
 {
   "name": "vscode-snippet-contrib",
   "displayName": "vscode-snippet-contrib",
-  "description": "",
   "version": "1.3.1",
-  "publisher": "SAPOSS",
   "private": true,
-  "engines": {
-    "vscode": "^1.44.2"
-  },
+  "description": "",
+  "categories": [
+    "Other"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/SAP/code-snippet",
     "directory": "vscode-snippet-contrib"
   },
+  "publisher": "SAPOSS",
   "main": "./out/src/extension.js",
-  "extensionDependencies": [
-    "saposs.code-snippet"
-  ],
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onCommand:extension.showCodeSnippetContrib"
-  ],
+  "scripts": {
+    "ci": "npm-run-all clean compile",
+    "clean": "rimraf ./dist",
+    "compile": "tsc -p .",
+    "package": "vsce package --yarn .",
+    "watch": "tsc -p . --watch"
+  },
   "contributes": {
     "commands": [
       {
@@ -40,13 +38,9 @@
       ]
     }
   },
-  "scripts": {
-    "ci": "npm-run-all clean compile",
-    "clean": "rimraf ./dist",
-    "package": "vsce package --yarn .",
-    "compile": "tsc -p .",
-    "watch": "tsc -p . --watch"
-  },
+  "activationEvents": [
+    "onCommand:extension.showCodeSnippetContrib"
+  ],
   "dependencies": {
     "@sap-devx/code-snippet-types": "^1.1.3",
     "comment-json": "2.1.0",
@@ -58,5 +52,11 @@
     "@types/fs-extra": "7.0.0",
     "@types/lodash": "^4.14.150",
     "@types/vscode": "^1.48.0"
+  },
+  "extensionDependencies": [
+    "saposs.code-snippet-framework"
+  ],
+  "engines": {
+    "vscode": "^1.44.2"
   }
 }
