@@ -37,7 +37,7 @@
   },
   "activationEvents": [],
   "extensionDependencies": [
-    "saposs.code-snippet-framework"
+    "saposs.code-snippet-tool"
   ],
   "devDependencies": {
     "@types/sinon": "^10.0.11",
