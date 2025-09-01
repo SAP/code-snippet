@@ -1,18 +1,17 @@
-# Code Snippet (Framework) VSCode Extension
+# Code Snippet Tool VSCode Extension
 
 ## Preview
 
-![form gui screenshot](./resources/preview.png)
+![Form GUI Screenshot](./resources/preview.png)
 
-## Description
+## Overview
 
-This component is the VSCode extension part of the VSCode Code Snippet Framework.
-It is responsible for:
+This package is the VSCode extension for the Code Snippet Tool. It enables:
 
-- Loading code snippets contributions (plugins) (e.g [vscode-snippet-contrib](../../examples)).
-- Rendering the code snippet form GUI to display relevant questions to the end user:
-  - inside a [VSCode webview](https://code.visualstudio.com/api/extension-guides/webview).
-  - Note that the form GUI is developed, in a separate [sub-package](../frontend).
-- Bridging between the frontend GUI and the contributions/plugins, e.g:
+- Loading code snippet contributions (plugins) for extensibility.
+- Rendering a dynamic code snippet form GUI in a [VSCode webview](https://code.visualstudio.com/api/extension-guides/webview) to present relevant questions to users. The form GUI is developed as a separate sub-package.
+- Bridging between the frontend GUI and snippet contributions/plugins, including:
   - Invoking custom validation logic.
-  - Sending the "answers" of the end user back to the contribution/plugin.
+  - Sending user-provided answers back to the respective contribution/plugin.
+
+This architecture supports interactive, extensible code snippet generation in VSCode, combining custom logic with a modern user interface.

@@ -25,3 +25,8 @@ packages/backend/dummy/main.js
 
 # this folder should be initially empty when running the contributor snippet example.
 examples/dummy-scripts/.vscode
+
+# macOS
+.DS_Store
+
+yarn-error.log

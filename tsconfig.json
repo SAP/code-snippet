@@ -4,6 +4,9 @@
       "path": "./packages/backend"
     },
     {
+      "path": "./packages/wrapper"
+    },
+    {
       "path": "./packages/types"
     },
     {

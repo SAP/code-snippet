@@ -1,6 +1,6 @@
 {
-  "name": "code-snippet-framework",
-  "displayName": "Code Snippet",
+  "name": "code-snippet-tool",
+  "displayName": "Code Snippet Tool",
   "version": "2.0.0",
   "private": true,
   "description": "A VSCode extension that provides a simple way to add code snippets.",
