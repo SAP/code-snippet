@@ -2,7 +2,7 @@
 
 ## Preview
 
-![Form GUI Screenshot](./resources/preview.png)
+![Form GUI Screenshot](https://raw.githubusercontent.com/SAP/code-snippet/master/packages/backend/resources/preview.png)
 
 ## Overview
 
