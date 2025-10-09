@@ -54,7 +54,7 @@
     "@types/vscode": "^1.48.0"
   },
   "extensionDependencies": [
-    "saposs.code-snippet-framework"
+    "saposs.code-snippet-tool"
   ],
   "engines": {
     "vscode": "^1.44.2"

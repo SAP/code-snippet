@@ -7,10 +7,10 @@ using the VSCode code snippet framework.
 
 A code snippet contribution is a VSCode extension which:
 
-1. Declares an `extensionDepedency` to `saposs.code-snippet`:
+1. Declares an `extensionDepedency` to `saposs.code-snippet-tool`:
    - ```json
      {
-       "extensionDependencies": ["saposs.code-snippet"]
+       "extensionDependencies": ["saposs.code-snippet-tool"]
      }
      ```
 1. Returns an object from its `activate()` method which defines the

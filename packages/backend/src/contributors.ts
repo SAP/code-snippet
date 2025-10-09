@@ -44,12 +44,16 @@ export class Contributors {
   }
 
   private getContributorExtension(contributorId: string) {
+    // Pre-compile regex pattern for better performance
+    const FRAMEWORK_PATTERN = /^saposs\.code-snippet(?:-tool)?$/;
+
     return _.find(vscode.extensions.all, (extension: vscode.Extension<any>) => {
       const extensionDependencies: string[] = _.get(
         extension,
-        "packageJSON.extensionDependencies"
+        "packageJSON.extensionDependencies",
+        []
       );
-      if (_.includes(extensionDependencies, "saposs.code-snippet")) {
+      if (extensionDependencies.some((dep) => FRAMEWORK_PATTERN.test(dep))) {
         if (contributorId === this.getExtensionId(extension)) {
           return extension;
         }
