@@ -85,7 +85,7 @@ describe("Contributors unit test", () => {
       packageJSON: {
         name: "vscode-snippet-contrib",
         publisher: "BLABLA3",
-        extensionDependencies: ["saposs.code-snippet"],
+        extensionDependencies: ["saposs.code-snippet-tool"],
       },
       extensionKind: null as any,
       activate: () =>
@@ -117,6 +117,28 @@ describe("Contributors unit test", () => {
 
     it("receives valid contributorId and snippetName from exports ---> returns valid snippet", async () => {
       _.set(testVscode, "extensions.all", [api]);
+
+      const uiOptions = {
+        contributorId: extensionId,
+        snippetName: snippetName,
+      };
+
+      loggerWrapperMock.expects("getClassLogger").returns(logger);
+      const contributors = new Contributors();
+      const snippet = await contributors.getSnippet(uiOptions);
+      expect(snippet.getMessages()).to.deep.equal(messageValue);
+    });
+
+    it("receives valid contributorId and snippetName from exports ---> returns valid snippet (for old ID)", async () => {
+      const oldApi = {
+        ...api,
+        packageJSON: {
+          ...api.packageJSON,
+          extensionDependencies: ["saposs.code-snippet"],
+        },
+      };
+
+      _.set(testVscode, "extensions.all", [oldApi]);
 
       const uiOptions = {
         contributorId: extensionId,
@@ -191,7 +213,7 @@ describe("Contributors unit test", () => {
       api.packageJSON = {
         name: "vscode-snippet-contrib",
         publisher: "BLABLA3",
-        extensionDependencies: ["saposs.code-snippet"],
+        extensionDependencies: ["saposs.code-snippet-tool"],
       };
       _.set(testVscode, "extensions.all", [api]);
 
