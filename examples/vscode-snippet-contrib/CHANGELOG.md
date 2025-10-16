@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.3](https://github.com/SAP/code-snippet/compare/v2.0.2...v2.0.3) (2025-10-15)
+
+
+### Bug Fixes
+
+* backward compatibility for using the oss extension ID ([#295](https://github.com/SAP/code-snippet/issues/295)) ([19f89a3](https://github.com/SAP/code-snippet/commit/19f89a3d0a31198c72fec94e507f524f5ba064d3))
+
+
+
+
+
 # [2.0.0](https://github.com/SAP/code-snippet/compare/v1.6.0...v2.0.0) (2025-08-20)
 
 
