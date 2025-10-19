@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.4](https://github.com/SAP/code-snippet/compare/v2.0.3...v2.0.4) (2025-10-19)
+
+
+### Bug Fixes
+
+* input width not using available space ([#296](https://github.com/SAP/code-snippet/issues/296)) ([0d752d6](https://github.com/SAP/code-snippet/commit/0d752d661df7718e8d1e576dc89accb03a93f916))
+
+
+
+
+
 ## [2.0.3](https://github.com/SAP/code-snippet/compare/v2.0.2...v2.0.3) (2025-10-15)
 
 
