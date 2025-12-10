@@ -1,8 +1,5 @@
 {
-  "packages": [
-    "packages/*",
-    "examples/*"
-  ],
+  "packages": ["packages/*", "examples/*"],
   "npmClient": "yarn",
   "command": {
     "publish": {
@@ -13,5 +10,5 @@
       "allowBranch": "master"
     }
   },
-  "version": "2.0.4"
+  "version": "2.0.5"
 }

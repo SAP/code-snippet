@@ -3,132 +3,79 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.4](https://github.com/SAP/code-snippet/compare/v2.0.3...v2.0.4) (2025-10-19)
+## [2.0.5](https://github.com/SAP/code-snippet/compare/v2.0.4...v2.0.5) (2025-12-10)
 
+**Note:** Version bump only for package code-snippet-frontend
+
+## [2.0.4](https://github.com/SAP/code-snippet/compare/v2.0.3...v2.0.4) (2025-10-19)
 
 ### Bug Fixes
 
-* input width not using available space ([#296](https://github.com/SAP/code-snippet/issues/296)) ([0d752d6](https://github.com/SAP/code-snippet/commit/0d752d661df7718e8d1e576dc89accb03a93f916))
-
-
-
-
+- input width not using available space ([#296](https://github.com/SAP/code-snippet/issues/296)) ([0d752d6](https://github.com/SAP/code-snippet/commit/0d752d661df7718e8d1e576dc89accb03a93f916))
 
 # [2.0.0](https://github.com/SAP/code-snippet/compare/v1.6.0...v2.0.0) (2025-08-20)
 
-
 ### Features
 
-* package name is changed ([#291](https://github.com/SAP/code-snippet/issues/291)) ([628ea11](https://github.com/SAP/code-snippet/commit/628ea11d0405e57446809294a207c88121841006))
-
+- package name is changed ([#291](https://github.com/SAP/code-snippet/issues/291)) ([628ea11](https://github.com/SAP/code-snippet/commit/628ea11d0405e57446809294a207c88121841006))
 
 ### BREAKING CHANGES
 
-* VS Code Marketplace Publishing Support
-
-
-
-
+- VS Code Marketplace Publishing Support
 
 # [1.6.0](https://github.com/SAP/code-snippet/compare/v1.5.1...v1.6.0) (2025-05-12)
 
-
 ### Features
 
-* auto complete support ([#290](https://github.com/SAP/code-snippet/issues/290)) ([642820c](https://github.com/SAP/code-snippet/commit/642820c3ca7b964d628c08ff7efbe498b81db919))
-
-
-
-
+- auto complete support ([#290](https://github.com/SAP/code-snippet/issues/290)) ([642820c](https://github.com/SAP/code-snippet/commit/642820c3ca7b964d628c08ff7efbe498b81db919))
 
 ## [1.5.1](https://github.com/SAP/code-snippet/compare/v1.5.0...v1.5.1) (2025-01-27)
 
-
 ### Bug Fixes
 
-* padding missing from inputs ([#289](https://github.com/SAP/code-snippet/issues/289)) ([7480615](https://github.com/SAP/code-snippet/commit/7480615e952107ffa7dbc63ecebc1d38873fe503))
-
-
-
-
+- padding missing from inputs ([#289](https://github.com/SAP/code-snippet/issues/289)) ([7480615](https://github.com/SAP/code-snippet/commit/7480615e952107ffa7dbc63ecebc1d38873fe503))
 
 ## [1.3.2](https://github.com/SAP/code-snippet/compare/v1.3.1...v1.3.2) (2024-04-25)
 
 **Note:** Version bump only for package code-snippet-frontend
 
-
-
-
-
 ## [1.3.1](https://github.com/SAP/code-snippet/compare/v1.3.0...v1.3.1) (2024-02-01)
-
 
 ### Bug Fixes
 
-* evaluateMethod fix + css fixes after vue3 ([#282](https://github.com/SAP/code-snippet/issues/282)) ([fa470e7](https://github.com/SAP/code-snippet/commit/fa470e77b29e9de44b9ead0d4c189b2d5178d38f))
-
-
-
-
+- evaluateMethod fix + css fixes after vue3 ([#282](https://github.com/SAP/code-snippet/issues/282)) ([fa470e7](https://github.com/SAP/code-snippet/commit/fa470e77b29e9de44b9ead0d4c189b2d5178d38f))
 
 # [1.3.0](https://github.com/SAP/code-snippet/compare/v1.2.5...v1.3.0) (2024-01-30)
 
-
 ### Features
 
-* migrating to Vue3 ([#280](https://github.com/SAP/code-snippet/issues/280)) ([67670a6](https://github.com/SAP/code-snippet/commit/67670a623895be6d963316f02f9876d1ee66ac15))
-
+- migrating to Vue3 ([#280](https://github.com/SAP/code-snippet/issues/280)) ([67670a6](https://github.com/SAP/code-snippet/commit/67670a623895be6d963316f02f9876d1ee66ac15))
 
 ### Reverts
 
-* Revert "fix: exclude radio from max-width (#243)" ([e41497f](https://github.com/SAP/code-snippet/commit/e41497f343de32e658f693ceb5b6520baec44661)), closes [#243](https://github.com/SAP/code-snippet/issues/243)
-
-
-
-
+- Revert "fix: exclude radio from max-width (#243)" ([e41497f](https://github.com/SAP/code-snippet/commit/e41497f343de32e658f693ceb5b6520baec44661)), closes [#243](https://github.com/SAP/code-snippet/issues/243)
 
 ## [1.2.5](https://github.com/SAP/code-snippet/compare/v1.2.4...v1.2.5) (2023-03-29)
 
-
 ### Bug Fixes
 
-* formatting ([#250](https://github.com/SAP/code-snippet/issues/250)) ([cd8d22c](https://github.com/SAP/code-snippet/commit/cd8d22c21ec3b6611e0f56e0a41c3e5244956063))
-
-
-
-
+- formatting ([#250](https://github.com/SAP/code-snippet/issues/250)) ([cd8d22c](https://github.com/SAP/code-snippet/commit/cd8d22c21ec3b6611e0f56e0a41c3e5244956063))
 
 ## [1.2.4](https://github.com/SAP/code-snippet/compare/v1.2.3...v1.2.4) (2023-03-29)
 
 **Note:** Version bump only for package code-snippet-frontend
 
-
-
-
-
 ## [1.2.3](https://github.com/SAP/code-snippet/compare/v1.2.2...v1.2.3) (2023-03-29)
 
 **Note:** Version bump only for package code-snippet-frontend
-
-
-
-
 
 ## [1.2.2](https://github.com/SAP/code-snippet/compare/v1.2.1...v1.2.2) (2023-03-29)
 
 **Note:** Version bump only for package code-snippet-frontend
 
-
-
-
-
 ## [1.2.1](https://github.com/SAP/code-snippet/compare/v1.2.0...v1.2.1) (2023-03-29)
 
 **Note:** Version bump only for package code-snippet-frontend
-
-
-
-
 
 # [1.2.0](https://github.com/SAP/code-snippet/compare/v1.1.5...v1.2.0) (2023-03-29)
 

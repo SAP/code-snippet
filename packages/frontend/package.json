@@ -1,7 +1,7 @@
 {
   "name": "code-snippet-frontend",
   "displayName": "Code Snippet Frontend",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "private": true,
   "description": "Frontend for the Code Snippet framework",
   "license": "Apache 2.0",

@@ -3,192 +3,114 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.4](https://github.com/SAP/code-snippet/compare/v2.0.3...v2.0.4) (2025-10-19)
+## [2.0.5](https://github.com/SAP/code-snippet/compare/v2.0.4...v2.0.5) (2025-12-10)
 
+**Note:** Version bump only for package root
+
+## [2.0.4](https://github.com/SAP/code-snippet/compare/v2.0.3...v2.0.4) (2025-10-19)
 
 ### Bug Fixes
 
-* input width not using available space ([#296](https://github.com/SAP/code-snippet/issues/296)) ([0d752d6](https://github.com/SAP/code-snippet/commit/0d752d661df7718e8d1e576dc89accb03a93f916))
-
-
-
-
+- input width not using available space ([#296](https://github.com/SAP/code-snippet/issues/296)) ([0d752d6](https://github.com/SAP/code-snippet/commit/0d752d661df7718e8d1e576dc89accb03a93f916))
 
 ## [2.0.3](https://github.com/SAP/code-snippet/compare/v2.0.2...v2.0.3) (2025-10-15)
 
-
 ### Bug Fixes
 
-* backward compatibility for using the oss extension ID ([#295](https://github.com/SAP/code-snippet/issues/295)) ([19f89a3](https://github.com/SAP/code-snippet/commit/19f89a3d0a31198c72fec94e507f524f5ba064d3))
-
-
-
-
+- backward compatibility for using the oss extension ID ([#295](https://github.com/SAP/code-snippet/issues/295)) ([19f89a3](https://github.com/SAP/code-snippet/commit/19f89a3d0a31198c72fec94e507f524f5ba064d3))
 
 ## [2.0.2](https://github.com/SAP/code-snippet/compare/v2.0.1...v2.0.2) (2025-09-03)
 
 **Note:** Version bump only for package root
 
-
-
-
-
 ## [2.0.1](https://github.com/SAP/code-snippet/compare/v2.0.0...v2.0.1) (2025-09-01)
 
 **Note:** Version bump only for package root
 
-
-
-
-
 # [2.0.0](https://github.com/SAP/code-snippet/compare/v1.6.0...v2.0.0) (2025-08-20)
-
 
 ### Features
 
-* package name is changed ([#291](https://github.com/SAP/code-snippet/issues/291)) ([628ea11](https://github.com/SAP/code-snippet/commit/628ea11d0405e57446809294a207c88121841006))
-
+- package name is changed ([#291](https://github.com/SAP/code-snippet/issues/291)) ([628ea11](https://github.com/SAP/code-snippet/commit/628ea11d0405e57446809294a207c88121841006))
 
 ### BREAKING CHANGES
 
-* VS Code Marketplace Publishing Support
-
-
-
-
+- VS Code Marketplace Publishing Support
 
 # [1.6.0](https://github.com/SAP/code-snippet/compare/v1.5.1...v1.6.0) (2025-05-12)
 
-
 ### Features
 
-* auto complete support ([#290](https://github.com/SAP/code-snippet/issues/290)) ([642820c](https://github.com/SAP/code-snippet/commit/642820c3ca7b964d628c08ff7efbe498b81db919))
-
-
-
-
+- auto complete support ([#290](https://github.com/SAP/code-snippet/issues/290)) ([642820c](https://github.com/SAP/code-snippet/commit/642820c3ca7b964d628c08ff7efbe498b81db919))
 
 ## [1.5.1](https://github.com/SAP/code-snippet/compare/v1.5.0...v1.5.1) (2025-01-27)
 
-
 ### Bug Fixes
 
-* padding missing from inputs ([#289](https://github.com/SAP/code-snippet/issues/289)) ([7480615](https://github.com/SAP/code-snippet/commit/7480615e952107ffa7dbc63ecebc1d38873fe503))
-
-
-
-
+- padding missing from inputs ([#289](https://github.com/SAP/code-snippet/issues/289)) ([7480615](https://github.com/SAP/code-snippet/commit/7480615e952107ffa7dbc63ecebc1d38873fe503))
 
 # [1.5.0](https://github.com/SAP/code-snippet/compare/v1.4.0...v1.5.0) (2024-05-16)
 
-
 ### Bug Fixes
 
-* readme update ([#287](https://github.com/SAP/code-snippet/issues/287)) ([4e55350](https://github.com/SAP/code-snippet/commit/4e5535080355e95a6949118cb8fceeef73587a60))
-
+- readme update ([#287](https://github.com/SAP/code-snippet/issues/287)) ([4e55350](https://github.com/SAP/code-snippet/commit/4e5535080355e95a6949118cb8fceeef73587a60))
 
 ### Features
 
-* lerna release force update ([#288](https://github.com/SAP/code-snippet/issues/288)) ([21a5fb0](https://github.com/SAP/code-snippet/commit/21a5fb068b4f2e80fe99dd3499ce067620c67840))
-
-
-
-
+- lerna release force update ([#288](https://github.com/SAP/code-snippet/issues/288)) ([21a5fb0](https://github.com/SAP/code-snippet/commit/21a5fb068b4f2e80fe99dd3499ce067620c67840))
 
 # [1.4.0](https://github.com/SAP/code-snippet/compare/v1.3.2...v1.4.0) (2024-05-16)
 
-
 ### Features
 
-* usage analytics in code-snippet ([#285](https://github.com/SAP/code-snippet/issues/285)) ([dc5329f](https://github.com/SAP/code-snippet/commit/dc5329f52e1fdd93f28b473cb3bda6feb8d5d4dc))
-
-
-
-
+- usage analytics in code-snippet ([#285](https://github.com/SAP/code-snippet/issues/285)) ([dc5329f](https://github.com/SAP/code-snippet/commit/dc5329f52e1fdd93f28b473cb3bda6feb8d5d4dc))
 
 ## [1.3.2](https://github.com/SAP/code-snippet/compare/v1.3.1...v1.3.2) (2024-04-25)
 
 **Note:** Version bump only for package root
 
-
-
-
-
 ## [1.3.1](https://github.com/SAP/code-snippet/compare/v1.3.0...v1.3.1) (2024-02-01)
-
 
 ### Bug Fixes
 
-* evaluateMethod fix + css fixes after vue3 ([#282](https://github.com/SAP/code-snippet/issues/282)) ([fa470e7](https://github.com/SAP/code-snippet/commit/fa470e77b29e9de44b9ead0d4c189b2d5178d38f))
-
-
-
-
+- evaluateMethod fix + css fixes after vue3 ([#282](https://github.com/SAP/code-snippet/issues/282)) ([fa470e7](https://github.com/SAP/code-snippet/commit/fa470e77b29e9de44b9ead0d4c189b2d5178d38f))
 
 # [1.3.0](https://github.com/SAP/code-snippet/compare/v1.2.5...v1.3.0) (2024-01-30)
 
-
 ### Features
 
-* migrating to Vue3 ([#280](https://github.com/SAP/code-snippet/issues/280)) ([67670a6](https://github.com/SAP/code-snippet/commit/67670a623895be6d963316f02f9876d1ee66ac15))
-
+- migrating to Vue3 ([#280](https://github.com/SAP/code-snippet/issues/280)) ([67670a6](https://github.com/SAP/code-snippet/commit/67670a623895be6d963316f02f9876d1ee66ac15))
 
 ### Reverts
 
-* Revert "fix: exclude radio from max-width (#243)" ([e41497f](https://github.com/SAP/code-snippet/commit/e41497f343de32e658f693ceb5b6520baec44661)), closes [#243](https://github.com/SAP/code-snippet/issues/243)
-
-
-
-
+- Revert "fix: exclude radio from max-width (#243)" ([e41497f](https://github.com/SAP/code-snippet/commit/e41497f343de32e658f693ceb5b6520baec44661)), closes [#243](https://github.com/SAP/code-snippet/issues/243)
 
 ## [1.2.5](https://github.com/SAP/code-snippet/compare/v1.2.4...v1.2.5) (2023-03-29)
 
-
 ### Bug Fixes
 
-* formatting ([#250](https://github.com/SAP/code-snippet/issues/250)) ([cd8d22c](https://github.com/SAP/code-snippet/commit/cd8d22c21ec3b6611e0f56e0a41c3e5244956063))
-* release workflow ([#249](https://github.com/SAP/code-snippet/issues/249)) ([f2b42ae](https://github.com/SAP/code-snippet/commit/f2b42ae6244c4979d97de6498a5764595a287fa9))
-
+- formatting ([#250](https://github.com/SAP/code-snippet/issues/250)) ([cd8d22c](https://github.com/SAP/code-snippet/commit/cd8d22c21ec3b6611e0f56e0a41c3e5244956063))
+- release workflow ([#249](https://github.com/SAP/code-snippet/issues/249)) ([f2b42ae](https://github.com/SAP/code-snippet/commit/f2b42ae6244c4979d97de6498a5764595a287fa9))
 
 ### Reverts
 
-* Revert "chore: bump husky from 4.3.6 to 8.0.3 (#232)" (#251) ([d651971](https://github.com/SAP/code-snippet/commit/d651971f6ec66d8f8715382dab96b85b1e7c854c)), closes [#232](https://github.com/SAP/code-snippet/issues/232) [#251](https://github.com/SAP/code-snippet/issues/251)
-
-
-
-
+- Revert "chore: bump husky from 4.3.6 to 8.0.3 (#232)" (#251) ([d651971](https://github.com/SAP/code-snippet/commit/d651971f6ec66d8f8715382dab96b85b1e7c854c)), closes [#232](https://github.com/SAP/code-snippet/issues/232) [#251](https://github.com/SAP/code-snippet/issues/251)
 
 ## [1.2.4](https://github.com/SAP/code-snippet/compare/v1.2.3...v1.2.4) (2023-03-29)
 
 **Note:** Version bump only for package root
 
-
-
-
-
 ## [1.2.3](https://github.com/SAP/code-snippet/compare/v1.2.2...v1.2.3) (2023-03-29)
 
 **Note:** Version bump only for package root
-
-
-
-
 
 ## [1.2.2](https://github.com/SAP/code-snippet/compare/v1.2.1...v1.2.2) (2023-03-29)
 
 **Note:** Version bump only for package root
 
-
-
-
-
 ## [1.2.1](https://github.com/SAP/code-snippet/compare/v1.2.0...v1.2.1) (2023-03-29)
 
 **Note:** Version bump only for package root
-
-
-
-
 
 # [1.2.0](https://github.com/SAP/code-snippet/compare/v1.1.5...v1.2.0) (2023-03-29)
 
