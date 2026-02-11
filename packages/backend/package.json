@@ -1,7 +1,7 @@
 {
   "name": "code-snippet-tool",
   "displayName": "Code Snippet Tool",
-  "version": "2.0.5",
+  "version": "2.1.0",
   "private": true,
   "description": "A VSCode extension that provides a simple way to add code snippets.",
   "categories": [
@@ -110,7 +110,7 @@
     "@sap-devx/webview-rpc": "0.3.1",
     "@sap/swa-for-sapbas-vsx": "2.0.4",
     "@vscode-logging/logger": "1.2.3",
-    "code-snippet-frontend": "^2.0.5",
+    "code-snippet-frontend": "^2.1.0",
     "fs-extra": "9.1.0",
     "jsdom": "23.2.0",
     "lodash": "4.17.23",

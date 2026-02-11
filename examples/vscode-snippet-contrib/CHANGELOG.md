@@ -3,62 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.3](https://github.com/SAP/code-snippet/compare/v2.0.2...v2.0.3) (2025-10-15)
+# [2.1.0](https://github.com/SAP/code-snippet/compare/v2.0.5...v2.1.0) (2026-02-11)
 
+### Features
+
+- update lodash version to 4.17.23 ([#298](https://github.com/SAP/code-snippet/issues/298)) ([2cd0f51](https://github.com/SAP/code-snippet/commit/2cd0f5111fcc6563ef91cb2831d0770c1be67c77))
+
+## [2.0.3](https://github.com/SAP/code-snippet/compare/v2.0.2...v2.0.3) (2025-10-15)
 
 ### Bug Fixes
 
-* backward compatibility for using the oss extension ID ([#295](https://github.com/SAP/code-snippet/issues/295)) ([19f89a3](https://github.com/SAP/code-snippet/commit/19f89a3d0a31198c72fec94e507f524f5ba064d3))
-
-
-
-
+- backward compatibility for using the oss extension ID ([#295](https://github.com/SAP/code-snippet/issues/295)) ([19f89a3](https://github.com/SAP/code-snippet/commit/19f89a3d0a31198c72fec94e507f524f5ba064d3))
 
 # [2.0.0](https://github.com/SAP/code-snippet/compare/v1.6.0...v2.0.0) (2025-08-20)
 
-
 ### Features
 
-* package name is changed ([#291](https://github.com/SAP/code-snippet/issues/291)) ([628ea11](https://github.com/SAP/code-snippet/commit/628ea11d0405e57446809294a207c88121841006))
-
+- package name is changed ([#291](https://github.com/SAP/code-snippet/issues/291)) ([628ea11](https://github.com/SAP/code-snippet/commit/628ea11d0405e57446809294a207c88121841006))
 
 ### BREAKING CHANGES
 
-* VS Code Marketplace Publishing Support
-
-
-
-
+- VS Code Marketplace Publishing Support
 
 ## [1.3.1](https://github.com/SAP/code-snippet/compare/v1.3.0...v1.3.1) (2024-02-01)
 
-
 ### Bug Fixes
 
-* evaluateMethod fix + css fixes after vue3 ([#282](https://github.com/SAP/code-snippet/issues/282)) ([fa470e7](https://github.com/SAP/code-snippet/commit/fa470e77b29e9de44b9ead0d4c189b2d5178d38f))
-
-
-
-
+- evaluateMethod fix + css fixes after vue3 ([#282](https://github.com/SAP/code-snippet/issues/282)) ([fa470e7](https://github.com/SAP/code-snippet/commit/fa470e77b29e9de44b9ead0d4c189b2d5178d38f))
 
 # [1.3.0](https://github.com/SAP/code-snippet/compare/v1.2.5...v1.3.0) (2024-01-30)
 
-
 ### Features
 
-* migrating to Vue3 ([#280](https://github.com/SAP/code-snippet/issues/280)) ([67670a6](https://github.com/SAP/code-snippet/commit/67670a623895be6d963316f02f9876d1ee66ac15))
-
-
-
-
+- migrating to Vue3 ([#280](https://github.com/SAP/code-snippet/issues/280)) ([67670a6](https://github.com/SAP/code-snippet/commit/67670a623895be6d963316f02f9876d1ee66ac15))
 
 ## [1.2.1](https://github.com/SAP/code-snippet/compare/v1.2.0...v1.2.1) (2023-03-29)
 
 **Note:** Version bump only for package vscode-snippet-contrib
-
-
-
-
 
 # [1.2.0](https://github.com/SAP/code-snippet/compare/v1.1.5...v1.2.0) (2023-03-29)
 

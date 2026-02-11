@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/SAP/code-snippet/compare/v2.0.5...v2.1.0) (2026-02-11)
+
+### Features
+
+- update lodash version to 4.17.23 ([#298](https://github.com/SAP/code-snippet/issues/298)) ([2cd0f51](https://github.com/SAP/code-snippet/commit/2cd0f5111fcc6563ef91cb2831d0770c1be67c77))
+
 ## [2.0.5](https://github.com/SAP/code-snippet/compare/v2.0.4...v2.0.5) (2025-12-10)
 
 **Note:** Version bump only for package code-snippet-frontend
